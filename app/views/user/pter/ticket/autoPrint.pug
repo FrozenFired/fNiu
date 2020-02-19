@@ -1,0 +1,48 @@
+extends ../aalayout/layout
+
+block content
+	.containerTik460.mt-3
+		.noprint
+			input#ticketing(type="hidden", value=order.ticketing)
+			input#id(type="hidden", value=order._id)
+		.row.text-center
+			.col-sm-12
+				div(style="font-size: 40px; border-bottom: 1px solid #000;"): strong #{firm.nome}
+		div(style="height: 200px")
+		.row.border.border-dark
+			.col-6
+				- let cterCp = new Object();
+				if order.cter
+					- cterCp = order.cter;
+				h5 Client: #{cterCp.nome}
+			.col-6.text-right
+				h5 电话: #{cterCp.tel}
+			div(style="height: 200px")
+		.row.mt-3(style="border-bottom: 1px solid #000;")
+			.col-5
+				h6 Date: #{moment(order.ctAt).format('DD/MM/YYYY')}
+			.col-7.text-right
+				h5 No: #{order.code}
+		div(style="height: 30px")
+		-var proLen = order.ordfirs.length;
+		-var proNum = 0;
+		each ordfir in order.ordfirs
+			-proNum += ordfir.quot;
+			.row.mt-2
+				.col-6: h5 #{ordfir.pdfir.code} &nbsp; #{ordfir.pdfir.nome} nome
+				-let pdPrice = 'NaN';
+				if ordfir.price && !isNaN(ordfir.price)
+					- pdPrice = (ordfir.price).toFixed(2);
+				.col-4.text-right: h5 #{ordfir.quot}X1 &nbsp;  #{pdPrice} €
+				.col-2.text-right: h5 #{ordfir.quot * pdPrice} €
+		.row(style="height: 5px; border-bottom: 1px solid #000;") &nbsp;
+		.row.mt-2
+			.col-4: h4 T.Art: #{proLen}
+			.col-4: h4 Tot: #{proNum} pz
+		-let odImp = 'NaN'
+		if order.imp && !isNaN(order.imp)
+			-odImp = (order.imp).toFixed(2);
+		.row.mt-3.text-right
+			.col-12.text-right: h3 IMP:  <strong>#{odImp}</strong> €
+
+	script(src="/js/pter/ticket.js")

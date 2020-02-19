@@ -1,0 +1,52 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		form.mt-3#bsProdNew(method="post", action="/bsPdfirNew", enctype="multipart/form-data")
+			input(type="hidden", name="obj[photoDir]", value=Conf.photoPath.proPhoto)
+			.row
+				.col-12(align="center")
+					img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="uploadPhoto") PdImg
+				.col-8
+					input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+			.form-group.row
+				label.col-4.col-form-label(for="iptCode") 编号
+				.col-8
+					input#iptCode.form-control(type="text", name="obj[code]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-form-label(for="iptNome") 名字
+				.col-8
+					input#iptNome.form-control(type="text", name="obj[nome]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-form-label(for="iptMaterial") 材料
+				.col-8
+					input#iptMaterial.form-control(type="text", name="obj[material]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-form-label(for="iptPrice") 价格
+				.col-8
+					input#iptPrice.form-control(type="number", name="obj[price]", placeholder='必填', autocomplete="off")
+				.col-4
+				.col-8
+					span#optPrice(style="display:none").text-danger 必须是数字
+			.form-group.row
+				label.col-4.col-form-label(for="iptCost") 采购价
+				.col-8
+					input#iptCost.form-control(type="number", name="obj[cost]", placeholder='必须是数字', autocomplete="off", value=0)
+				.col-4
+				.col-8
+					span#optPriceIn(style="display:none").text-danger 必须是数字
+			.form-group.row
+				label.col-4.col-form-label(for="iptStock", autocomplete="off") 库存
+				.col-8
+					input#iptStock.form-control(type="number", name="obj[stock]", value=0, autocomplete="off")
+				.col-4
+				.col-8
+					span#optAddquot(style="display:none").text-danger 必须是数字
+			hr
+			.form-group.row
+				.col-sm-6
+				.col-sm-6.col-12
+					input#btnSubmit.btn.btn-info.btn-block(type="submit" value='提交')
+	script(src="/js/bser/pdfir/add.js")
