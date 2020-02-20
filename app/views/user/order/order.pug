@@ -15,8 +15,8 @@ html
 			.bomNav-first(style="background: #B0C4DE")
 				.row
 					.col-9.input-group
-						input#headPdCode.ipt-70-40(type="number", placeholder='模特编号', autocomplete="off")
-					.col-3.p-2.text-info: h1#headPdNum 0
+						input#headPdCode.ipt-70-40(type="number", placeholder='添加模特', autocomplete="off")
+					.col-3.p-2.text-info: h3#headPdNum 0
 
 		#orderAddPage.page(style="display:none")
 			include ./orderAdd
@@ -31,8 +31,8 @@ html
 			.row.text-center
 				.col-3.py-2.orderTop#selectHome-topBtn.bg-success
 					img(src="/imgs/index/deposit.png", width="43px", height="43px")
-				.col-3.py-2.orderTop#orderHome-topBtn
-					img(src="/imgs/index/order.png", width="43px", height="43px")
+				.col-3.pt-2.text-danger.orderTop#orderHome-topBtn 
+					h2#bsOrderAdd_arts 0
 				.col-3.py-2.orderTop#ordersHome-topBtn
 					img(src="/imgs/index/orders.png", width="43px", height="43px")
 				.col-3.py-2.orderTop#selfHome-topBtn

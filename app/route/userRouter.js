@@ -62,7 +62,7 @@ module.exports = function(app){
 	app.get('/bspdfir/:id', MdRole.bserIsLogin, Product.bspdfir);
 
 	app.post('/bsPdfirUpd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhoto, Product.bsPdfirUpd);
-	// app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel)
+	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel)
 
 
 	/* =================================== cter =================================== */

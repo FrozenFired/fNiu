@@ -5,9 +5,11 @@ block content
 	.container.mt-3
 		#basic_elem.page(style="display:none")
 			.row.my-3
-				.col-6
+				.col-4
 					a.btn.btn-info(href="/bsPdfirs") <span class="oi oi-arrow-thick-left"></span>
-				.col-6.text-right
+				.col-4.text-center
+					a.btn.btn-danger(href="/bsPdfirDel/"+pdfir._id) 删除
+				.col-4.text-right
 					button.btn.btn-warning#upBtn(type="button") <span class="oi oi-pencil"></span>
 
 			table.table.table-bordered.my-3
@@ -33,6 +35,7 @@ block content
 			.row.mt-5
 				.col-12(align="center")
 					img#pdfirUpDefaultImg(src=pdfir.photo, width="200px")
+
 		#update_elem.page(style="display:none")
 			.row.my-3
 				.col-6

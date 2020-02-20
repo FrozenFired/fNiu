@@ -114,4 +114,21 @@ $( function() {
 		let quot = parseInt($(this).val());
 		optOrderChgfir(pdfirId, quot);
 	})
+
+	$("#selPdPage").on('click', '.changePrice', function(e) {
+		let pdfirId = $(this).attr("id").split("-")[1];
+		$("#changeSelPrice-"+pdfirId).toggle();
+	})
+	$("#selPdPage").on('blur', '.iptChangePrice', function(e) {
+		let pdfirId = $(this).attr("id").split("-")[1];
+		let newPrice = $(this).val();
+		if(isFloat(newPrice)) {
+			newPrice = parseFloat(newPrice);
+			$("#selPrice-"+pdfirId).text(newPrice)
+			selOrd.price = newPrice;
+			$(this).hide();
+		} else {
+			alert('请输入正确的数字')
+		}
+	})
 });

@@ -104,11 +104,21 @@ let selPdPage_appendElem = function() {
 					// elem += '<div class="col-6 text-warning"> 原价:'+ selPd.price + ' €</div>';
 				elem += '</div>';
 
+				// console.log(selOrd)
 				elem += '<div class="row mt-2">'
-					elem += '<h5 class="col-6 text-info pt-2">'+ selOrd.price + ' €</h5>';
-					if(selPd.price != selOrd.price) {
-						elem += '<h5 class="col-6 text-secondary pt-2">'+ selOrd.price + ' €</h5>';
-					}
+					elem += '<h5 class="col-6 text-info pt-2">'
+						elem += '<span class="changePrice" id="selPrice-'+selOrd.pdfir._id+'">'
+							elem += selOrd.price 
+						elem += '</span> <span> €</span>'
+					elem += '</h5>'
+					// if(selPd.price != selOrd.price) {
+					// 	elem += '<div class="col-6 text-secondary pt-2">原价: '+ selPd.price + ' €</div>';
+					// }
+					elem += '<div class="col-6" id="changeSelPrice-'
+					elem += selOrd.pdfir._id+'" style="display:none">'
+						elem += '<input class="form-control iptChangePrice" id="selIptPric-'
+						elem += selOrd.pdfir._id+'" type="text" value='+selOrd.price+'>'
+					elem += '</div>';
 				elem += '</div>';
 			elem += '</div>';
 
@@ -198,11 +208,17 @@ let selPdPage_appendElem = function() {
 	}
 	elem += '</div>'
 	$("#headPdCode").val("")
-	$("#headPdNum").text(ordfirs.length)
+	$("#headPdNum").text(getPz())
 	$(".selPd_class").remove();
 	$("#selPdPage").append(elem);
 }
-
+let getPz = function() {
+	let pz = 0;
+	for(let i=0; i<ordfirs.length; i++) {
+		pz += ordfirs[i].quot;
+	}
+	return pz;
+}
 /* ========== 订单中的产品 ========== */
 let ordfirsShow = function() {
 	let elem = '<div class="ordfirsShow_class">'
@@ -265,6 +281,7 @@ let ordfirsShow = function() {
 	$("#cterPage").hide();
 	$("#ordfirsShow").show();
 
+	$("#bsOrderAdd_pz").text(getPz())
 	$("#bsOrderAdd_arts").text(ordfirs.length)
 	$("#bsOrderAdd_imp").val(imp)
 }
@@ -308,7 +325,7 @@ let optOrderChgfir = function(pdfirId, quot) {
 		else {
 			// console.log(ordfirs)
 		}
-		$("#headPdNum").text(ordfirs.length)
+		// $("#headPdNum").text(getPz())
 		ordfirsShow()
 		selPdPage_appendElem()
 	}

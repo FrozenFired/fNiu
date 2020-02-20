@@ -254,7 +254,6 @@ exports.bsPdfirDel = function(req, res) {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Pdfir.findOne({_id: id, 'firm': crUser.firm})
-	.populate({path: 'pdsecs'})
 	.exec(function(err, pdfir){
 		if(err) {
 			console.log(err);
@@ -263,8 +262,6 @@ exports.bsPdfirDel = function(req, res) {
 		} else if(!pdfir) {
 			info = "此产品已经被删除, 请刷新查看!";
 			Err.usError(req, res, info);
-		} else if(pdfir.pdsecs.length > 0 || pdfir.pdsezs.length >0) {
-			res.redirect('/bsProduct/'+id);
 		} else {
 			let orgPhoto = pdfir.photo;
 			MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.proPhoto);
@@ -273,7 +270,7 @@ exports.bsPdfirDel = function(req, res) {
 					info = "bsPdfirDel, Pdfir.findOne, Error!";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/bsProducts');
+					res.redirect('/bsPdfirs');
 				}
 			})
 		}

@@ -8,6 +8,7 @@ block content
 		.row.text-center
 			.col-sm-12
 				div(style="font-size: 40px; border-bottom: 1px solid #000;"): strong #{firm.nome}
+			.col-sm-12 Tel: #{firm.tel}
 		div(style="height: 200px")
 		.row.border.border-dark
 			.col-6
@@ -29,12 +30,20 @@ block content
 		each ordfir in order.ordfirs
 			-proNum += ordfir.quot;
 			.row.mt-2
-				.col-6: h5 #{ordfir.pdfir.code} &nbsp; #{ordfir.pdfir.nome} nome
+
+				if ordfir.pdfir
+					- pdfir = ordfir.pdfir;
+					- let nome = pdfir.nome;
+					if nome.length > 9
+						- nome = nome.slice(0,8) + '...';
+					.col-6: h4 #{pdfir.code} &nbsp; #{nome}
+				else
+					.col-6: h4 产品被删除
 				-let pdPrice = 'NaN';
 				if ordfir.price && !isNaN(ordfir.price)
 					- pdPrice = (ordfir.price).toFixed(2);
-				.col-4.text-right: h5 #{ordfir.quot}X1 &nbsp;  #{pdPrice} €
-				.col-2.text-right: h5 #{ordfir.quot * pdPrice} €
+				.col-4.text-right: h4 #{ordfir.quot} x #{pdPrice}€
+				.col-2.text-right: h4 #{ordfir.quot * pdPrice}€
 		.row(style="height: 5px; border-bottom: 1px solid #000;") &nbsp;
 		.row.mt-2
 			.col-4: h4 T.Art: #{proLen}
@@ -44,5 +53,6 @@ block content
 			-odImp = (order.imp).toFixed(2);
 		.row.mt-3.text-right
 			.col-12.text-right: h3 IMP:  <strong>#{odImp}</strong> €
-
+	div(style="height: 400px")
+	span .
 	script(src="/js/pter/ticket.js")
