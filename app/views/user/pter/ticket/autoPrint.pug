@@ -7,23 +7,23 @@ block content
 			input#id(type="hidden", value=order._id)
 		.row.text-center
 			.col-sm-12
-				div(style="font-size: 40px; border-bottom: 1px solid #000;"): strong #{firm.nome}
-			.col-sm-12: h5 Tel: #{firm.tel}
+				div(style="font-size: 40px; border-bottom: 2px solid #000;"): strong #{firm.nome}
+			.col-sm-12: h5: strong Tel: #{firm.tel}
 		div(style="height: 200px")
-		.row.border.border-dark
+		.row(style="border: 2px solid #000;")
 			.col-6
 				- let cterCp = new Object();
 				if order.cter
 					- cterCp = order.cter;
-				h5 Client: #{cterCp.nome}
+				h5: strong Client: #{cterCp.nome}
 			.col-6.text-right
-				h5 电话: #{cterCp.tel}
+				h5: strong 电话: #{cterCp.tel}
 			div(style="height: 200px")
-		.row.mt-3(style="border-bottom: 1px solid #000;")
+		.row.mt-3(style="border-bottom: 2px solid #000;")
 			.col-5
-				h6 Date: #{moment(order.ctAt).format('DD/MM/YYYY')}
+				h6: strong Date: #{moment(order.ctAt).format('DD/MM/YYYY')}
 			.col-7.text-right
-				h5 No: #{order.code}
+				h5: strong No: #{order.code}
 		div(style="height: 30px")
 		-var proLen = order.ordfirs.length;
 		-var proNum = 0;
@@ -40,28 +40,28 @@ block content
 					- let nome = pdfir.nome;
 					if nome.length > 9
 						- nome = nome.slice(0,8) + '...';
-					.col-6: h4 #{pdfir.code} &nbsp; #{nome}
+					.col-6: h4: strong #{pdfir.code} &nbsp; #{nome}
 				else
-					.col-6: h4 产品被删除
+					.col-6: h4: strong 产品被删除
 				-let pdPrice = 'NaN';
 				if ordfir.price && !isNaN(ordfir.price)
 					- pdPrice = (ordfir.price).toFixed(2);
-				.col-4.text-right: h4 
+				.col-4.text-right: h4: strong
 					span #{ordfir.quot}
 					span.text-white .
 					span x
 					span.text-white .
 					span #{pdPrice}€
-				.col-2.text-right: h4 #{ordfir.quot * pdPrice}€
+				.col-2.text-right: h4: strong #{ordfir.quot * pdPrice}€
 		.row(style="height: 5px; border-bottom: 1px solid #000;") &nbsp;
 		.row.mt-2
-			.col-4: h4 T.Art: #{proLen}
-			.col-4: h4 Tot: #{proNum} pz
+			.col-4: h4: strong T.Art: #{proLen}
+			.col-4: h4: strong Tot: #{proNum} pz
 		-let odImp = 'NaN'
 		if order.imp && !isNaN(order.imp)
 			-odImp = (order.imp).toFixed(2);
 		.row.mt-3.text-right
-			.col-12.text-right: h3 IMP:  <strong>#{odImp}</strong> €
+			.col-12.text-right: h3: strong IMP:  #{odImp} €
 	div(style="height: 400px")
 	span .
 	script(src="/js/pter/ticket.js")
