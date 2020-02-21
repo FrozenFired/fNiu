@@ -50,22 +50,29 @@ $( function() {
 		let order = getOrderFromOrders(orderId);
 
 		ordfirs = JSON.parse(JSON.stringify(order.ordfirs));
-		
-		$(".page").hide();
-		$("#orderAddPage").show();
-		$("#headUserInfo").hide();
-		$("#headPdFilter").show();
-		$("#headPdCode").focus();
-
-		$(".orderTop").removeClass('bg-success');
-		$("#orderHome-topBtn").addClass("bg-success");
-
-		if(order.cter){
-			decideCter(order.cter._id, order.cter.nome)
-		} else {
-			decideCter('', '散客');
+		let i=0;
+		for(; i<ordfirs.length; i++) {
+			if(!ordfirs[i].pdfir) break;
 		}
-		ordfirsShow();
+		if(i != ordfirs.length) {
+			alert("订单中有被删除的模特, 不可复制")
+		} else {
+			$(".page").hide();
+			$("#orderAddPage").show();
+			$("#headUserInfo").hide();
+			$("#headPdFilter").show();
+			$("#headPdCode").focus();
+
+			$(".orderTop").removeClass('bg-success');
+			$("#orderHome-topBtn").addClass("bg-success");
+
+			if(order.cter){
+				decideCter(order.cter._id, order.cter.nome)
+			} else {
+				decideCter('', '散客');
+			}
+			ordfirsShow();
+		}
 	})
 	
 	/* ======== 在 订单详情页面 点击更新按钮 更新订单 ======== */
@@ -75,23 +82,30 @@ $( function() {
 		let order = getOrderFromOrders(orderId);
 
 		ordfirs = JSON.parse(JSON.stringify(order.ordfirs));
-
-		$(".page").hide();
-		$("#orderAddPage").show();
-		$("#headUserInfo").hide();
-		$("#headPdFilter").show();
-		$("#headPdCode").focus();
-		
-		$(".orderTop").removeClass('bg-success');
-		$("#orderHome-topBtn").addClass("bg-success");
-
-		if(order.cter){
-			decideCter(order.cter._id, order.cter.nome)
-		} else {
-			decideCter('', '散客');
+		let i=0;
+		for(; i<ordfirs.length; i++) {
+			if(!ordfirs[i].pdfir) break;
 		}
-		$("#form_orderId").val(order._id)
-		ordfirsShow();
+		if(i != ordfirs.length) {
+			alert("订单中有被删除的模特, 不可更新")
+		} else {
+			$(".page").hide();
+			$("#orderAddPage").show();
+			$("#headUserInfo").hide();
+			$("#headPdFilter").show();
+			$("#headPdCode").focus();
+			
+			$(".orderTop").removeClass('bg-success');
+			$("#orderHome-topBtn").addClass("bg-success");
+
+			if(order.cter){
+				decideCter(order.cter._id, order.cter.nome)
+			} else {
+				decideCter('', '散客');
+			}
+			$("#form_orderId").val(order._id)
+			ordfirsShow();
+		}
 	})
 
 	$("#bsOrder_page").on('click', '.printTicket', function(e) {

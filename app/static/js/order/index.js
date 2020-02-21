@@ -223,6 +223,7 @@ let getPz = function() {
 let ordfirsShow = function() {
 	let elem = '<div class="ordfirsShow_class">'
 	let piece = 0, imp = 0;
+
 	for(let i=0; i<ordfirs.length; i++) {
 		let ordfir = ordfirs[i];
 		let pdfir = ordfir.pdfir;
@@ -408,15 +409,19 @@ let bsOrderShow = function(order) {
 		let pieces = 0;
 		for(let i=0; i<firLen; i++) {
 			let ordfir = order.ordfirs[i];
-			let pdfir = ordfir.pdfir;
 			pieces += ordfir.quot;
 			elem += '<tr>'
-				elem += '<td>'+pdfir.code+'</td>';
-				let pdname = pdfir.nome;
-				if(pdname && pdname.length > 5){
-					pdname = pdname.slice(0,3)+'...';
+				if(ordfir.pdfir) {
+					let pdfir = ordfir.pdfir;
+					elem += '<td>'+pdfir.code+'</td>';
+					let pdname = pdfir.nome;
+					if(pdname && pdname.length > 5){
+						pdname = pdname.slice(0,3)+'...';
+					}
+					elem += '<td colspan="2">'+pdname+'</td>'
+				} else {
+					elem += '<td colspan="3">模特已删除</td>'
 				}
-				elem += '<td colspan="2">'+pdname+'</td>'
 				elem += '<td class="text-right">'+ordfir.quot+'</td>'
 				elem += '<td class="text-right">'+Math.round(ordfir.price * 100)/100+'</td>'
 				elem += '<td class="text-right">'+Math.round(ordfir.price*ordfir.quot * 100)/100+'</td>'

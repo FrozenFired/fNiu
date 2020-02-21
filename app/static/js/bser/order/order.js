@@ -54,15 +54,19 @@ let bsOrderShow = function(order) {
 		let pieces = 0;
 		for(let i=0; i<firLen; i++) {
 			let ordfir = order.ordfirs[i];
-			let pdfir = ordfir.pdfir;
 			pieces += ordfir.quot;
 			str += '<tr>'
-				str += '<td>'+pdfir.code+'</td>';
-				let pdname = pdfir.nome;
-				if(pdname && pdname.length > 5){
-					pdname = pdname.slice(0,3)+'...';
+				if(ordfir.pdfir) {
+					let pdfir = ordfir.pdfir;
+					str += '<td>'+pdfir.code+'</td>';
+					let pdname = pdfir.nome;
+					if(pdname && pdname.length > 5){
+						pdname = pdname.slice(0,3)+'...';
+					}
+					str += '<td colspan="2">'+pdname+'</td>'
+				} else {
+					str += '<td colspan="3">模特已删除</td>'
 				}
-				str += '<td colspan="2">'+pdname+'</td>'
 				str += '<td class="text-right">'+ordfir.quot+'</td>'
 				str += '<td class="text-right">'+Math.round(ordfir.price * 100)/100+'</td>'
 				str += '<td class="text-right">'+Math.round(ordfir.price*ordfir.quot * 100)/100+'</td>'
