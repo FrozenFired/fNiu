@@ -108,6 +108,7 @@ $( function() {
 		}
 	})
 
+	/* ======== 在 订单详情页面 点击小票打印 ======== */
 	$("#bsOrder_page").on('click', '.printTicket', function(e) {
 		let target = $(e.target);
 		let orderId = target.data('id');

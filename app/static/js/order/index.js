@@ -106,8 +106,8 @@ let selPdPage_appendElem = function() {
 
 				// console.log(selOrd)
 				elem += '<div class="row mt-2">'
-					elem += '<h5 class="col-6 text-info pt-2">'
-						elem += '<span class="changePrice" id="selPrice-'+selOrd.pdfir._id+'">'
+					elem += '<h5 class="col-6 text-info pt-2 changePrice" id="selPrice-'+selOrd.pdfir._id+'">'
+						elem += '<span id="selPriceSpan-'+selOrd.pdfir._id+'">'
 							elem += selOrd.price 
 						elem += '</span> <span> €</span>'
 					elem += '</h5>'

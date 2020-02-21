@@ -11,6 +11,8 @@ block content
 		- let i = 0;
 		each pdfir in pdfirs
 			- i++;
+			if i == 51
+				-break;
 			.card.mt-3.p-2.bsPdfirs_pdfir(id="bsPdfirs_pdfir-"+pdfir._id)
 				.row
 					.col-4.border-right

@@ -124,9 +124,9 @@ $( function() {
 		let newPrice = $(this).val();
 		if(isFloat(newPrice)) {
 			newPrice = parseFloat(newPrice);
-			$("#selPrice-"+pdfirId).text(newPrice)
+			$("#selPriceSpan-"+pdfirId).text(newPrice)
 			selOrd.price = newPrice;
-			$(this).hide();
+			$("#changeSelPrice-"+pdfirId).hide();
 		} else {
 			alert('请输入正确的数字')
 		}

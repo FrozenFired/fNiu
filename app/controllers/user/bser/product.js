@@ -9,8 +9,8 @@ let _ = require('underscore');
 
 exports.bsPdfirs = function(req, res) {
 	let crUser = req.session.crUser;
-	let limit = 50;
-	if(req.query.limit) limit = parseInt(req.query.limit);
+	// let limit = 50;
+	// if(req.query.limit) limit = parseInt(req.query.limit);
 
 	let sortBy = 'upAt';
 	if(req.query.sortBy) sortBy = req.query.sortBy;
@@ -35,7 +35,7 @@ exports.bsPdfirs = function(req, res) {
 		'photo': {[symPhoto]: keyPhoto}
 	})
 	.sort({[sortBy]: sortVal})
-	.limit(limit)
+	// .limit(limit)
 	.exec(function(err, pdfirs) {
 		if(err) {
 			info = "bser pdfirs, pdfir find, Error！";
@@ -52,10 +52,12 @@ exports.bsPdfirs = function(req, res) {
 }
 exports.bsPdfirsAjax = function(req, res) {
 	let crUser = req.session.crUser;
-	let limit = 50;
-
+	let limit = 10;
+	let code = req.query.code;
+	let keywordReg = new RegExp(code + '.*');
 	Pdfir.find({
 		'firm': crUser.firm,
+		'code': {'$in': keywordReg}
 	})
 	.sort({'upAt': -1})
 	.limit(limit)

@@ -48,6 +48,7 @@ $( function() {
 		decideCter('', '散客');
 	})
 
+	/* =============== 添加新的客户 =============== */
 	$("#bsOrderAdd_cters").on('click', '#newCter_submit', function(e) {
 		let vip = parseInt($("#iptBsCterAdVip").val());
 		if(isNaN(vip)) {
