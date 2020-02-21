@@ -30,7 +30,7 @@ module.exports = function(app){
 	app.get('/getCters', MdRole.userIsLogin, OdCter.getCters)
 
 	/* =========================== order =========================== */
-	app.post('/orderNew', MdRole.userIsLogin, postForm, Ord.orderNew);
+	app.post('/orderNew', postForm, Ord.orderNew);		// 不要角色判断，因为自动退出
 	app.get('/orderDelSts', MdRole.userIsLogin, Ord.orderDelSts);
 	// app.get('/orderDel', MdRole.userIsLogin, Ord.orderDel);
 	app.get('/getOrders', MdRole.userIsLogin, Ord.getOrders);

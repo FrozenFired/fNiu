@@ -140,6 +140,7 @@ let selPdPage_appendElem = function() {
 			elem += '</div>';
 		elem += '</div>';
 	} else if(headPdCode && headPdCode.length > 1) {
+		// console.log(headPdCode)
 		elem += '<form id="newPdfir_Form" class="newPdfir_Form p-2">'
 			elem += '<div class="form-group row mt-4">'
 				elem += '<label class="col-4 col-form-label for="iptPdfirAddCode">编号</label>'

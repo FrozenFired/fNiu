@@ -26,6 +26,7 @@ $( function() {
 	/* ======== 焦点进入模特输入框 ======== */
 	$("#headPdCode").focus(function(e) {
 		$(this).val('');
+		selOrds = new Array();
 		$("#selPdPage").hide();
 		$("#matchPdsPage").show();
 		matchPdsPage_appendElem();

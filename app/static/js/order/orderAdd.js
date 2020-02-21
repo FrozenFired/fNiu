@@ -99,6 +99,7 @@ $( function() {
 					}
 					decideCter('', '散客');
 					$("#form_orderId").val('');
+					$("#bsOrderAdd_arts").text(0)
 					bsOrderShow(order)
 				} else {
 					alert(results.info);

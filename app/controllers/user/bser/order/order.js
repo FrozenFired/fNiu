@@ -318,7 +318,7 @@ let bsOrd_newDBs = function(req, res, order, newfirs, n, isUpd) {
 				.populate('cter')
 				.exec(function(err, orderFn) {
 					if(err) {
-						info = "bser orderNew, Order.findOne, Error!";console.log(err);
+						info = "bser order New, Order.findOne, Error!";console.log(err);
 						res.json({success: 0, info: info});
 					} else {
 						res.json({success: 1, order: orderFn, isUpd: isUpd});
