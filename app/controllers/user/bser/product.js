@@ -71,6 +71,25 @@ exports.bsPdfirsAjax = function(req, res) {
 	})
 }
 
+exports.bsPdAjaxCode = function(req, res) {
+	let crUser = req.session.crUser;
+	let code = req.query.code;
+	Pdfir.findOne({
+		'firm': crUser.firm,
+		'code': code
+	})
+	.exec(function(err, pdfir) {
+		if(err) {
+			info = "bser pdfir, pdfir find, Error！";
+			res.json({success: 0, info: info})
+		} else if(!pdfir){
+			info = "没有此号码的模特";
+			res.json({success: 0, info: info})
+		} else {
+			res.json({success: 1, pdfir: pdfir})
+		}
+	})
+}
 
 exports.bspdfir = function(req, res) {
 	let crUser = req.session.crUser;
@@ -167,6 +186,8 @@ exports.bsPdfirNew = function(req, res) {
 exports.bsPdfirUpd = function(req, res, next) {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
+	
+	if(req.body.objId) obj._id = req.body.objId;
 	if(obj.price) obj.price = parseFloat(obj.price);
 	if(obj.cost) obj.cost = parseFloat(obj.cost);
 	if(obj.stock) obj.stock = parseInt(obj.stock);

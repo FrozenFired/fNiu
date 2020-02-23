@@ -4,6 +4,7 @@ block content
 	.container.mt-3
 		form.mt-3#bsProdNew(method="post", action="/bsPdfirNew", enctype="multipart/form-data")
 			input(type="hidden", name="obj[photoDir]", value=Conf.photoPath.proPhoto)
+			input#objId(type="hidden", name="objId")
 			.row
 				.col-12(align="center")
 					img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
@@ -15,6 +16,9 @@ block content
 				label.col-4.col-form-label(for="iptCode") 编号
 				.col-8
 					input#iptCode.form-control(type="text", name="obj[code]", autocomplete="off")
+				.col-4
+				.col-8
+					span#optCode(style="display:none").text-danger
 			.form-group.row
 				label.col-4.col-form-label(for="iptNome") 名字
 				.col-8
@@ -26,17 +30,17 @@ block content
 			.form-group.row
 				label.col-4.col-form-label(for="iptPrice") 价格
 				.col-8
-					input#iptPrice.form-control(type="number", name="obj[price]", placeholder='必填', autocomplete="off")
+					input#iptPrice.form-control(type="text", name="obj[price]", placeholder='必填', autocomplete="off")
 				.col-4
 				.col-8
 					span#optPrice(style="display:none").text-danger 必须是数字
 			.form-group.row
 				label.col-4.col-form-label(for="iptCost") 采购价
 				.col-8
-					input#iptCost.form-control(type="number", name="obj[cost]", placeholder='必须是数字', autocomplete="off", value=0)
+					input#iptCost.form-control(type="text", name="obj[cost]", placeholder='必须是数字', autocomplete="off", value=0)
 				.col-4
 				.col-8
-					span#optPriceIn(style="display:none").text-danger 必须是数字
+					span#optCost(style="display:none").text-danger 必须是数字
 			.form-group.row
 				label.col-4.col-form-label(for="iptStock", autocomplete="off") 库存
 				.col-8
@@ -49,4 +53,5 @@ block content
 				.col-sm-6
 				.col-sm-6.col-12
 					input#btnSubmit.btn.btn-info.btn-block(type="submit" value='提交')
+	script(src="/js/main.js")
 	script(src="/js/bser/pdfir/add.js")
