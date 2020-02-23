@@ -173,7 +173,7 @@ exports.bsPdfirNew = function(req, res) {
 						info = "添加新产品时，数据库保存出错, 请联系管理员";
 						Err.usError(req, res, info);
 					} else {
-						res.redirect('/bser')
+						res.redirect('/bsPdfirs')
 					}
 				})
 			}
@@ -214,7 +214,7 @@ exports.bsPdfirUpd = function(req, res, next) {
 					info = "bsProductUpd, _pdfir.save, Error！";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/bser')
+					res.redirect('/bsPdfirs')
 				}
 			})
 		}
