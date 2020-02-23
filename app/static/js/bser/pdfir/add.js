@@ -14,6 +14,18 @@ $(function() {
 		if(code.length < 2) {
 			$("#optCode").text("请输入编号, 至少两个编号");
 			$("#optCode").show();
+
+			document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
+			$("#crtImg").addClass("rounded-circle")
+			$("#bsProdNew").attr('action', '/bsPdfirNew');
+			$("#objId").val('')
+			$("#iptNome").val('')
+			$("#iptMaterial").val('')
+			$("#iptPrice").val('')
+			$("#iptCost").val(0)
+			$("#iptStock").show();
+			$("#iptStockPlus").val(0);
+			$("#iptStockPlus").hide();
 		} else {
 			let codeUrI = encodeURIComponent(code)
 			$.ajax({
@@ -24,14 +36,28 @@ $(function() {
 				if(results.success === 1) {
 					let pdfir = results.pdfir;
 					document.getElementById('crtImg').src = pdfir.photo;
+					$("#crtImg").removeClass("rounded-circle")
 					$("#bsProdNew").attr('action', '/bsPdfirUpd');
 					$("#objId").val(pdfir._id)
 					$("#iptNome").val(pdfir.nome)
 					$("#iptMaterial").val(pdfir.material)
 					$("#iptPrice").val(pdfir.price)
 					$("#iptCost").val(pdfir.cost)
-					$("#iptStock").val(pdfir.stock)
+					$("#iptStock").hide();
+					$("#iptStockPlus").show();
 				} else {
+					document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
+					$("#crtImg").addClass("rounded-circle")
+					$("#bsProdNew").attr('action', '/bsPdfirNew');
+					$("#objId").val('')
+					$("#iptNome").val('')
+					$("#iptMaterial").val('')
+					$("#iptPrice").val('')
+					$("#iptCost").val(0)
+					$("#iptStock").show();
+					$("#iptStockPlus").val(0);
+					$("#iptStockPlus").hide();
+
 					$("#optCode").hide();
 				}
 			})

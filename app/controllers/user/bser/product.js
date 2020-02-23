@@ -186,7 +186,7 @@ exports.bsPdfirNew = function(req, res) {
 exports.bsPdfirUpd = function(req, res, next) {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	
+
 	if(req.body.objId) obj._id = req.body.objId;
 	if(obj.price) obj.price = parseFloat(obj.price);
 	if(obj.cost) obj.cost = parseFloat(obj.cost);
@@ -201,6 +201,12 @@ exports.bsPdfirUpd = function(req, res, next) {
 			info = "数据库中没有此模特, 刷新查看";
 			Err.usError(req, res, info);
 		} else {
+			if(obj.stockPlus) {
+				stockPlus = parseInt(obj.stockPlus)
+				if(!isNaN(stockPlus)) {
+					obj.stock = parseInt(pdfir.stock) + stockPlus;
+				}
+			}
 			let _pdfir = _.extend(pdfir, obj)
 			_pdfir.save(function(err, pdfirSave) {
 				if(err) {
