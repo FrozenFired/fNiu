@@ -12,7 +12,7 @@ $( function() {
 		
 		headPdCode = '';
 		/* 取消 筛选号码的显示 */
-		$(".matchPds_class").remove();	
+		$(".matchPds_class").remove();
 		selOrds = new Array();
 
 		selPdPage_appendElem();

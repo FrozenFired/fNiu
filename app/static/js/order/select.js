@@ -28,6 +28,8 @@ $( function() {
 		$(this).val('');
 		selOrds = new Array();
 		$("#selPdPage").hide();
+		headPdCode = '';
+		$(".matchPds_class").remove();
 		$("#matchPdsPage").show();
 		matchPdsPage_appendElem();
 	});
@@ -131,5 +133,11 @@ $( function() {
 		} else {
 			alert('请输入正确的数字')
 		}
+	})
+
+	$(".reloadPdfirs").click(function(e) {
+		$("#loading").show();
+		$("#loaded").hide();
+		ajaxGetpdfirs();
 	})
 });

@@ -8,8 +8,11 @@ html
 
 		input#Conf(type="hidden", value=Conf)
 		input#bsMyInfo(type="hidden", value=crUser)
-
 		#selOrderPage.page
+			.row.text-right.mt-3
+				.col-12
+					h3.reloadPdfirs#loading 正在加载... <span class="oi oi-reload"></span>
+					h3.reloadPdfirs#loaded(style="display:none") <span class="oi oi-reload"></span>
 			#matchPdsPage
 			#selPdPage
 			.bomNav-first(style="background: #B0C4DE")

@@ -16,6 +16,8 @@ let ajaxGetpdfirs = function() {
 		success: function(results) {
 			if(results.success == 1) {
 				pdfirs = results.pdfirs;	// 重新加载 pdfirs 数据
+				$("#loading").hide();
+				$("#loaded").show();
 			} else {
 				alert(results.info);
 			}
