@@ -106,7 +106,11 @@ $( function() {
 		if(isNaN(quot)) {
 			quot = parseInt($("#quotIpt_ordfir-"+pdfirId).val());
 		}
-		quot += sym;
+		if(sym == 0) {
+			quot = 0;
+		} else {
+			quot += sym;
+		}
 		optOrderChgfir(pdfirId, quot);
 	})
 
@@ -118,10 +122,12 @@ $( function() {
 		optOrderChgfir(pdfirId, quot);
 	})
 
+	/* =========== 在筛选的pd上点击价格 进行价格更改 =========== */
 	$("#selPdPage").on('click', '.changePrice', function(e) {
 		let pdfirId = $(this).attr("id").split("-")[1];
 		$("#changeSelPrice-"+pdfirId).toggle();
 	})
+	/* =========== 从更改价格的输入框中出来 =========== */
 	$("#selPdPage").on('blur', '.iptChangePrice', function(e) {
 		let pdfirId = $(this).attr("id").split("-")[1];
 		let newPrice = $(this).val();
@@ -135,6 +141,7 @@ $( function() {
 		}
 	})
 
+	/* =========== 重新加载数据 =========== */
 	$(".reloadPdfirs").click(function(e) {
 		$("#loading").show();
 		$("#loaded").hide();

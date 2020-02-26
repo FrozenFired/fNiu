@@ -49,37 +49,24 @@ let isFloat = function(num) {
 }
 
 window.onload=function () {
-	document.addEventListener('touchstart',function (event) {
-		if(event.touches.length>1){
-			event.preventDefault();
-		}
-	});
-	var lastTouchEnd=0;
-	document.addEventListener('touchend',function (event) {
-		var now=(new Date()).getTime();
-		if(now-lastTouchEnd<=10){
-			event.preventDefault();
-		}
-		lastTouchEnd=now;
-	},false);
+	var agent = navigator.userAgent.toLowerCase();		//检测是否是ios
+	if (agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0) {
+		document.addEventListener('touchstart',function (event) {
+			if(event.touches.length>1){
+				event.preventDefault();
+			}
+		});
+		var lastTouchEnd=0;
+		document.addEventListener('touchend',function (event) {
+			var now=(new Date()).getTime();
+			if(now-lastTouchEnd<=10){
+				event.preventDefault();
+			}
+			lastTouchEnd=now;
+		},false);
 
-	document.addEventListener('gesturestart', function (event) {
-		event.preventDefault();
-	});
+		document.addEventListener('gesturestart', function (event) {
+			event.preventDefault();
+		});
+	}
 }
-
-// var agent = navigator.userAgent.toLowerCase();		//检测是否是ios
-// console.log(agent.indexOf('iphone'))
-// var iLastTouch = null;							     //缓存上一次tap的时间
-// if (agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0) {
-// 	document.body.addEventListener('touchend', function(event) {
-// 		var iNow = new Date().getTime();
-// 		iLastTouch = iLastTouch || iNow + 1 /** 第一次时将iLastTouch设为当前时间+1 */ ;
-// 		var delta = iNow - iLastTouch;
-// 		if (delta < 500 && delta > 0) {
-// 			event.preventDefault();
-// 			return false;
-// 		}
-// 		iLastTouch = iNow;
-// 	}, false);
-// }

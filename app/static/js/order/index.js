@@ -47,32 +47,60 @@ let getSelOrdFromSelOrds = function(pdfirId) {
 /* ======== 前端添加匹配的产品 ======== */
 let matchPdsPage_appendElem = function() {
 	let elem = '<div class="matchPds_class">'
-		elem += '<div class="row text-center">'
-		for(let i=0; i<selOrds.length; i++) {
-			if(i == selPdNum) break;
-			let selPd = selOrds[i].pdfir;
-
-			elem += '<h4 class="col-6 p-2 border selPdCard" id="selPdCard-'+selPd._id+'">'
-				elem += selPd.code
-			elem += '</h4>';
-		}
-		elem += '</div>';
-		if(headPdCode && headPdCode.length > 1) {
-			if(selOrds && selOrds.length > 0) {
-				if(selOrds[0].pdfir.code != headPdCode) {
-					elem += '<div class="col-12 mt-5 p-2 text-center bg-warning selPdCard" '
-					elem += 'id="newPdfir-">'
-						elem += '<span class="oi oi-plus"></span>'
-					elem += '</div>'
-				}
-			} else {
-				elem += '<div class="col-12 mt-5 p-2 text-center bg-warning selPdCard" '
+	if(headPdCode && headPdCode.length > 1) {
+		elem += '<div class="row my-3 text-center">'
+		if(selOrds && selOrds.length > 0) {
+			/* ============ 判断是否有此产品 ============ */
+			if(selOrds[0].pdfir.code != headPdCode) {
+				elem += '<div class="col-12 p-2 text-center bg-warning selPdCard" '
 				elem += 'id="newPdfir-">'
 					elem += '<span class="oi oi-plus"></span>'
 				elem += '</div>'
 			}
+		} else {
+			elem += '<div class="col-12 p-2 text-center bg-warning selPdCard" '
+			elem += 'id="newPdfir-">'
+				elem += '<span class="oi oi-plus"></span>'
+			elem += '</div>'
 		}
-	elem += '</div>'
+		elem += '</div>'
+	}
+	for(let i=0; i<selOrds.length; i++) {
+		if(i == selPdNum) break;
+		let selPd = selOrds[i].pdfir;
+		elem += '<div class="row p-2 m-1 border bg-light selPdCard" id="selPdCard-'+selPd._id+'">'
+			elem += '<div class="col-4">'
+				elem += '<div class="row">'
+					elem += '<img class="foto-showImg" src="' + selPd.photo +'" ';
+					elem += 'width="100%" ';
+					elem += 'style="max-width:100px;max-height:100px;"'
+					elem += ' alt="'+selPd.code+'" />';
+				elem += '</div>';
+			elem += '</div>';
+
+			elem += '<div class="col-8">'
+				elem += '<div class="row">'
+					elem += '<h4 class="col-6">'+ selPd.code+ '</h4>';
+					elem += '<h5 class="col-6 text-right">'+ selPd.nome+ '</h5>';
+				elem += '</div>';
+				elem += '<div class="row mt-1">'
+					elem += '<div class="col-6">库存: ' + selPd.stock + '</div>';
+					elem += '<div class="col-6 text-right">销量: ' + selPd.sales + '</div>';
+					// elem += '<div class="col-6 text-warning"> 原价:'+ selPd.price + ' €</div>';
+				elem += '</div>';
+
+				// console.log(selOrd)
+				elem += '<div class="row mt-2">'
+					elem += '<h5 class="col-6 pt-2">'
+							elem += selPd.price 
+					elem += ' €</h5>'
+				elem += '</div>';
+			elem += '</div>';
+
+		elem += '</div>';
+	}
+	elem += '</div>';
+	
 	$(".matchPds_class").remove();
 	$("#matchPdsPage").append(elem);
 }
@@ -120,26 +148,39 @@ let selPdPage_appendElem = function() {
 						elem += selOrd.pdfir._id+'" type="text" value='+selOrd.price+'>'
 					elem += '</div>';
 				elem += '</div>';
-			elem += '</div>';
 
-			elem += '<div class="col-12">'
-			elem += '<div class="row mt-2">'
-				elem += '<div class="col-3 text-right">'
-					elem += '<button type="button" class="btn btn-warning btn-lg quotBtn" ';
+				elem += '<div class="row mt-2">'
+					// elem += '<div class="col-2 text-right">'
+					// 	elem += '<button type="button" class="btn btn-warning btn-lg quotBtn" ';
+					// 	elem += 'data-sym=-1 data-id='+selPd._id+'> - </button>';
+					// elem += '</div>';
+					// elem += '<div class="col-4">'
+					// 	elem += '<input type="number" id="quotIpt_selPd-'+selPd._id;
+					// 	elem += '" class="ipt-50-35 quotIpt" value='+selOrd.quot+'>'
+					// elem += '</div>';
+					// elem += '<div class="col-2">'
+					// 	elem += '<button type="button" class="btn btn-primary btn-lg quotBtn" ';
+					// 	elem += 'data-sym=1 data-id='+selPd._id+'> + </button>';
+					// elem += '</div>';
+
+					elem += '<div class="col-4">'
+						elem += '<button type="button" class="btn btn-link text-danger quotBtn" ';
+						elem += 'data-sym=0 data-id='+selPd._id+'> 清除 </button>';
+					elem += '</div>';
+					elem += '<button type="button" class="col-2 btn btn-warning quotBtn" ';
 					elem += 'data-sym=-1 data-id='+selPd._id+'> - </button>';
-				elem += '</div>';
-				elem += '<div class="col-6">'
-					elem += '<input type="number" id="quotIpt_selPd-'+selPd._id;
-					elem += '" class="ipt-50-35 quotIpt" value='+selOrd.quot+'>'
-				elem += '</div>';
-				elem += '<div class="col-3">'
-					elem += '<button type="button" class="btn btn-primary btn-lg quotBtn" ';
+
+					elem += '<input type="number" id="quotIpt_ordfir-'+selPd._id;
+					elem += '" class="col-4 form-control quotIpt" value='+selOrd.quot+'>'
+
+					elem += '<button type="button" class="col-2 btn btn-primary quotBtn" ';
 					elem += 'data-sym=1 data-id='+selPd._id+'> + </button>';
 				elem += '</div>';
 			elem += '</div>';
-			elem += '</div>';
+
 		elem += '</div>';
 	} else if(headPdCode && headPdCode.length > 1) {
+		/* ============================ 添加新模特页面  ============================ */
 		// console.log(headPdCode)
 		elem += '<form id="newPdfir_Form" class="newPdfir_Form p-2">'
 			elem += '<div class="form-group row mt-4">'
@@ -243,22 +284,25 @@ let ordfirsShow = function() {
 			elem += '</div>';
 
 			elem += '<div class="col-9">'
-				elem += '<div class="row">'			// 库存
+				elem += '<div class="row">'
 					elem += '<h4 class="col-6">'+ pdfir.code+ '</h4>';
 					elem += '<h5 class="col-6 text-right">'+ pdfir.nome+ '</h5>';
 				elem += '</div>';
+
 				elem += '<div class="row mt-1">'
-					elem += '<div class="col-6">库存: ' + pdfir.stock + '</div>';
-					// elem += '<div class="col-6 text-warning"> 原价:'+ pdfir.price + ' €</div>';
+					elem += '<div class="col-6">单价:'+ ordfir.price + ' €</div>';
+					elem += '<input type="hidden" name="obj[firs]['+i+'][price]" value='
+					elem += ordfir.price + '>'
 					elem += '<div class="col-6 text-right">总价: ';
 						elem += Math.round(ordfir.quot*ordfir.price * 100) / 100 + ' €';
 					elem += '</div>';
 				elem += '</div>';
 
 				elem += '<div class="row mt-2">'
-					elem += '<h5 class="col-4 text-info pt-2">'+ ordfir.price + ' €</h5>';
-					elem += '<input type="hidden" name="obj[firs]['+i+'][price]" value='
-					elem += ordfir.price + '>'
+					elem += '<div class="col-4">'
+						elem += '<button type="button" class="btn btn-link text-danger quotBtn" ';
+						elem += 'data-sym=0 data-id='+pdfir._id+'> 清除 </button>';
+					elem += '</div>';
 					elem += '<input type="hidden" name="obj[firs]['+i+'][pdfir]" value='
 					elem += pdfir._id + '>'
 					elem += '<input type="hidden" name="obj[firs]['+i+'][quot]" value='
