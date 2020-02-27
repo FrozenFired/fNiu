@@ -9,8 +9,10 @@ let dbSchema = new Schema({
 	firm: {type: ObjectId, ref: 'Firm'},
 	creater: {type: ObjectId, ref: 'User'},
 
-	nome: String,
 	code: String,
+	pwd: String,
+
+	nome: String,
 	vip: String,
 	tel: String,
 	iva: String,

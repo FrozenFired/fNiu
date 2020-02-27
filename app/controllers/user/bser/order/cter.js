@@ -46,28 +46,50 @@ exports.bsCter = function(req, res) {
 		}
 	})
 }
+exports.bsCterDel = function(req, res) {
+	let crUser = req.session.crUser;
+	let cterId = req.params.cterId;
+
+	Cter.findOne({'firm': crUser.firm, '_id': cterId})
+	.exec(function(err, cter) {
+		if(err) {
+			console.log(err);
+			info = "bsCters, Cter.find, Error！";
+			Err.usError(req, res, info);
+		} else if(!cter){
+			res.redirect('/bsCters')
+		} else {
+			Cter.deleteOne({_id: cter._id}, function(err, objRm) {
+				if(err) {
+					console.log(err);
+					info = "bser CterDel, Cter.deleteOne,Error!";
+					Err.usError(req, res, info);
+				} else {
+					res.redirect('/bsCters')
+				}
+			})
+		}
+	})
+}
 
 exports.bsCterDelAjax = function(req, res) {
 	let crUser = req.session.crUser;
 
 	let id = req.query.id;
-	Cter.findOne({_id: id}, function(err, object){ if(err) {
-		res.json({success: 0, info: "bsCterDelAjax, Cter.findOne, Error"})
-	} else if(!object){
-		res.json({success: 0, info: "此客户已经被删除"})
-	} else if(object.firm != crUser.firm){
-		res.json({success: 0, info: "操作错误,请联系管理员! bsCterDelAjax, object.firm != crUser.firm"})
-	} else {
-		if(object.orders && object.orders.length > 0) {
-			res.json({success: 0, info: "此客户还有订单,不可以删除"})
+	Cter.findOne({_id: id, 'firm': crUser.firm})
+	.exec(function(err, cter){ 
+		if(err) {
+			res.json({success: 0, info: "bsCterDelAjax, Cter.findOne, Error"})
+		} else if(!cter){
+			res.json({success: 0, info: "此客户已经被删除"})
 		} else {
-			Cter.deleteOne({_id: object._id}, function(err, objRm) { if(err) {
+			Cter.deleteOne({_id: cter._id}, function(err, objRm) { if(err) {
 				res.json({success: 0, info: "bsCterDelAjax, Cter.deleteOne,Error!"})
 			} else {
 				res.json({success: 1})
 			} })
 		}
-	} })
+	})
 }
 
 
@@ -80,11 +102,11 @@ exports.bsCterUpd = function(req, res) {
 	if(obj.nome) obj.nome= obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	if(obj.vip) obj.vip = parseInt(obj.vip);
 	Cter.findOne({_id: obj._id, 'firm': crUser.firm})
-	.exec(function(err, object) {
+	.exec(function(err, cter) {
 		if(err) {
 			info = "bser CterUpd, Cter.findOne, Error!";
 			res.json({success: 0, info: info});
-		} else if(!object) {
+		} else if(!cter) {
 			info = "deleted! refresh Page!";
 			res.json({success: 0, info: info});
 		} else {
@@ -98,9 +120,9 @@ exports.bsCterUpd = function(req, res) {
 					info = "已经有了此名字！";
 					res.json({success: 0, info: info});
 				} else {
-					let _object
-					_object = _.extend(object, obj)
-					_object.save(function(err, objSave){
+					let _cter
+					_cter = _.extend(cter, obj)
+					_cter.save(function(err, objSave){
 						if(err) console.log(err);
 						res.json({success: 1, cter: objSave});
 					})
@@ -157,11 +179,11 @@ exports.bsCterIsAjax = function(req, res) {
 		'firm': crUser.firm,
 		[keytype]: keyword
 	})
-	.exec(function(err, object){
+	.exec(function(err, cter){
 		if(err) {
 			res.json({success: 0, info: "bsCterIsAjax, Cter.findOne, Error!"});
-		} else if(object){
-			res.json({ success: 1, object: object})
+		} else if(cter){
+			res.json({ success: 1, cter: cter})
 		} else {
 			res.json({success: 0})
 		}

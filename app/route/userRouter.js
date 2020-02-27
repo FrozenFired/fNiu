@@ -70,6 +70,7 @@ module.exports = function(app){
 	/* =================================== cter =================================== */
 	app.get('/bsCters', MdRole.bserIsLogin, Cter.bsCters)
 	app.get('/bsCter/:cterId', MdRole.bserIsLogin, Cter.bsCter)
+	app.get('/bsCterDel/:cterId', MdRole.bserIsLogin, Cter.bsCterDel)
 	app.delete('/bsCterDelAjax', MdRole.bserIsLogin, Cter.bsCterDelAjax)
 	
 	app.post('/bsCterUpd', MdRole.bserIsLogin, postForm, Cter.bsCterUpd)

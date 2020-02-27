@@ -41,14 +41,22 @@ block content
 				.col-4
 				.col-8
 					span#optCost(style="display:none").text-danger 必须是数字
-			.form-group.row
-				label.col-4.col-form-label(for="iptStock", autocomplete="off") 库存
+			.form-group.row#rowStock
+				label.col-4.col-form-label(for="iptStock") 库存
 				.col-8
 					input#iptStock.form-control(type="number", name="obj[stock]", value=0, autocomplete="off")
-					input#iptStockPlus.form-control(style="display:none", type="number", name="obj[stockPlus]", value=0, autocomplete="off")
 				.col-4
 				.col-8
-					span#optAddquot(style="display:none").text-danger 必须是数字
+					span#optStock(style="display:none").text-danger 必须是数字
+			.form-group.row#rowStockPlus(style="display:none")
+				label.col-4.col-form-label 现有库存
+				label.col-8.col-form-label#nowStock
+				label.col-4.col-form-label(for="iptStock") 采购量
+				.col-8
+					input#iptStockPlus.form-control(type="number", name="obj[stockPlus]", value=0, autocomplete="off")
+				.col-4
+				.col-8
+					span#optStockPlus(style="display:none").text-danger 必须是数字
 			hr
 			.form-group.row
 				.col-sm-6

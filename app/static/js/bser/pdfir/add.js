@@ -23,9 +23,9 @@ $(function() {
 			$("#iptMaterial").val('')
 			$("#iptPrice").val('')
 			$("#iptCost").val(0)
-			$("#iptStock").show();
+			$("#rowStock").show();
+			$("#rowStockPlus").hide();
 			$("#iptStockPlus").val(0);
-			$("#iptStockPlus").hide();
 		} else {
 			let codeUrI = encodeURIComponent(code)
 			$.ajax({
@@ -43,8 +43,9 @@ $(function() {
 					$("#iptMaterial").val(pdfir.material)
 					$("#iptPrice").val(pdfir.price)
 					$("#iptCost").val(pdfir.cost)
-					$("#iptStock").hide();
-					$("#iptStockPlus").show();
+					$("#rowStock").hide();
+					$("#nowStock").text(pdfir.stock)
+					$("#rowStockPlus").show();
 				} else {
 					document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
 					$("#crtImg").addClass("rounded-circle")
@@ -54,9 +55,9 @@ $(function() {
 					$("#iptMaterial").val('')
 					$("#iptPrice").val('')
 					$("#iptCost").val(0)
-					$("#iptStock").show();
+					$("#rowStock").show();
+					$("#rowStockPlus").hide();
 					$("#iptStockPlus").val(0);
-					$("#iptStockPlus").hide();
 
 					$("#optCode").hide();
 				}
