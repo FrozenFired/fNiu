@@ -5,6 +5,15 @@ let Order = require('../../../../models/client/order');
 
 let _ = require('underscore');
 
+exports.bsCterAdd = function(req, res) {
+	let crUser = req.session.crUser;
+
+	res.render('./user/bser/cter/add', {
+		title : '添加客户',
+		crUser: crUser,
+	});
+}
+
 exports.bsCters = function(req, res) {
 	let crUser = req.session.crUser;
 
@@ -17,7 +26,7 @@ exports.bsCters = function(req, res) {
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/bser/cter/list', {
-				title : '订单管理',
+				title : '客户列表',
 				crUser: crUser,
 
 				cters: cters
@@ -38,7 +47,7 @@ exports.bsCter = function(req, res) {
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/bser/cter/detail', {
-				title : '订单管理',
+				title : '客户详情',
 				crUser: crUser,
 
 				cter: cter
@@ -143,27 +152,32 @@ exports.bsCterNew = function(req, res) {
 		obj.code= obj.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	}
 	if(obj.iva) obj.iva= obj.iva.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	if(obj.vip) obj.vip= parseInt(obj.vip);
+	if(!isNaN(obj.vip)) obj.vip = 0;
 
 	obj.firm = crUser.firm;
 	if(!obj.nome) {
 		info = "请输入客户名字";
-		res.json({success: 0, info: info})
+		Err.usError(req, res, info);
 	} else {
 		Cter.findOne({'firm': crUser.firm, nome: obj.nome}, function(err, objSm) {
 			if(err) {
-				info = "bsCterNew, Cter.findOne, Error!";
-				res.json({success: 0, info: info})
+				console.log(err);
+				info = "bser CterNew, Cter.findOne, Error!";
+				Err.usError(req, res, info);
 			} else if(objSm) {
 				info = "已经有了此名字, 请换个名字！";
-				res.json({success: 0, info: info})
+				Err.usError(req, res, info);
 			} else {
 				let _cter = new Cter(obj);
-				_cter.save(function(err, cterSave) { if(err) {
-					info = "bsCterNew, _cter.save, Error!";
-					res.json({success: 0, info: info})
-				} else {
-					res.json({success: 1, cter: cterSave})
-				} })
+				_cter.save(function(err, cterSave) {
+					if(err) {
+						info = "bser CterNew, _cter.save, Error!";
+						Err.usError(req, res, info);
+					} else {
+						res.redirect('/bsCters')
+					}
+				})
 			}
 		})
 	}

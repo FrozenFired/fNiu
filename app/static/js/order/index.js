@@ -604,7 +604,7 @@ let bsOrdersShow = function(selOrders) {
 
 
 
-/* ======== 从添加订单页面 显示客户列表 ======== */
+/* ======== 从添加订单页面 添加新客户 ======== */
 let addCterAjax = function() {
 	let elem = '<div class="bsOrderAdd_cters_class row m-3 text-center">';
 		elem += '<form id="newCter_Form">'

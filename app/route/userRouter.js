@@ -68,6 +68,7 @@ module.exports = function(app){
 	
 
 	/* =================================== cter =================================== */
+	app.get('/bsCterAdd', MdRole.bserIsLogin, Cter.bsCterAdd)
 	app.get('/bsCters', MdRole.bserIsLogin, Cter.bsCters)
 	app.get('/bsCter/:cterId', MdRole.bserIsLogin, Cter.bsCter)
 	app.get('/bsCterDel/:cterId', MdRole.bserIsLogin, Cter.bsCterDel)

@@ -14,6 +14,7 @@ let dbSchema = new Schema({
 
 	nome: String,
 	vip: String,
+
 	tel: String,
 	iva: String,
 	cf: String,
@@ -25,6 +26,9 @@ let dbSchema = new Schema({
 	note: String,
 
 	orders: [{type: ObjectId, ref: 'Order'}],
+	price: Float,	// 总消费钱数
+	times: Number,  // 次数
+
 	ctAt: Date,
 	upAt: Date,
 });
