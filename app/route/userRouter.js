@@ -75,6 +75,7 @@ module.exports = function(app){
 	app.delete('/bsCterDelAjax', MdRole.bserIsLogin, Cter.bsCterDelAjax)
 	
 	app.post('/bsCterUpd', MdRole.bserIsLogin, postForm, Cter.bsCterUpd)
+	app.post('/bsCterUpdLogin', MdRole.bserIsLogin, postForm, MdBcrypt.rqBcrypt, Cter.bsCterUpdLogin)
 
 	app.post('/bsCterNew', MdRole.bserIsLogin, postForm, Cter.bsCterNew)
 

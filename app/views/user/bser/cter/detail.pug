@@ -10,13 +10,13 @@ block content
 				.col-3
 					a.btn.btn-danger(href="/bsCterDel/"+cter._id) 删除
 				.col-3.text-right
-					//- button.btn.btn-warning#upPwdBtn(type="button") <span class="oi oi-key"></span>
+					button.btn.btn-warning#upLoginBtn(type="button") <span class="oi oi-key"></span>
 				.col-3.text-right
 					button.btn.btn-warning#upBtn(type="button") <span class="oi oi-pencil"></span>
 
 			table.table.table-bordered.my-3
 				tr
-					td 编号
+					td 帐号
 					td #{cter.code}
 				tr
 					td 名称
@@ -46,16 +46,12 @@ block content
 		#update_elem.page(style="display:none")
 			.row.my-3
 				.col-6
-					button.btn.btn-secondary#cnlBtn(type="button") <span class="oi oi-x"></span>
+					button.btn.btn-secondary.cnlBtn(type="button") <span class="oi oi-x"></span>
 				.col-6.text-right
 					button.btn.btn-success#subBtn(type="button") <span class="oi oi-location"></span>
 
 			form.mt-3#bsCterUpdForm
 				input(type="hidden", name="obj[_id]", value=cter._id)
-				.form-group.row
-					label.col-4.col-form-label(for="iptCode") 编号
-					.col-8
-						input#iptCode.form-control(type="text", name="obj[code]", autocomplete="off", value=cter.code)
 				.form-group.row
 					label.col-4.col-form-label(for="iptNome") 名字
 					.col-8
@@ -88,7 +84,34 @@ block content
 					label.col-4.col-form-label(for="iptCity") 城市
 					.col-8
 						input#iptCity.form-control(type="text", name="obj[city]", autocomplete="off", value=cter.city)
+		#updLogin_elem.page(style="display:none")
+			.row.my-3
+				.col-6
+					button.btn.btn-secondary.cnlBtn(type="button") <span class="oi oi-x"></span>
+				.col-6.text-right
+					button.btn.btn-success#subLoginBtn(type="button") <span class="oi oi-location"></span>
 
+			form.mt-3#bsCterLoginForm
+				input(type="hidden", name="obj[_id]", value=cter._id)
+				.form-group.row
+					label.col-4.col-form-label(for="iptCode") 帐号
+					.col-8
+						input#iptCode.form-control(type="text", name="obj[code]", autocomplete="off", value=cter.code)
+				.form-group.row
+					label.col-4.col-form-label(for="iptPwd") 密码
+					.col-8
+						input#iptPwd.form-control(type="text", name="obj[pwd]", autocomplete="off")
+				.form-group.row
+					label.col-4.col-form-label(for="iptCode") 帐号
+					.col-8
+						select.form-control(name="obj[canLogin]", data-style="btn-info")
+							if cter.canLogin == 1
+								-a;
+								option(value=1) 可以登录
+								option(value=0) 禁止登录
+							else
+								option(value=0) 禁止登录
+								option(value=1) 可以登录
 		#ordfirs_elem.page
 			#ordfirsAjax_div
 			div(style="height:400px")

@@ -7,6 +7,15 @@ let updateShow = function() {
 	$("#basic_btn").removeClass("bg-secondary");
 	$("#basic_btn").addClass("bg-info");
 }
+let updLoginShow = function() {
+	$(".page").hide();
+	$("#updLogin_elem").show();
+
+	$(".bomBtn").removeClass("bg-info");
+	$(".bomBtn").addClass("bg-secondary");
+	$("#basic_btn").removeClass("bg-secondary");
+	$("#basic_btn").addClass("bg-info");
+}
 let basicShow = function() {
 	$(".page").hide();
 	$("#basic_elem").show();
@@ -179,7 +188,10 @@ $(function() {
 	$("#upBtn").click(function(e) {
 		updateShow();
 	})
-	$("#cnlBtn").click(function(e) {
+	$("#upLoginBtn").click(function(e) {
+		updLoginShow();
+	})
+	$(".cnlBtn").click(function(e) {
 		basicShow();
 	})
 	$("#basic_btn").click(function(e) {
@@ -195,7 +207,7 @@ $(function() {
 		cterOrderShow();
 	})
 
-
+	/* ======== 输入模特号 查找客户购买的模特 ======== */
 	$("#ordfirs_elem").on('input', '#pdCode', function(e) {
 		let pdCode = $(this).val();
 		// console.log(pdCode)
@@ -203,7 +215,6 @@ $(function() {
 		let selFirs = ordfirs;
 
 		let temps = JSON.parse(JSON.stringify(selFirs));
-		/* ============= 客户选择 ============= */
 		if(pdCode && pdCode.length >0) {
 			selFirs = new Array();
 			for(let i=0; i<temps.length; i++) {
@@ -219,6 +230,7 @@ $(function() {
 		}
 		pdOrdfirsPage(selFirs)
 	})
+	/* ===== 根据下单时间筛选 ===== */
 	$("#ordfirTime").change(function(e) {
 		let ordfirTime = $(this).val();
 		$("#customizeOrdfirNav").hide();
@@ -229,12 +241,30 @@ $(function() {
 		}
 	})
 
+	/* ===== 提交更改基本信息按钮 ===== */
 	$("#subBtn").click(function(e) {
 		let form = $("#bsCterUpdForm");
 		let data = form.serialize();
 		$.ajax({
 			type: "POST",
 			url: '/bsCterUpd',
+			data: data,
+			success: function(results) {
+				if(results.success == 1) {
+					location.reload();
+				} else {
+					alert(results.info);
+				}
+			}
+		});
+	})
+	/* ===== 提交更改登录信息按钮 ===== */
+	$("#subLoginBtn").click(function(e) {
+		let form = $("#bsCterLoginForm");
+		let data = form.serialize();
+		$.ajax({
+			type: "POST",
+			url: '/bsCterUpdLogin',
 			data: data,
 			success: function(results) {
 				if(results.success == 1) {

@@ -9,6 +9,7 @@ let dbSchema = new Schema({
 	firm: {type: ObjectId, ref: 'Firm'},
 	creater: {type: ObjectId, ref: 'User'},
 
+	canLogin: Number,
 	code: String,
 	pwd: String,
 

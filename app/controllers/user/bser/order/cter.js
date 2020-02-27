@@ -107,8 +107,7 @@ exports.bsCterDelAjax = function(req, res) {
 exports.bsCterUpd = function(req, res) {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj
-	if(obj.code) obj.code= obj.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-	if(obj.nome) obj.nome= obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	if(obj.nome) obj.nome= obj.nome.replace(/\s+/g,"").toUpperCase();
 	if(obj.vip) obj.vip = parseInt(obj.vip);
 	Cter.findOne({_id: obj._id, 'firm': crUser.firm})
 	.exec(function(err, cter) {
@@ -141,7 +140,45 @@ exports.bsCterUpd = function(req, res) {
 	})
 }
 
-
+exports.bsCterUpdLogin = function(req, res) {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj
+	if(!obj.code) {
+		info = "请输入登录帐号";
+		res.json({success: 0, info: info});
+	} else {
+		obj.code= obj.code.replace(/\s+/g,"").toUpperCase();
+		Cter.findOne({_id: obj._id, 'firm': crUser.firm})
+		.exec(function(err, cter) {
+			if(err) {
+				info = "bser CterUpdLogin, Cter.findOne, Error!";
+				res.json({success: 0, info: info});
+			} else if(!cter) {
+				info = "deleted! refresh Page!";
+				res.json({success: 0, info: info});
+			} else {
+				Cter.findOne({'code': obj.code, 'firm': crUser.firm})
+				.where('_id').ne(obj._id)
+				.exec(function(err, cterSm) {
+					if(err) {
+						info = "bser CterUpdLogin, Cter.findOne, Error!";
+						res.json({success: 0, info: info});
+					} else if(cterSm) {
+						info = "已经有了此帐号, 请重新输入！";
+						res.json({success: 0, info: info});
+					} else {
+						let _cter
+						_cter = _.extend(cter, obj)
+						_cter.save(function(err, objSave){
+							if(err) console.log(err);
+							res.json({success: 1, cter: objSave});
+						})
+					}
+				})
+			} 
+		})
+	}
+}
 
 exports.bsCterNew = function(req, res) {
 	let crUser = req.session.crUser;
