@@ -11,17 +11,17 @@ exports.aderIsLogin = function(req, res, next) {
 
 
 let User = require('../models/login/user');
-let UsErr = require('../controllers/user/aaIndex/err');
+let Err = require('../controllers/aaIndex/err');
 exports.singleUsLogin = function(req, res, next){
 	let crUser = req.session.crUser;
 	User.findById(crUser._id, function(err, user){ 
 		if(err) {
 			console.log(err);
 			info = "singleUsLogin, User.findById, Error!";
-			UsErr.usError(req, res, info);
+			Err.usError(req, res, info);
 		} else if(!user) {
 			info = "此帐号已经被删除!";
-			UsErr.usError(req, res, info);
+			Err.usError(req, res, info);
 		} else {
 			let crLog = (new Date(crUser.lgAt)).getTime();
 			let atLog = (new Date(user.lgAt)).getTime();
@@ -73,3 +73,35 @@ exports.userIsLogin = function(req, res, next) {
 	}
 };
 
+let Cter = require('../models/client/cter');
+exports.singleCtLogin = function(req, res, next){
+	let crCter = req.session.crCter;
+	Cter.findById(crCter._id, function(err, cter){ 
+		if(err) {
+			console.log(err);
+			info = "singleCtLogin, Cter.findById, Error!";
+			Err.usError(req, res, info);
+		} else if(!cter) {
+			info = "此帐号已经被删除!";
+			Err.usError(req, res, info);
+		} else {
+			let crLog = (new Date(crCter.lgAt)).getTime();
+			let atLog = (new Date(cter.lgAt)).getTime();
+			if(crLog == atLog){
+				next();
+			}else{
+				res.redirect('/logout');
+			}
+		} 
+	});
+};
+
+
+exports.cterIsLogin = function(req, res, next) {
+	let crCter = req.session.crCter;
+	if(!crCter) {
+		res.redirect('/logout');
+	} else {
+		next();
+	}
+};

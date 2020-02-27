@@ -1,4 +1,4 @@
-let Err = require('../aaIndex/err')
+let Err = require('../../aaIndex/err');
 let Pdfir = require('../../../models/material/pdfir');
 
 let _ = require('underscore');

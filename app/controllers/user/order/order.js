@@ -1,4 +1,4 @@
-let Err = require('../aaIndex/err');
+let Err = require('../../aaIndex/err');
 let Conf = require('../../../../conf');
 
 let _ = require('underscore');

@@ -1,4 +1,4 @@
-let Err = require('../aaIndex/err')
+let Err = require('../../aaIndex/err');
 
 let User = require('../../../models/login/user')
 let Firm = require('../../../models/login/firm')

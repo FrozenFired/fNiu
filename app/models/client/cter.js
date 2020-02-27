@@ -12,6 +12,7 @@ let dbSchema = new Schema({
 	canLogin: Number,
 	code: String,
 	pwd: String,
+	lgAt: Date,	// 上次登录时间
 
 	nome: String,
 	vip: String,
@@ -35,7 +36,7 @@ let dbSchema = new Schema({
 });
 dbSchema.pre('save', function(next) {	
 	if(this.isNew) {
-		this.upAt = this.ctAt = Date.now();
+		this.upAt = this.ctAt = this.lgAt = Date.now();
 	} else {
 		this.upAt = Date.now();
 	}

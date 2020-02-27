@@ -1,4 +1,4 @@
-let Err = require('../aaIndex/err');
+let Err = require('../../aaIndex/err');
 
 let Order = require('../../../models/client/order');
 

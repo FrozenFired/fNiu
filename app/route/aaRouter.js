@@ -1,4 +1,4 @@
-let Index = require('../controllers/user/aaIndex/index');
+let Index = require('../controllers/aaIndex/index');
 
 module.exports = function(app){
 

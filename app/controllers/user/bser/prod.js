@@ -1,4 +1,4 @@
-let Err = require('../aaIndex/err')
+let Err = require('../../aaIndex/err');
 
 let MdPicture = require('../../../middle/middlePicture');
 let Conf = require('../../../../conf');

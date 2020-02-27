@@ -25,6 +25,15 @@ exports.index = function(req, res) {
 	}
 }
 
+exports.cter = function(req, res) {
+	let crCter = req.session.crCter;
+	res.render('./cter/index/index', {
+		title: '客户',
+		crCter : crCter,
+	})
+}
+
+
 exports.bser = function(req, res) {
 	let crUser = req.session.crUser;
 	res.render('./user/bser/index/index', {
@@ -61,7 +70,8 @@ exports.login = function(req, res) {
 
 
 
-let User = require('../../../models/login/user');
+let User = require('../../models/login/user');
+let Cter = require('../../models/client/cter');
 let bcrypt = require('bcryptjs');
 exports.loginUser = function(req, res) {
 	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -70,14 +80,13 @@ exports.loginUser = function(req, res) {
 
 	loginUserf(req, res, code, pwd);
 }
-loginUserf = function(req, res, code, pwd) {
+let loginUserf = function(req, res, code, pwd) {
 	User.findOne({code: code})
 	.populate('firm')
 	.exec(function(err, user) {
 		if(err) console.log(err);
 		if(!user){
-			info = "用户名不正确，请重新登陆";
-			Err.usError(req, res, info);
+			loginCterf(req, res, code, pwd)
 		} else{
 			bcrypt.compare(pwd, user.pwd, function(err, isMatch) {
 				if(err) console.log(err);
@@ -104,6 +113,32 @@ loginUserf = function(req, res, code, pwd) {
 					}
 				}
 				else {
+					loginCterf(req, res, code, pwd)
+				}
+			})
+		}
+	})
+}
+let loginCterf = function(req, res, code, pwd) {
+	Cter.findOne({code: code})
+	.exec(function(err, cter) {
+		if(err) console.log(err);
+		if(!cter){
+			info = "用户名不正确，请重新登陆";
+			Err.usError(req, res, info);
+		} else{
+			bcrypt.compare(pwd, cter.pwd, function(err, isMatch) {
+				if(err) console.log(err);
+				if(isMatch) {
+					cter.lgAt = Date.now();
+					// console.log(cter)
+					cter.save(function(err, objSave){
+						if(err) console.log(err)
+					})
+					req.session.crCter = cter;
+					res.redirect('/cter');
+				}
+				else {
 					info = "用户名与密码不符，请重新登陆";
 					Err.usError(req, res, info);
 				}
@@ -115,6 +150,8 @@ loginUserf = function(req, res, code, pwd) {
 exports.logout = function(req, res) {
 	// User
 	if(req.session.crUser) delete req.session.crUser;
+	// Cter
+	if(req.session.crCter) delete req.session.crCter;
 	// Ader
 	if(req.session.crAder) delete req.session.crAder;
 
