@@ -18,7 +18,7 @@ let multipart = require('connect-multiparty');
 let postForm = multipart();
 
 module.exports = function(app){
-	app.get('/cter', MdRole.cterIsLogin, Index.cter);
+	app.get('/cter', MdRole.cterIsLogin, Cter.cter);
 	/* =================================== Cter =================================== */
 	// app.get('/ctMyself', MdRole.cterIsLogin, Cter.ctCter)
 	// app.post('/ctCterUpdInfo', MdRole.cterIsLogin, postForm, Cter.ctCterUpd)

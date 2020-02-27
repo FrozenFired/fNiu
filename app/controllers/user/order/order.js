@@ -10,6 +10,14 @@ let Ordfir = require('../../../models/client/ordfir');
 
 let Pdfir = require('../../../models/material/pdfir');
 
+exports.order = function(req, res) {
+	let crUser = req.session.crUser;
+	res.render('./user/order/order', {
+		title: '系统',
+		crUser : crUser,
+	})
+}
+
 exports.ordAddCter = function(req, res) {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;

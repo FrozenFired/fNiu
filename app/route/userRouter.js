@@ -24,7 +24,7 @@ let postForm = multipart();
 
 module.exports = function(app){
 	/* ================================ Index ================================ */
-	app.get('/order', MdRole.userIsLogin, Index.order);
+	app.get('/order', MdRole.userIsLogin, Ord.order);
 
 	app.get('/getPdfirs', MdRole.userIsLogin, OdProd.getPdfirs)
 	app.get('/getCters', MdRole.userIsLogin, OdCter.getCters)
@@ -43,7 +43,7 @@ module.exports = function(app){
 
 
 
-	app.get('/bser', MdRole.bserIsLogin, Index.bser);
+	app.get('/bser', MdRole.bserIsLogin, User.bser);
 	/* =================================== User =================================== */
 	app.get('/bsUsers', MdRole.bserIsLogin, User.bsUsers)
 	app.get('/bsUser/:userId', MdRole.bserIsLogin, User.bsUser)

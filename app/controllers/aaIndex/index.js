@@ -25,38 +25,6 @@ exports.index = function(req, res) {
 	}
 }
 
-exports.cter = function(req, res) {
-	let crCter = req.session.crCter;
-	res.render('./cter/index/index', {
-		title: '客户',
-		crCter : crCter,
-	})
-}
-
-
-exports.bser = function(req, res) {
-	let crUser = req.session.crUser;
-	res.render('./user/bser/index/index', {
-		title: '管理',
-		crUser : crUser,
-	})
-}
-
-exports.order = function(req, res) {
-	let crUser = req.session.crUser;
-	res.render('./user/order/order', {
-		title: '系统',
-		crUser : crUser,
-	})
-}
-
-exports.pter = function(req, res) {
-	let crUser = req.session.crUser;
-	res.render('./user/pter/index/index', {
-		title: '打印',
-		crUser : crUser,
-	})
-}
 
 
 exports.login = function(req, res) {
@@ -125,6 +93,9 @@ let loginCterf = function(req, res, code, pwd) {
 		if(err) console.log(err);
 		if(!cter){
 			info = "用户名不正确，请重新登陆";
+			Err.usError(req, res, info);
+		} else if(cter.canLogin != 1) {
+			info = "您无权登录, 请联系商家";
 			Err.usError(req, res, info);
 		} else{
 			bcrypt.compare(pwd, cter.pwd, function(err, isMatch) {

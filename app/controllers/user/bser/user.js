@@ -4,7 +4,13 @@ let User = require('../../../models/login/user')
 let Firm = require('../../../models/login/firm')
 let _ = require('underscore')
 
-
+exports.bser = function(req, res) {
+	let crUser = req.session.crUser;
+	res.render('./user/bser/index/index', {
+		title: '管理',
+		crUser : crUser,
+	})
+}
 
 exports.bsUserUpd = function(req, res) {
 	let obj = req.body.obj

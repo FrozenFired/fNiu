@@ -2,6 +2,14 @@ let Err = require('../../aaIndex/err');
 
 let Order = require('../../../models/client/order');
 
+exports.pter = function(req, res) {
+	let crUser = req.session.crUser;
+	res.render('./user/pter/index/index', {
+		title: '打印',
+		crUser : crUser,
+	})
+}
+
 exports.ptAutoTk = function(req, res, next) {
 	let crUser = req.session.crUser;
 	// 第一步 找到需要打印的订单
