@@ -478,20 +478,16 @@ let bsOrderShow = function(order) {
 		elem += '<tr>'
 			elem += '<th colspan="2" class="border border-dark"> TOT: '+firLen+'</th>'
 			elem += '<th colspan="2" class="border border-dark text-right">'+pieces+' pz</th>'
-			elem += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.imp * 100)/100+' €</th>'
+			elem += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.pdPr * 100)/100+' €</th>'
 		elem += '</tr>'
 	elem += '</table>'
 
 	elem += '<div class="row mt-4">'
 		elem += '<div class="col-6">'
-			if(order.pdPr && order.pdPr != order.imp) {
-				elem += '打折价: '+Math.round(order.pdPr * 100)/100+' €'
-			}
+			elem += '原价: '+Math.round(order.real * 100)/100+' €'
 		elem += '</div>'
 		elem += '<div class="col-6 text-right">'
-			if(order.real && order.real != order.imp) {
-				elem += '原价: '+Math.round(order.real * 100)/100+' €'
-			}
+			elem += '实收: '+Math.round(order.imp * 100)/100+' €'
 		elem += '</div>'
 	elem += '</div>'
 	if(order.note) {
