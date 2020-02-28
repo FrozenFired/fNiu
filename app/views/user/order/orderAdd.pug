@@ -22,6 +22,8 @@ form#bsOrderAddForm.py-2
 			label#selCter-Btn.btn.btn-secondary.col-form-label.col-3 散客
 			label#bsOrderAdd_pz.col-form-label.col-2.text-info 0
 			.col-4
+				input#bsOrderAdd_real.form-control(type="hidden", name="obj[real]", value=0, autocomplete="off")
+				input#bsOrderAdd_pdPr.form-control(type="hidden", name="obj[pdPr]", value=0, autocomplete="off")
 				input#bsOrderAdd_imp.form-control(type="text", name="obj[imp]", value=0, autocomplete="off")
 			.col-3
 				button#bsOrderAdd_btnSub.btn.btn-success.btn-block(type="button") 付款

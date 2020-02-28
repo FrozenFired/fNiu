@@ -15,7 +15,9 @@ let dbSchema = new Schema({
 	cter: {type: ObjectId, ref: 'Cter'},
 
 	ordfirs: [{type: ObjectId, ref: 'Ordfir'}],
-	imp: Float,
+	real: Float,	// 原价
+	pdPr: Float,	// 打折后价格
+	imp: Float,		// 实际收费
 
 	note: String,
 

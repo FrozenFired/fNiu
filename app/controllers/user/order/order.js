@@ -136,7 +136,9 @@ exports.orderNew = function(req, res) {
 	let cterId = null;
 	if(obj.cter) cterId = obj.cter;
 	obj.imp = parseFloat(obj.imp);
-	if(isNaN(obj.imp)) {
+	obj.pdPr = parseFloat(obj.pdPr);
+	obj.real = parseFloat(obj.real);
+	if(isNaN(obj.imp) || isNaN(obj.pdPr) || isNaN(obj.real)) {
 		console.log(err)
 		info = "注意, 总价错误!";
 		res.json({success: 0, info: info});

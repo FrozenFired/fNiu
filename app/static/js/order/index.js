@@ -264,7 +264,7 @@ let getPz = function() {
 /* ========== 订单中的产品 ========== */
 let ordfirsShow = function() {
 	let elem = '<div class="ordfirsShow_class">'
-	let piece = 0, imp = 0;
+	let piece = 0, imp = 0, real=0;
 
 	for(let i=0; i<ordfirs.length; i++) {
 		let ordfir = ordfirs[i];
@@ -272,6 +272,7 @@ let ordfirsShow = function() {
 
 		piece += ordfir.quot;
 		imp += ordfir.quot*ordfir.price;
+		real += ordfir.quot*pdfir.price;
 
 		elem += '<div class="row p-2 m-1" style="background: #C0C0C0">'
 			elem += '<div class="col-3">'
@@ -329,6 +330,8 @@ let ordfirsShow = function() {
 
 	$("#bsOrderAdd_pz").text(getPz())
 	$("#bsOrderAdd_arts").text(ordfirs.length)
+	$("#bsOrderAdd_real").val(real)
+	$("#bsOrderAdd_pdPr").val(imp)
 	$("#bsOrderAdd_imp").val(imp)
 }
 
@@ -479,6 +482,18 @@ let bsOrderShow = function(order) {
 		elem += '</tr>'
 	elem += '</table>'
 
+	elem += '<div class="row mt-4">'
+		elem += '<div class="col-6">'
+			if(order.pdPr && order.pdPr != order.imp) {
+				elem += '打折价: '+Math.round(order.pdPr * 100)/100+' €'
+			}
+		elem += '</div>'
+		elem += '<div class="col-6 text-right">'
+			if(order.real && order.real != order.imp) {
+				elem += '原价: '+Math.round(order.real * 100)/100+' €'
+			}
+		elem += '</div>'
+	elem += '</div>'
 	if(order.note) {
 		elem += '<div class="row mt-4">';
 			elem += '<div class="col-12 bg-light">'
