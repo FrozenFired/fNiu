@@ -1,1 +1,12 @@
-h1 cter
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row.text-right.mt-3
+			.col-12
+				h3.reloadPdfirs#loading 正在加载... <span class="oi oi-reload"></span>
+				//- h3.reloadPdfirs#loaded(style="display:none") <span class="oi oi-reload"></span>
+		#allPdfirs
+	script(src="/js/cter/aaMain.js")
+	script(src="/js/cter/index.js")
+	script(src="/js/cter/cter.js")

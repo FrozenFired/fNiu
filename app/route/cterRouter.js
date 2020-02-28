@@ -2,7 +2,7 @@ let Index = require('../controllers/aaIndex/index');
 
 let Cter = require('../controllers/cter/cter');
 
-// let Product = require('../controllers/cter/cter/product');
+let Product = require('../controllers/cter/product');
 
 // let Cter = require('../controllers/cter/cter/order/cter');
 // let Order = require('../controllers/cter/cter/order/order');
@@ -19,8 +19,9 @@ let postForm = multipart();
 
 module.exports = function(app){
 	app.get('/cter', MdRole.cterIsLogin, Cter.cter);
+	app.get('/ctGetPdfirs', MdRole.cterIsLogin, Product.ctGetPdfirs);
 	/* =================================== Cter =================================== */
-	// app.get('/ctMyself', MdRole.cterIsLogin, Cter.ctCter)
+	app.get('/ctMyself', MdRole.cterIsLogin, Cter.ctCter)
 	// app.post('/ctCterUpdInfo', MdRole.cterIsLogin, postForm, Cter.ctCterUpd)
 	// app.post('/ctCterUpdPwd', MdRole.cterIsLogin, postForm, MdBcrypt.rqBcrypt, Cter.ctCterUpd)
 

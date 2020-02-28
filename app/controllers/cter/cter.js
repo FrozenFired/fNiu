@@ -9,3 +9,11 @@ exports.cter = function(req, res) {
 		crCter : crCter,
 	})
 }
+
+exports.ctCter = function(req, res) {
+	let crCter = req.session.crCter;
+	res.render('./cter/index/cter', {
+		title: '个人中心',
+		crCter : crCter,
+	})
+}

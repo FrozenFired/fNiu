@@ -13,7 +13,7 @@ let dbSchema = new Schema({
 	material: String,
 	// assists : [{type: ObjectId, ref: 'Assist'}],
 	price: Float,
-	cost: {type: Float, default: 0},	// 生产价格
+	cost: {type: Float, default: 0},	// 成本价格
 	note: String,
 	/* ------------------ 创建时 ------------------ */
 
@@ -23,6 +23,9 @@ let dbSchema = new Schema({
 	ctAt: Date,
 	upAt: Date,
 	/* ------------------ 自动生成 ------------------ */
+
+	status: Number,
+	photos: [String],
 
 	stock: Number,  // 库存
 	sales: Number,  // 销量

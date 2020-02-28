@@ -1,0 +1,32 @@
+.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+	a.navbar-brand.btn.btn-success(href="/cter") <span class="oi oi-home"></span>
+	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
+		<span class="navbar-toggler-icon"></span>
+
+	.collapse.navbar-collapse#navbarTogglerDemo02
+		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+			li
+				span &nbsp;
+			//- li.nav-item.active.bg-secondary.text-center
+			//- 	a.nav-link(href="/cter") 推荐 <span class="sr-only">(current)</span>
+			//- li
+			//- 	span &nbsp;
+			//- li.nav-item.active.bg-secondary.text-center
+			//- 	a.nav-link(href="/cter") 全部 <span class="sr-only">(current)</span>
+		ul.navbar-nav
+			li
+				span &nbsp;
+			li.text-center
+				a.btn.btn-link.text-info(href="/ctMyself")
+					span hello: 
+					- let nome = crCter.code;
+					if crCter.nome && crCter.nome.length > 0
+						- nome = crCter.nome;
+					span #{nome}
+			li
+				span &nbsp;
+			li: a.btn.btn-danger(href="/logout") Logout
+
+.container
+	.row
+		div(style="height:80px")
