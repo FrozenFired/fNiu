@@ -20,6 +20,7 @@ let postForm = multipart();
 module.exports = function(app){
 	app.get('/cter', MdRole.cterIsLogin, Cter.cter);
 	app.get('/ctGetPdfirs', MdRole.cterIsLogin, Product.ctGetPdfirs);
+	app.get('/ctGetOrdfirs', MdRole.cterIsLogin, Product.ctGetOrdfirs);
 	/* =================================== Cter =================================== */
 	app.get('/ctMyself', MdRole.cterIsLogin, Cter.ctCter)
 	// app.post('/ctCterUpdInfo', MdRole.cterIsLogin, postForm, Cter.ctCterUpd)

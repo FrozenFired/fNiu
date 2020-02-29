@@ -1,4 +1,3 @@
-// ordfirs = JSON.parse(JSON.stringify(order.ordfirs));
 /* ======== 显示选择的产品 ======== */
 let appendPdfirs = function(selPdfirs) {
 	let elem = '';
@@ -29,7 +28,7 @@ let appendPdfirs = function(selPdfirs) {
 				// elem += '</div>';
 
 				elem += '<div class="row mt-2">'
-					elem += '<h5 class="col-6 pt-2">价格: '
+					elem += '<h5 class="col-12 pt-2">价格: '
 							elem += selPd.price 
 					elem += ' €</h5>'
 				elem += '</div>';
@@ -39,12 +38,53 @@ let appendPdfirs = function(selPdfirs) {
 	}
 	return elem;
 }
-let allPdfirsShow = function() {
+let pdfirsShow = function(selPdfirs) {
 	let elem = '<div class="allPdfirs_class">'
 	
-	elem += appendPdfirs(pdfirs)
+	elem += appendPdfirs(selPdfirs)
 	elem += '</div>';
 	
 	$(".allPdfirs_class").remove();
 	$("#allPdfirs").append(elem);
+}
+
+
+let pdfirShow = function(pdfirId) {
+	let pdfir = getPdfirFromPdfirs(pdfirId);
+	let elem = '<div class="pdfir_class p-3">';
+
+	elem += '<div class="row mt-3">'
+		elem += '<div class="col-12">'
+			elem += '<button class="btn btn-info backPdfirs" type="button"> 返回 </button>'
+		elem += '</div>'
+	elem += '</div>'
+	elem += '<table class="table table-bordered my-3">';
+		elem += '<tr>'
+			elem += '<td> 编号 </td>'
+			elem += '<td>' + pdfir.code + '</td>'
+		elem += '</tr>'
+		elem += '<tr>'
+			elem += '<td> 名称 </td>'
+			elem += '<td>' + pdfir.nome + '</td>'
+		elem += '</tr>'
+		elem += '<tr>'
+			elem += '<td> 价格 </td>'
+			elem += '<td>' + pdfir.price + '</td>'
+		elem += '</tr>'
+		// elem += '<tr>'
+		// 	elem += '<td> 销量 </td>'
+		// 	elem += '<td>' + pdfir.sales + '</td>'
+		// elem += '</tr>'
+	elem += '</table>'
+	elem += '<div class="row mt-5">'
+		elem += '<div class="col-12" align="center">'
+			elem += '<img src='+pdfir.photo+' width="100%">'
+		elem += '</div>'
+	elem += '</div>'
+
+	elem += '</div>'
+	$(".pdfir_class").remove();
+	$("#pdfirInfo").append(elem);
+	$(".page").hide();
+	$("#pdfir_page").show();
 }
