@@ -12,9 +12,10 @@ let init = function() {
 		$("#sortSelect").val(sortBy+'_'+sortVal)
 	}
 
-	let isPhoto = getUrlParam('isPhoto');
-	if(isPhoto) {
-		$("#isPhoto").val(isPhoto);
+	let selBy = getUrlParam('selBy');
+	let selVal = getUrlParam('selVal');
+	if(selBy) {
+		$("#isSel").val(selBy+'_'+selVal);
 	}
 }
 
@@ -76,12 +77,16 @@ $(function() {
 		let sortBy = sort[0];
 		let sortVal = sort[1];
 
-		let isPhoto = $("#isPhoto").val();
+		let sel = $("#isSel").val().split('_');
+		let selBy = sel[0];
+		let selVal = sel[1];
 
-		console.log(sortBy)
-		console.log(sortVal)
-		console.log(isPhoto)
-		window.location.href = "/bsPdfirs?sortBy="+sortBy+'&sortVal='+sortVal+'&isPhoto='+isPhoto;
+		let newUrl ="/bsPdfirs?"
+		newUrl += 'sortBy='+sortBy;
+		newUrl += '&sortVal='+sortVal;
+		newUrl += '&selBy='+selBy;
+		newUrl += '&selVal='+selVal;
+		window.location.href = newUrl;
 	})
 
 	$("#pdCodeNav").on('input', '#pdCodeAjax', function(e) {

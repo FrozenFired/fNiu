@@ -25,6 +25,7 @@ let dbSchema = new Schema({
 	/* ------------------ 自动生成 ------------------ */
 
 	status: Number,
+	rcmd: Number, // 店长推荐
 	photos: [String],
 
 	stock: Number,  // 库存

@@ -11,8 +11,15 @@ block content
 					a.btn.btn-danger(href="/bsPdfirDel/"+pdfir._id) 删除
 				.col-4.text-right
 					button.btn.btn-warning#upBtn(type="button") <span class="oi oi-pencil"></span>
-
 			table.table.table-bordered.my-3
+				tr
+					td 推荐
+					td
+						if pdfir.rcmd == 1
+							-a;
+							span.text-info 推荐
+						else
+							span.text-secondary 否
 				tr
 					td 编号
 					td #{pdfir.code}
@@ -34,7 +41,7 @@ block content
 
 			.row.mt-5
 				.col-12(align="center")
-					img#pdfirUpDefaultImg(src=pdfir.photo, width="200px")
+					img#pdfirUpDefaultImg(src=pdfir.photo, width="100%")
 
 		#update_elem.page(style="display:none")
 			.row.my-3
@@ -55,6 +62,17 @@ block content
 					.col-8
 						input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
 				hr
+				.form-group.row
+					label.col-4.col-form-label(for="iptRcmd") 帐号
+					.col-8
+						select.form-control(name="obj[rcmd]", data-style="btn-info")
+							if pdfir.rcmd == 1
+								-a;
+								option(value=1) 推荐
+								option(value=0) 不推荐
+							else
+								option(value=0) 不推荐
+								option(value=1) 推荐
 				.form-group.row
 					label.col-4.col-form-label(for="iptCode") 编号
 					.col-8

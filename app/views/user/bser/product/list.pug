@@ -21,7 +21,11 @@ block content
 							img.card-img.ml-1(src=pdfir.photo, width="100%", style="max-width: 90px; max-height: 120px")
 					.col-8
 						.row
-							h4.col-6.text-left #{pdfir.code}
+							if pdfir.rcmd == 1
+								-a;
+								h4.col-6.text-left.text-info #{pdfir.code}
+							else
+								h4.col-6.text-left #{pdfir.code}
 							h5.col-6.text-right #{pdfir.nome}
 
 							.col-5.text-right 售价:
@@ -43,10 +47,12 @@ block content
 						option(value='sales_-1') 销量最多
 						option(value='sales_1') 销量最少
 				.col-5
-					select#isPhoto.selectPd.custom-select.custom-select-md.mb-3
-						option(value=-1) 全部选择
-						option(value='1') 无图片
-						option(value='2') 有图片
+					select#isSel.selectPd.custom-select.custom-select-md.mb-3
+						option(value='all_-1') 全部选择
+						option(value='isPhoto_0') 无图片
+						option(value='isPhoto_1') 有图片
+						option(value='isRcmd_1') 推荐产品
+						option(value='isRcmd_0') 未推荐
 	.topNav-second.bg-info#pdCodeNav.p-2
 		.row
 			.col-12

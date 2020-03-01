@@ -17,22 +17,36 @@ exports.bsPdfirs = function(req, res) {
 	let sortVal = -1;
 	if(req.query.sortVal) sortVal = req.query.sortVal;
 
-	let isPhoto = -1;
 	let symPhoto = '$ne';
 	let keyPhoto = 'xxx.jpg';
-	if(req.query.isPhoto) isPhoto = parseInt(req.query.isPhoto);
-	// console.log(isPhoto)
-	if(isPhoto == 1) {
-		symPhoto = '$eq';
-		keyPhoto = '/upload/product/1.jpg';
-	} else if(isPhoto == 2) {
-		symPhoto = '$ne';
-		keyPhoto = '/upload/product/1.jpg';
+	let symRcmd = '$ne';
+	let keyRcmd = '20';
+	if(req.query.selBy && req.query.selVal) {
+		let selBy = req.query.selBy;
+		let selVal = parseInt(req.query.selVal);
+		if(selBy == 'isPhoto') {
+			if(selVal == 0) {
+				symPhoto = '$eq';
+				keyPhoto = '/upload/product/1.jpg';
+			} else {
+				symPhoto = '$ne';
+				keyPhoto = '/upload/product/1.jpg';
+			}
+		} else if(selBy == 'isRcmd') {
+			if(selVal == 1) {
+				symRcmd = '$eq';
+				keyRcmd = selVal;
+			} else {
+				symRcmd = '$ne';
+				keyRcmd = 1;
+			}
+		}
 	}
 
 	Pdfir.find({
 		'firm': crUser.firm,
-		'photo': {[symPhoto]: keyPhoto}
+		'photo': {[symPhoto]: keyPhoto},
+		'rcmd': {[symRcmd]: keyRcmd}
 	})
 	.sort({[sortBy]: sortVal})
 	// .limit(limit)
