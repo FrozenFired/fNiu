@@ -4,6 +4,7 @@ let cters = new Array();
 
 let pdfirs = new Array();
 let pdSaleAll = null;
+let pdRcmds = null; // 推荐产品
 
 // let pdSaleYear = null;
 // let pdSaleQuater = null;

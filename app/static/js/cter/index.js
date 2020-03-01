@@ -7,7 +7,11 @@ let appendPdfirs = function(selPdfirs) {
 		elem += '<div class="row p-2 mt-2 border bg-light selPdCard" id="selPdCard-'+selPd._id+'">'
 			elem += '<div class="col-4">'
 				elem += '<div class="row">'
-					elem += '<h4 class="col-12">'+ selPd.code+ '</h4>';
+					let textCode = '';
+					if(selPd.rcmd ==1) {
+						textCode = 'text-info';
+					}
+					elem += '<h4 class="col-12 '+textCode+'">'+ selPd.code+ '</h4>';
 				elem += '</div>';
 				elem += '<div class="row">'
 					elem += '<img class="foto-showImg" src="' + selPd.photo +'" ';

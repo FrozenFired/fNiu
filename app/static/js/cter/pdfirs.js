@@ -57,12 +57,15 @@ $(function() {
 			}
 			pdfirsShow(pdSaleAll);
 		} else if(sortVal == 2) {
-			if(!pdSaleYear) {
-				pdSaleYear = JSON.parse(JSON.stringify(pdSaleAll));
-				for(let i=0; i<pdSaleYear.length; i++) {
-					
+			if(!pdRcmds) {
+				pdRcmds = new Array();
+				for(let i=0; i<pdfirs.length; i++) {
+					if(pdfirs[i].rcmd == 1) {
+						pdRcmds.push(pdfirs[i]);
+					}
 				}
 			}
+			pdfirsShow(pdRcmds);
 		} else if(sortVal == 3) {
 			console.log('sales quater')
 		} else if(sortVal == 4) {
