@@ -188,11 +188,11 @@ exports.orderNew = function(req, res) {
 }
 
 let fkOrdUpd_setOrdfir = function(req, res, order, firs) {
-	let newfirs  = new Array();
-	let updfirs  = new Array();
-	let delfirs = new Array();
+	let newfirs  = new Array();		// 新增的产品
+	let updfirs  = new Array();		// 被更新的产品
+	let delfirs = new Array();		// 被删除的产品
 
-	let orgFirs = order.ordfirs;
+	let orgFirs = order.ordfirs;	// 原本订单的产品
 	for(let i=0; i<orgFirs.length; i++) {
 		let orgFir = orgFirs[i];
 		let fir = null;
@@ -218,7 +218,7 @@ let fkOrdUpd_setOrdfir = function(req, res, order, firs) {
 		let fir = firs[i];
 		let orgFir = null;
 		for(let j=0; j<orgFirs.length; j++) {
-			if(orgFirs[j].pdfir._id == fir.pdfir) {
+			if(orgFirs[j].pdfir && orgFirs[j].pdfir._id == fir.pdfir) {
 				orgFir = orgFirs[j];
 				break;
 			}
