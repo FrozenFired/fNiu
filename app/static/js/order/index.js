@@ -330,9 +330,9 @@ let ordfirsShow = function() {
 
 	$("#bsOrderAdd_pz").text(getPz())
 	$("#bsOrderAdd_arts").text(ordfirs.length)
-	$("#bsOrderAdd_real").val(real)
-	$("#bsOrderAdd_pdPr").val(imp)
-	$("#bsOrderAdd_imp").val(imp)
+	$("#bsOrderAdd_real").val(Math.round(real * 100) / 100 )
+	$("#bsOrderAdd_pdPr").val(Math.round(imp * 100) / 100 )
+	$("#bsOrderAdd_imp").val(Math.round(imp * 100) / 100 )
 }
 
 /* =========== 操作订单时, 订单相应的产品显示更新 =========== */
@@ -498,6 +498,36 @@ let bsOrderShow = function(order) {
 		elem += '</div>'
 	}
 
+	elem += '<div style="height:100px"></div>'
+	for(let i=0; i<firLen; i++) {
+		let ordfir = order.ordfirs[i];
+		pieces += ordfir.quot;
+		elem += '<div class="row mt-2 bg-light py-2">'
+			let pdfir = new Object();
+			pdfir.photo = '/1.jpg'
+			pdfir.code = '模特已删除'
+			if(ordfir.pdfir) {
+				pdfir = ordfir.pdfir;
+			}
+			elem += '<div class="col-4">'
+				elem += '<img src="' + pdfir.photo +'" width="100%" ';
+				elem += 'style="max-width:100px;max-height:100px;"'
+				elem += ' alt="'+pdfir.code+'" />';
+			elem += '</div>'
+			elem += '<div class="col-8">'
+				elem += '<div class="row">'
+					elem += '<h3 class="col-6">'+pdfir.code+'</h3>'
+					elem += '<h4 class="col-6 text-right">'+pdfir.nome+'</h4>'
+					elem += '<div class="col-12 text-right">'
+						elem += ordfir.quot+'pz * '
+						elem += Math.round(ordfir.price * 100)/100+'€ = &nbsp; &nbsp;'
+						elem += Math.round(ordfir.price*ordfir.quot * 100)/100+'€</div>'
+					elem += '</div>'
+				elem += '</div>'
+			elem += '</div>'
+		elem += '</div>'
+	}
+	elem += '<div style="height:100px"></div>'
 
 	elem += '<div class="topNav-second pt-2">'
 		elem += '<div class="row p-2">';

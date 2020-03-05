@@ -86,6 +86,38 @@ let bsOrderShow = function(order) {
 			str += Math.round(order.imp * 100)/100
 		str += ' €</div>'
 	str += '</div>'
+
+	str += '<div style="height:100px"></div>'
+	for(let i=0; i<firLen; i++) {
+		let ordfir = order.ordfirs[i];
+		pieces += ordfir.quot;
+		str += '<div class="row mt-2 bg-light py-2">'
+			let pdfir = new Object();
+			pdfir.photo = '/1.jpg'
+			pdfir.code = '模特已删除'
+			if(ordfir.pdfir) {
+				pdfir = ordfir.pdfir;
+			}
+			str += '<div class="col-4">'
+				str += '<img src="' + pdfir.photo +'" width="100%" ';
+				str += 'style="max-width:100px;max-height:100px;"'
+				str += ' alt="'+pdfir.code+'" />';
+			str += '</div>'
+			str += '<div class="col-8">'
+				str += '<div class="row">'
+					str += '<h3 class="col-6">'+pdfir.code+'</h3>'
+					str += '<h4 class="col-6 text-right">'+pdfir.nome+'</h4>'
+					str += '<div class="col-12 text-right">'
+						str += ordfir.quot+'pz * '
+						str += Math.round(ordfir.price * 100)/100+'€ = &nbsp; &nbsp;'
+						str += Math.round(ordfir.price*ordfir.quot * 100)/100+'€</div>'
+					str += '</div>'
+				str += '</div>'
+			str += '</div>'
+		str += '</div>'
+	}
+	str += '<div style="height:100px"></div>'
+
 	str += '<div style="height: 200px"></div>'
 	str += '<div class="row">'
 		str += '<div class="col-8">'
@@ -95,8 +127,7 @@ let bsOrderShow = function(order) {
 			str += 'data-id='+order._id+' type="button"> 删除 </button>'
 		str += '</div>'
 	str += '</div>'
-
-
+	
 	str += '<div class="topNav-second pt-2">'
 		str += '<div class="row pl-2">';
 			str += '<div class="col-6">'
