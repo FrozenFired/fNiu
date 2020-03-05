@@ -51,30 +51,30 @@ block content
 					span #{pdPrice}€
 				.col-2.text-right #{ordfir.quot * pdPrice}€
 		.row(style="height: 5px; border-bottom: 1px solid #000;") .
-		.row.mt-2(style="font-size:24px")
+		.row.my-2(style="font-size:24px")
 			.col-4 T.Art: #{proLen}
 			.col-5 Tot: #{proNum} pz
-		-let pdPr = 'NaN';
-		if order.pdPr && !isNaN(order.pdPr)
-			-pdPr = (order.pdPr).toFixed(2);
-		else if order.imp && !isNaN(order.imp)
-			-pdPr = (order.imp).toFixed(2);
-		.row.mb-2(style="font-size:28px")
-			.col-12.text-right IMP: #{pdPr}€
 
 		.row(style="font-size: 28px; border: 1px solid #000;")
-			if order.real != order.pdPr
-				-let real = 'NaN';
-				if order.real && !isNaN(order.real)
-					-real = (order.real).toFixed(2);
-				.col-6 ORIGINALE:
-				.col-6.text-right #{real} €
 			if order.imp != order.pdPr
-				-let imp = 'NaN';
-				if order.imp && !isNaN(order.imp)
-					-imp = (order.imp).toFixed(2);
-				.col-6 Paid-up:
-				.col-6.text-right #{imp} €
+				-let pdPr = 'NaN';
+				if order.pdPr && !isNaN(order.pdPr)
+					-pdPr = (order.pdPr).toFixed(2);
+				else if order.imp && !isNaN(order.imp)
+					-pdPr = (order.imp).toFixed(2);
+				.col-6 IMP:
+				.col-6.text-right #{pdPr} €
+			//- if order.real != order.pdPr
+			//- 	-let real = 'NaN';
+			//- 	if order.real && !isNaN(order.real)
+			//- 		-real = (order.real).toFixed(2);
+			//- 	.col-6 ORIGINALE:
+			//- 	.col-6.text-right #{real} €
+			-let imp = 'NaN';
+			if order.imp && !isNaN(order.imp)
+				-imp = (order.imp).toFixed(2);
+			.col-7 Total da pagare:
+			.col-5.text-right #{imp} €
 	div(style="height: 200px")
 	span .
 	script(src="/js/pter/ticket.js")

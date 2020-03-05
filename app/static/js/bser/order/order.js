@@ -75,9 +75,17 @@ let bsOrderShow = function(order) {
 		str += '<tr>'
 			str += '<th colspan="2" class="border border-dark"> TOT: '+firLen+'</th>'
 			str += '<th colspan="2" class="border border-dark text-right">'+pieces+' pz</th>'
-			str += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.imp * 100)/100+' €</th>'
+			str += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.pdPr * 100)/100+' €</th>'
 		str += '</tr>'
 	str += '</table>'
+	str += '<div class="row">'
+		str += '<div class="col-6"> 原价: '
+			str += Math.round(order.real * 100)/100
+		str += ' €</div>'
+		str += '<div class="col-6 text-right"> 实收'
+			str += Math.round(order.imp * 100)/100
+		str += ' €</div>'
+	str += '</div>'
 	str += '<div style="height: 200px"></div>'
 	str += '<div class="row">'
 		str += '<div class="col-8">'
