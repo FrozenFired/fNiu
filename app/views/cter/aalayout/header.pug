@@ -1,32 +1,60 @@
-.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-	a.navbar-brand.btn.btn-success(href="/cter") <span class="oi oi-home"></span>
-	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
-		<span class="navbar-toggler-icon"></span>
-
-	.collapse.navbar-collapse#navbarTogglerDemo02
-		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-			li
-				span &nbsp;
-			//- li.nav-item.active.bg-secondary.text-center
-			//- 	a.nav-link(href="/cter") 推荐 <span class="sr-only">(current)</span>
-			//- li
-			//- 	span &nbsp;
-			//- li.nav-item.active.bg-secondary.text-center
-			//- 	a.nav-link(href="/cter") 全部 <span class="sr-only">(current)</span>
-		ul.navbar-nav
-			li
-				span &nbsp;
-			li.text-center
-				a.btn.btn-link.text-info(href="/ctMyself")
-					span hello: 
-					- let nome = crCter.code;
-					if crCter.nome && crCter.nome.length > 0
-						- nome = crCter.nome;
-					span #{nome}
-			li
-				span &nbsp;
-			li: a.btn.btn-danger(href="/logout") Logout
-
-.container
-	.row
-		div(style="height:80px")
+- let nome = crCter.code;
+if crCter.nome && crCter.nome.length > 0
+	- nome = crCter.nome;
+.narrows
+	.header-box
+		.container
+			.row.py-2.pb-4
+				.col-6
+					a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
+				.col-6.text-right
+					//- a.btn.btn-link.text-info(href="/ctMyself")
+					a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
+			.row.py-2.scrollDownHide
+				.col-2
+					button.btn.btn-default(type="button") <span class="oi oi-chevron-bottom"></span>
+				.col-10
+					.input-group.input-group-lg
+						input#headPdCode.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
+						.input-group-prepend
+							<span class="input-group-text">搜索</span>
+.wides
+	.header-box
+		.container
+			.row.pt-2.pb-1
+				.col-md-3
+					a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
+				.col-md-6
+					.input-group.input-group-lg
+						input#headPdCode.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
+						.input-group-prepend
+							<span class="input-group-text">搜索</span>
+				.col-md-3.text-right
+					a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
+			.row.pt-4.scrollDownHide
+				.col-md-9
+					ul.headerUl.catgSpread
+						li.catgList(id="b-1"): h5: a.btn.btn-info(href="#") 男装
+						li.catgList(id="b-2"): h5: a.btn.btn-info(href="#") 女装
+						li.catgList(id="b-3"): h5: a.btn.btn-info(href="#") 鞋子
+						li.catgList(id="b-4"): h5: a.btn.btn-info(href="#") 冬装
+						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
+				.col-md-3.text-right
+					ul.headerUl
+						li: h5 about &nbsp;
+						li: h5 News &nbsp;
+						li: h5 <span class="oi oi-heart"></span>
+						li: h5 <span class="oi oi-heart"></span>
+	.header-spread
+		.container.catgSpread(style="background-color: #FF00FF")
+			.row.pt-3.navShow(id="a-1", style="display:none")
+				.col-md-8
+					h1 hello
+				.col-md-4
+					img(src="/imgs/1.jpg", width="100%", title="公司图标")
+			.row.py-3.navShow(id="a-2", style="display:none")
+				.col-md-8
+					h1 word
+				.col-md-4
+					img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
+script(src="/js/aaViews/header.js")

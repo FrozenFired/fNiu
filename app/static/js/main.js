@@ -12,7 +12,13 @@ $(window).scroll(function(event){
 	setTimeout(function(){ t = p ; },0)
 });
 /* ============= 页面滚动 三级导航事件 ============= */
-
+$(function() {
+	if($(window).width()<768) {
+		$('.wides').hide()
+	} else {
+		$('.narrows').hide()
+	}
+})
 
 
 let isFloat = function(num) {

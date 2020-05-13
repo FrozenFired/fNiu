@@ -1,29 +1,105 @@
 extends ../aalayout/layout
 
 block content
-	.page#pdfirs_page
-		.container.mt-3
-			.row.text-right.mt-3
-				.col-12
-					h3.reloadPdfirs#loading 正在加载... <span class="oi oi-reload"></span>
-					h3.reloadPdfirs#loaded(style="display:none") <span class="oi oi-reload"></span>
-			#allPdfirs
+	.container
+		#carouselExampleIndicators.carousel.slide(data-ride="carousel")
+			//- .carousel-indicators
+			//- 	li(data-target="#carouselExampleIndicators" data-slide-to="0" class="active")
+			//- 	li(data-target="#carouselExampleIndicators" data-slide-to="1")
+			//- 	li(data-target="#carouselExampleIndicators" data-slide-to="2")
+			.carousel-inner
+				.carousel-item
+					img.d-block.w-100(src="/imgs/sl1.jpg")
+					.carousel-caption.d-none.d-md-block
+						h5 第一个
+						p 第一个
+				.carousel-item.active
+					img.d-block.w-100(src="/imgs/sl2.jpg")
+					.carousel-caption.d-none.d-md-block
+						h5 第一个
+						p 第一个
+				.carousel-item
+					img.d-block.w-100(src="/imgs/sl3.jpg")
+					.carousel-caption.d-none.d-md-block
+						h5 第一个
+						p 第一个
+			a.carousel-control-prev(href="#carouselExampleIndicators" role="button" data-slide="prev")
+				span.carousel-control-prev-icon(aria-hidden="true")
+				span.sr-only Previous
+			a.carousel-control-next(href="#carouselExampleIndicators" role="button" data-slide="next")
+				span.carousel-control-next-icon(aria-hidden="true")
+				span.sr-only Next
+		.row.mt-5
+			.col-md-12.text-center
+				h1 店长推荐
+			each pdfir in pdfirs
+				-a;
+				.col-md-4.col-lg-3.mt-3
+					.card
+						img.card-img-top(src=pdfir.photo alt=pdfir.code)
+						.card-body
+							h5.card-title
+								.row
+									.col-7 #{pdfir.code}
+									.col-5.text-right #{pdfir.price} €
+							P.card-text
+								span #{pdfir.nome}
+								if !pdfir.nome
+									-a;
+									br
 
-		.bomNav-first.bg-white
-			.row.pt-1
-				.col-10
-					select#sortSelect.selectPd.custom-select.custom-select-lg.mb-3
-						option(value='ctAt_-1') 最新产品
-						option(value='sales-all_1') 销量最多
-						option(value='rcmd_2') 店长推荐
-					input#pdCodeName.ipt-50-35(type="text", style="display:none" placeholder='型号或名称搜索', autocomplete="off")
-				.col-2.pt-2
-					h2#sortToFind <span class="oi oi-magnifying-glass"></span>
-					h2#findToSort(style="display:none") <span class="oi oi-sort-descending"></span>
-	.page#pdfir_page
-		#pdfirInfo
-	script(src="/js/cter/aaMain.js")
-	script(src="/js/cter/index.js")
-	script(src="/js/cter/pdfirs.js")
-	script(src="/js/cter/pdfir.js")
-	script(src="/js/cter/cter.js")
+								if pdfir.material
+									-a;
+									span : #{pdfir.material}
+							a.btn.btn-primary.btn-block(href="#") 微信联系
+		//- .row.mt-5
+		//- 	.col-md-12.text-center
+		//- 		h1 我的购物车
+		//- .row.mt-3.border.p-2
+		//- 	.col-md-3.text-center
+		//- 		img.card-img-top(src="/imgs/1.jpg")
+		//- 	.col-md-6
+		//- 		h5.card-title Card title
+		//- 		P.card-text Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		//- 		a.btn.btn-primary.btn-block(href="#") Go somewhere
+		//- 	.col-md-3.text-center
+		//- 		h5 单价: 12.5 €
+		//- 		.row
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") -
+		//- 			.col-6
+		//- 				input.iptsty(type="number", value=3)
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") +
+		//- .row.mt-3.border.p-2
+		//- 	.col-md-3.text-center
+		//- 		img.card-img-top(src="/imgs/1.jpg")
+		//- 	.col-md-6
+		//- 		h5.card-title Card title
+		//- 		P.card-text Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		//- 		a.btn.btn-primary.btn-block(href="#") Go somewhere
+		//- 	.col-md-3.text-center
+		//- 		h5 单价: 12.5 €
+		//- 		.row
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") -
+		//- 			.col-6
+		//- 				input.iptsty(type="number", value=3)
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") +
+		//- .row.mt-3.border.p-2
+		//- 	.col-md-3.text-center
+		//- 		img.card-img-top(src="/imgs/1.jpg")
+		//- 	.col-md-6
+		//- 		h5.card-title Card title
+		//- 		P.card-text Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		//- 		a.btn.btn-primary.btn-block(href="#") Go somewhere
+		//- 	.col-md-3.text-center
+		//- 		h5 单价: 12.5 €
+		//- 		.row
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") -
+		//- 			.col-6
+		//- 				input.iptsty(type="number", value=3)
+		//- 			.col-3
+		//- 				button.btn.btn-info.btn-block(type="button") +
