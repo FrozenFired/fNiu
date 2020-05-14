@@ -67,7 +67,7 @@ let loginUserf = function(req, res, code, pwd) {
 					req.session.crUser = user;
 					// console.log(req.session.crUser.firm)
 					if(user.role == 1) {
-						res.redirect('/order');
+						res.redirect('/bser');
 					}
 					else if(user.role == 3) {
 						res.redirect('/pter');

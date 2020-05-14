@@ -9,6 +9,8 @@ let Ord = require('../controllers/user/order/order');
 let Product = require('../controllers/user/bser/product');
 let Prod = require('../controllers/user/bser/prod');
 
+let Nome = require('../controllers/user/bser/nome');
+
 let Cter = require('../controllers/user/bser/order/cter');
 let Order = require('../controllers/user/bser/order/order');
 let Ordfir = require('../controllers/user/bser/order/ordfir');
@@ -65,6 +67,18 @@ module.exports = function(app){
 	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel)
 
 	app.get('/bsPdAjaxCode', MdRole.bserIsLogin, Product.bsPdAjaxCode);
+
+
+	/* =================================== Nome =================================== */
+	app.get('/bsNomeRevise', MdRole.bserIsLogin, Nome.bsNomeRevise);
+	app.get('/bsNomes', MdRole.bserIsLogin, Nome.bsNomes);
+	app.get('/bsNomeAdd', MdRole.bserIsLogin, Nome.bsNomeAdd);
+	app.post('/bsNomeNew', MdRole.bserIsLogin, postForm, Nome.bsNomeNew);
+	app.get('/bsNome/:id', MdRole.bserIsLogin, Nome.bsNome);
+
+	app.post('/bsNomeUpd', MdRole.bserIsLogin, postForm, Nome.bsNomeUpd);
+	app.get('/bsNomeDel/:id', MdRole.bserIsLogin, Nome.bsNomeDel)
+
 	
 
 	/* =================================== cter =================================== */

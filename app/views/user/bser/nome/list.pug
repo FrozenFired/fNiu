@@ -1,0 +1,16 @@
+extends ../aalayout/layout
+
+block content
+	p.mb-3.px-2.text-secondary.text-right 名称校对：[/bsNomeRevise]
+	table.table.table-hover
+		tr
+			th Nome
+			th status
+			th weight
+		each nome in nomes
+			-a;
+			tr
+				td #{nome.code}
+				td #{nome.status}
+				td #{nome.weight}
+	script(src="/js/bser/pdfir/pdfirs.js")
