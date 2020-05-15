@@ -153,7 +153,7 @@ exports.bsFirm = function(req, res) {
 			info = "公司信息出现错误，联系管理员";
 			Err.wsError(req, res, info);
 		} else {
-			res.render('./user/bser/index/firm', {
+			res.render('./user/bser/index/firm/firm', {
 				title: '公司信息',
 				crUser: crUser,
 
@@ -185,4 +185,19 @@ exports.bsFirmUpd = function(req, res) {
 			});
 		}
 	});
+}
+
+exports.bsPostAdd = function(req, res) {
+	let crUser = req.session.crUser;
+	let postObj = req.body.obj;
+	console.log(postObj);
+	return;
+	Firm.findOne({_id: crUser.firm}, function(err, firm) {
+		if(err) console.log(err);
+		if(!firm) {
+
+		} else {
+
+		}
+	})
 }

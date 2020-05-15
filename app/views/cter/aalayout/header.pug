@@ -15,8 +15,8 @@ if crCter.nome && crCter.nome.length > 0
 					button.btn.btn-default(type="button") <span class="oi oi-chevron-bottom"></span>
 				.col-10
 					.input-group.input-group-lg
-						input.headPdCode.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
-						.input-group-prepend
+						input.headPdCode.headNarrrow.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
+						.input-group-prepend.headSearch#headNarrrow
 							<span class="input-group-text">搜索</span>
 .wides
 	.header-box
@@ -26,25 +26,19 @@ if crCter.nome && crCter.nome.length > 0
 					a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
 				.col-md-6
 					.input-group.input-group-lg
-						input.headPdCode.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
-						.input-group-prepend
+						input.headPdCode.headWide.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
+						.input-group-prepend.headSearch#headWide
 							<span class="input-group-text">搜索</span>
 				.col-md-3.text-right
 					a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
 			.row.pt-4.scrollDownHide
 				.col-md-9
 					ul.headerUl.catgSpread
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
-						li.catgList(id="b-5"): h5: a.btn.btn-info(href="#") 夏装
+						each proNome in proNomes
+							- bg = 'btn-info';
+							if proNome.code == keyword
+								- bg = 'btn-success';
+							li.catgList(id="b-5"): h5: a.btn(class=bg href="/products?keyword="+proNome.code) #{proNome.code}
 						li.catgList(id="b-5"): h5: a.btn.btn-primary(href="#") 更多
 				.col-md-3.text-right
 					ul.headerUl

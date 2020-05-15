@@ -1,17 +1,15 @@
 $(function() {
-	// $('.catgList').mouseenter(function(e) {
-	// 	let id = $(this).attr("id").split('-')[1]
-	// 	console.log(id)
-	// 	$('.navShow').hide();
-	// 	$('#a-'+id).show();
+	// $(".header-box").on('input', '.headPdCode', function(e) {
+	// 	let str = $(this).val().replace(/\s+/g,"").toUpperCase();
+	// 	console.log(str)
 	// })
-	// $('.catgSpread').mouseleave(function(e) {
-	// 	console.log('a1')
-	// 	setTimeout(function(){
-	// 		$('.catgSpread').mouseout(function(e) {
-	// 			console.log('a3')
-	// 			$('.navShow').hide(); 
-	// 		})
-	// 	}, 100);
-	// })
+	$(".headSearch").click(function(e) {
+		let iptClass = $(this).attr("id");
+		let keyword = $('.'+iptClass).val().replace(/\s+/g,"").toUpperCase();
+		window.location.href = "/products?keyword="+keyword;
+	})
+	$(".headPdCode").blur(function(e) {
+		let keyword = $(this).val().replace(/\s+/g,"").toUpperCase();
+		window.location.href = "/products?keyword="+keyword;
+	})
 })

@@ -22,6 +22,13 @@ let dbSchema = new Schema({
 	iban: String,
 	resp: String,// 负责人
 
+	posts: [{
+		photo: String,
+		title: String,
+		desp: String,
+		weight: Number
+	}],
+
 	ctAt: Date,
 	upAt: Date,
 });

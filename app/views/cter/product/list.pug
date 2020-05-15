@@ -1,0 +1,10 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-5
+		h1 #{keyword}
+		.row.mt-5
+			each pdfir in pdfirs
+				-a;
+				.col-md-4.col-lg-3.mt-3
+					include ./productCard

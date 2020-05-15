@@ -2,9 +2,41 @@ let Err = require('../aaIndex/err');
 
 let Pdfir = require('../../models/material/pdfir');
 let Ordfir = require('../../models/client/ordfir');
+exports.products = function(req, res) {
+	let crCter = req.session.crCter;
+	let proNomes = req.session.proNomes;
+	let keyword = req.query.keyword;
+	let keywordReg = new RegExp(keyword + '.*');
 
+	Pdfir.find({
+		'firm': crCter.firm,
+		$or:[
+			{'code': {'$in': keywordReg}},
+			{'nome': {'$in': keywordReg}},
+		]
+	})
+	.sort({'ctAt': -1})
+	.exec(function(err, pdfirs) {
+		if(err) {
+			console.log(err);
+			info = "cter products Pdfir.find, Error!"
+			Err.usError(req, res, info);
+		} else {
+			res.render('./cter/product/list', {
+				title : '产品列表',
+				crCter: crCter,
+				proNomes: proNomes,
+
+				pdfirs: pdfirs,
+				keyword: keyword
+			});
+		}
+	})
+}
 exports.ctGetPdfirs = function(req, res) {
 	let crCter = req.session.crCter;
+	let proNomes = req.session.proNomes;
+
 	Pdfir.find({'firm': crCter.firm})
 	.sort({'ctAt': -1})
 	.exec(function(err, pdfirs) {
@@ -20,6 +52,7 @@ exports.ctGetPdfirs = function(req, res) {
 
 exports.ctGetOrdfirs = function(req, res) {
 	let crCter = req.session.crCter;
+	let proNomes = req.session.proNomes;
 
 	let symAtFm = "$gte";
 	let symAtTo = "$lte";

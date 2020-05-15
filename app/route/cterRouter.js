@@ -28,7 +28,7 @@ module.exports = function(app){
 
 
 	/* ======================================== product ======================================== */
-	// app.get('/ctPdfirs', MdRole.cterIsLogin, Product.ctPdfirs);
+	app.get('/products', MdRole.cterIsLogin, Product.products);
 	// app.get('/ctPdfirsAjax', MdRole.cterIsLogin, Product.ctPdfirsAjax);
 	// app.get('/ctpdfir/:id', MdRole.cterIsLogin, Product.ctpdfir);
 	// app.get('/ctPdAjaxCode', MdRole.cterIsLogin, Product.ctPdAjaxCode);

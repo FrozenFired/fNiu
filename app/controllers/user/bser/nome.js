@@ -287,3 +287,22 @@ exports.bsNomeDel = function(req, res) {
 		}
 	})
 }
+
+exports.bsNomeChStsAjax = function(req, res) {
+	let crUser = req.session.crUser;
+	let nomeId = req.query.nomeId;
+	let status = req.query.status;
+	Nome.findOne({_id: nomeId, 'firm': crUser.firm})
+	.exec(function(err, nome) {
+		if(err) console.log(err);
+		if(!nome) {
+			res.json({success: 0, info: "bsCterDelAjax, Cter.deleteOne,Error!"})
+		} else {
+			nome.status = parseInt(status);
+			nome.save(function(err, nomeSave) {
+				if(err) console.log(err);
+				res.json({success: 1})
+			})
+		}
+	})
+}

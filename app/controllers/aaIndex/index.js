@@ -40,6 +40,7 @@ exports.login = function(req, res) {
 
 let User = require('../../models/login/user');
 let Cter = require('../../models/client/cter');
+let Nome = require('../../models/material/nome');
 let bcrypt = require('bcryptjs');
 exports.loginUser = function(req, res) {
 	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -106,8 +107,13 @@ let loginCterf = function(req, res, code, pwd) {
 					cter.save(function(err, objSave){
 						if(err) console.log(err)
 					})
-					req.session.crCter = cter;
-					res.redirect('/cter');
+					Nome.find({'firm': cter.firm, 'status': 1})
+					.exec(function(err, nomes) {
+						if(err) console.log(err);
+						req.session.crCter = cter;
+						req.session.proNomes = nomes;
+						res.redirect('/cter');
+					})
 				}
 				else {
 					info = "用户名与密码不符，请重新登陆";
@@ -123,6 +129,7 @@ exports.logout = function(req, res) {
 	if(req.session.crUser) delete req.session.crUser;
 	// Cter
 	if(req.session.crCter) delete req.session.crCter;
+	if(req.session.proNomes) delete req.session.proNomes;
 	// Ader
 	if(req.session.crAder) delete req.session.crAder;
 

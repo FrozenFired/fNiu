@@ -54,6 +54,8 @@ module.exports = function(app){
 
 	app.get('/bsFirm', MdRole.bserIsLogin, User.bsFirm)
 	app.post('/bsFirmUpd', MdRole.bserIsLogin, postForm, User.bsFirmUpd);
+
+	app.post('/bsPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotoOrg, User.bsPostAdd);
 	/* =================================== Firm =================================== */
 
 	/* ======================================== product ======================================== */
@@ -78,6 +80,8 @@ module.exports = function(app){
 
 	app.post('/bsNomeUpd', MdRole.bserIsLogin, postForm, Nome.bsNomeUpd);
 	app.get('/bsNomeDel/:id', MdRole.bserIsLogin, Nome.bsNomeDel)
+
+	app.get('/bsNomeChStsAjax', MdRole.bserIsLogin, Nome.bsNomeChStsAjax);
 
 	
 

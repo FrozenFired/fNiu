@@ -5,7 +5,7 @@ let Pdfir = require('../../models/material/pdfir');
 
 exports.cter = function(req, res) {
 	let crCter = req.session.crCter;
-	
+	let proNomes = req.session.proNomes;
 	Pdfir.find({
 		'firm': crCter.firm,
 	})
@@ -17,8 +17,9 @@ exports.cter = function(req, res) {
 		} else {
 			res.render('./cter/index/index', {
 				title: '首页',
-				crCter : crCter,
-				pdfirs: pdfirs,
+				crCter,
+				proNomes,
+				pdfirs,
 			})
 		}
 	})
@@ -26,8 +27,10 @@ exports.cter = function(req, res) {
 
 exports.ctCter = function(req, res) {
 	let crCter = req.session.crCter;
+	let proNomes = req.session.proNomes;
 	res.render('./cter/index/cter', {
 		title: '个人中心',
-		crCter : crCter,
+		crCter,
+		proNomes,
 	})
 }
