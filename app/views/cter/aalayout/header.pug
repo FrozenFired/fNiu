@@ -38,8 +38,8 @@ if crCter.nome && crCter.nome.length > 0
 							- bg = 'btn-info';
 							if proNome.code == keyword
 								- bg = 'btn-success';
-							li.catgList(id="b-5"): h5: a.btn(class=bg href="/products?keyword="+proNome.code) #{proNome.code}
-						li.catgList(id="b-5"): h5: a.btn.btn-primary(href="#") 更多
+							li.catgList(id="b-5"): h5: a.btn(class=bg href="/products?pdnome="+proNome.code) #{proNome.code}
+						li.catgList(id="b-5"): h5: a.btn.btn-primary(href="/pdnomes") 更多
 				.col-md-3.text-right
 					ul.headerUl
 						li: h5 about &nbsp;

@@ -32,6 +32,9 @@ module.exports = function(app){
 	// app.get('/ctPdfirsAjax', MdRole.cterIsLogin, Product.ctPdfirsAjax);
 	// app.get('/ctpdfir/:id', MdRole.cterIsLogin, Product.ctpdfir);
 	// app.get('/ctPdAjaxCode', MdRole.cterIsLogin, Product.ctPdAjaxCode);
+
+	app.get('/pdnomes', MdRole.cterIsLogin, Product.pdnomes);
+	/* ======================================== nome ======================================== */
 	
 
 	/* ======================================== order ======================================== */

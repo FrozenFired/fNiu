@@ -1,21 +1,29 @@
 let Err = require('../aaIndex/err');
 
 let Pdfir = require('../../models/material/pdfir');
+let Nome = require('../../models/material/nome');
 let Ordfir = require('../../models/client/ordfir');
+
 exports.products = function(req, res) {
 	let crCter = req.session.crCter;
 	let proNomes = req.session.proNomes;
 	let keyword = req.query.keyword;
+	let pdnome = req.query.pdnome;
 	let keywordReg = new RegExp(keyword + '.*');
+	if(pdnome && pdnome.length>0) keyword = pdnome;
+
+	let limit = 120;
 
 	Pdfir.find({
 		'firm': crCter.firm,
 		$or:[
 			{'code': {'$in': keywordReg}},
 			{'nome': {'$in': keywordReg}},
+			{'nome': pdnome},
 		]
 	})
 	.sort({'ctAt': -1})
+	.limit(limit)
 	.exec(function(err, pdfirs) {
 		if(err) {
 			console.log(err);
@@ -33,6 +41,32 @@ exports.products = function(req, res) {
 		}
 	})
 }
+
+exports.pdnomes = function(req, res) {
+	let crCter = req.session.crCter;
+	let proNomes = req.session.proNomes;
+
+	Nome.find({
+		'firm': crCter.firm,
+	})
+	.sort({'status': -1})
+	.exec(function(err, nomes) {
+		if(err) {
+			console.log(err);
+			info = "cter pdnomes Nome.find, Error!"
+			Err.usError(req, res, info);
+		} else {
+			res.render('./cter/product/pdnomes', {
+				title : '产品分类列表',
+				crCter: crCter,
+				proNomes: proNomes,
+
+				nomes: nomes,
+			});
+		}
+	})
+}
+
 exports.ctGetPdfirs = function(req, res) {
 	let crCter = req.session.crCter;
 	let proNomes = req.session.proNomes;

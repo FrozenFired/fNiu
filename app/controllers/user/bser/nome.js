@@ -18,7 +18,11 @@ exports.bsNomeRevise = function(req, res) {
 			info = "bsNomeRevise Pdfir.find, Error！";
 			Err.usError(req, res, info);
 		} else {
-			bsSetNomes(req, res, pdfirs, 0)
+			Nome.deleteMany({'firm': crUser.firm}, function(err, nomesdel) {
+				if(err) console.log(err);
+
+				bsSetNomes(req, res, pdfirs, 0)
+			})
 		}
 	})
 }
@@ -28,7 +32,17 @@ let bsSetNomes = function(req, res, pdfirs, n) {
 	} else {
 		let crUser = req.session.crUser;
 		let pdfir = pdfirs[n];
-		Nome.findOne({'firm': crUser.firm, 'code': pdfir.nome})
+		if(!pdfir.nome || pdfir.nome.length == 0) {
+			pdfir.nome = 'undefine'
+		}
+		pdnome = pdfir.nome.replace(/\s+/g,"").toUpperCase();
+		if(pdnome != pdfir.nome) {
+			pdfir.nome = pdnome;
+			pdfir.save(function(err, pdfirSave) {
+				if(err) console.log(err);
+			})
+		}
+		Nome.findOne({'firm': crUser.firm, 'code': pdnome})
 		.exec(function(err, nome) {
 			if(err) console.log(err);
 			if(nome) {
@@ -39,7 +53,7 @@ let bsSetNomes = function(req, res, pdfirs, n) {
 				})
 			} else {
 				let _nome = new Nome();	// 创建nome
-				_nome.code = pdfir.nome;
+				_nome.code = pdnome;
 				_nome.firm = crUser.firm;
 				_nome.save(function(err, nomeSave) {
 					if(err) console.log(err);
@@ -55,13 +69,15 @@ exports.bsNomes = function(req, res) {
 	Nome.find({
 		// 'firm': crUser.firm,
 	})
-	.sort({'status': -1, 'weight': -1, 'quant': -1})
+	.sort({'status': -1, 'weight': -1, 'upAt': -1, 'quant': -1})
 	.exec(function(err, nomes) {
 		if(err) {
 			info = "bser nomes, nome find, Error！";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(nomes)
+			// for(let i=0; i<nomes.length; i++) {
+			// 	console.log(nomes[i].upAt)
+			// }
 			res.render('./user/bser/nome/list', {
 				title : '产品名称列表',
 				crUser: crUser,

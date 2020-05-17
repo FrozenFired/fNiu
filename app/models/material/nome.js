@@ -13,6 +13,8 @@ let dbSchema = new Schema({
 	status: Number,
 	weight: Number,
 	quant: Number, // 店长推荐
+
+	upAt: Date,
 });
 
 dbSchema.pre('save', function(next) {	
@@ -20,7 +22,10 @@ dbSchema.pre('save', function(next) {
 		if(!this.status) this.status = 0;
 		if(!this.weight) this.weight = 0;
 		if(!this.quant) this.quant = 1;
+	} else {
+
 	}
+	this.upAt = Date.now();
 	next();
 })
 
