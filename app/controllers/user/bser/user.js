@@ -1,7 +1,11 @@
 let Err = require('../../aaIndex/err');
 
+let MdPicture = require('../../../middle/middlePicture');
+let Conf = require('../../../../conf');
+
 let User = require('../../../models/login/user')
 let Firm = require('../../../models/login/firm')
+
 let _ = require('underscore')
 
 exports.bser = function(req, res) {
@@ -190,14 +194,43 @@ exports.bsFirmUpd = function(req, res) {
 exports.bsPostAdd = function(req, res) {
 	let crUser = req.session.crUser;
 	let postObj = req.body.obj;
-	console.log(postObj);
-	return;
 	Firm.findOne({_id: crUser.firm}, function(err, firm) {
 		if(err) console.log(err);
 		if(!firm) {
-
+			info = "修改公司信息时，数据库保存错误 请联系管理员";
+			Err.usError(req, res, info);
 		} else {
+			firm.posts.push(postObj);
+			firm.save(function(err, firmSave) {
+				if(err) console.log(err);
+				res.redirect('/bsFirm')
+			})
+		}
+	})
+}
 
+exports.bsPostDel = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.params.id;
+
+	Firm.findOne({_id: crUser.firm}, function(err, firm) {
+		if(err) console.log(err);
+		if(!firm) {
+			info = "修改公司信息时，数据库保存错误 请联系管理员";
+			Err.usError(req, res, info);
+		} else {
+			for(let i=0; i<firm.posts.length; i++) {
+				let post = firm.posts[i];
+				if(post._id == id) {
+					let orgPhoto = post.photo;
+					MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.firmPostPhoto);
+					firm.posts.remove(post);
+				}
+			}
+			firm.save(function(err, firmSave) {
+				if(err) console.log(err);
+				res.redirect('/bsFirm')
+			})
 		}
 	})
 }

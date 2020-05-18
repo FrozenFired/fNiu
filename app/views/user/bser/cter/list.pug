@@ -8,6 +8,14 @@ block content
 		.row.my-3
 			.col-12.text-right
 				a.btn.btn-warning(href="/bsCterAdd") <span class="oi oi-plus"></span>
+			.col-12.my-4
+				form(method="get", action="/bsCters")
+					.form-group.row
+						.col-9
+							input.form-control(type="text",name="keyword")
+						.col-3
+							input.btn.btn-success.btn-block(type="submit" value="搜索")
+
 		- let i = 0;
 		each cter in cters
 			- i++;

@@ -75,7 +75,7 @@ let MiddlePicture = {
 				let type = photoData.type.split('/')[1];		// 图片类型
 				let timestamp = Date.now();						// 时间戳
 				let photoName = picName + '_' + timestamp + '.' + type;	// 图片名称 code_2340.jpg
-				let photoSrc = path.join(__dirname, '../../../public/upload/'+photoDir);	// niu/public/upload/***/
+				let photoSrc = path.join(__dirname, '../../public/upload/'+photoDir);	// niu/public/upload/***/
 				let photo = photoSrc + photoName;
 				fs.writeFile(photo, data, function(err){
 					if(err) console.log(err);

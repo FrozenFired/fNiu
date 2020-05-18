@@ -56,6 +56,7 @@ module.exports = function(app){
 	app.post('/bsFirmUpd', MdRole.bserIsLogin, postForm, User.bsFirmUpd);
 
 	app.post('/bsPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotoOrg, User.bsPostAdd);
+	app.get('/bsPostDel/:id', MdRole.bserIsLogin, User.bsPostDel);
 	/* =================================== Firm =================================== */
 
 	/* ======================================== product ======================================== */

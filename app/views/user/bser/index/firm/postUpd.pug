@@ -44,22 +44,19 @@
 #delPost.modal.fade
 	.modal-dialog
 		.modal-content
-			form#upGroup(method="post", action="/bsFirmUpd", enctype="multipart/form-data")
-				.modal-header
-					h5 删除海报
-				.modal-body
-					input(type="hidden", name="obj[_id]", value=firm._id)
-					each post in firm.posts
-						-a;
-						.row
-							.col-12
-								img(src=post.photo)
-						.row
-							.col-9 #{post.title}
-							.col-3
-								button.btn.btn-danger(type="button") 删除
-				.modal-footer
-					.col-6
-						button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
-					.col-6.text-right
-						button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
+			.modal-header
+				h5 删除海报
+			.modal-body
+				each post in firm.posts
+					-a;
+					.row.mt-5
+						.col-12
+							img(src=post.photo, width="100%")
+					.row.mt-3
+						.col-9 #{post.title}
+						.col-3
+							a.btn.btn-danger(href="/bsPostDel/"+post._id) 删除
+			.modal-footer
+				.col-6
+					button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+				.col-6.text-right

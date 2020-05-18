@@ -1,5 +1,6 @@
 let Err = require('../aaIndex/err');
 
+let Firm = require('../../models/login/firm');
 let Cter = require('../../models/client/cter');
 let Pdfir = require('../../models/material/pdfir');
 
@@ -15,11 +16,16 @@ exports.cter = function(req, res) {
 			info = "bser pdfirs, pdfir find, Error！";
 			Err.usError(req, res, info);
 		} else {
-			res.render('./cter/index/index', {
-				title: '首页',
-				crCter,
-				proNomes,
-				pdfirs,
+			Firm.findOne({_id: crCter.firm}, function(err, firm) {
+				if(err) console.log(err);
+
+				res.render('./cter/index/index', {
+					title: '首页',
+					crCter,
+					proNomes,
+					pdfirs,
+					firm
+				})
 			})
 		}
 	})

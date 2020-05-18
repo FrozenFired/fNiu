@@ -16,8 +16,17 @@ exports.bsCterAdd = function(req, res) {
 
 exports.bsCters = function(req, res) {
 	let crUser = req.session.crUser;
+	let keyword = '';
+	if(req.query.keyword) keyword = req.query.keyword.replace(/\s+/g,"").toUpperCase();
+	let keywordReg = new RegExp(keyword + '.*');
 
-	Cter.find({'firm': crUser.firm,})
+	Cter.find({
+		'firm': crUser.firm,
+		$or:[
+			{'code': {'$in': keywordReg}},
+			{'nome': {'$in': keywordReg}},
+		]
+	})
 	.sort({'vip': -1})
 	.exec(function(err, cters) {
 		if(err) {
