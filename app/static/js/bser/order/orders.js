@@ -80,6 +80,27 @@ let appendCters = function() {
 /* ============ 显示订单列表 ============ */
 let bsOrdersShow = function() {
 	let str = '<div class="bsOrders_class">'
+	let tot = 0;
+	for(let i=0; i<selOrds.length; i++) {
+		let order = selOrds[i];
+		if(!isNaN(order.imp)){
+			tot += order.imp;
+		}
+	}
+	str += '<h4 class="row text-right">'
+		str += '<div class="col-6">'
+			str += '<span class="text-warning">'
+			str += selOrds.length
+			str += '</span>'
+			str += '<span> 单</span>'
+		str += '</div>'
+		str += '<div class="col-6">'
+			str += '<span class="text-warning">'
+			str += tot
+			str += '</span>'
+			str += '<span> €</span>'
+		str += '</div>'
+	str += '</h4>'
 	for(let i=0; i<selOrds.length; i++) {
 		let order = selOrds[i];
 		str += '<div class="card bg-light mt-2 p-2">';
@@ -130,7 +151,6 @@ let bsOrdersShow = function() {
 		str += '</div>';
 	}
 	str += '</div>'
-
 	$(".page").hide();
 	$("#bsOrders_page").show();
 
