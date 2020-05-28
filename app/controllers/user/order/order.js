@@ -4,6 +4,8 @@ let Conf = require('../../../../conf');
 let _ = require('underscore');
 let moment = require('moment');
 
+let User = require('../../../models/login/user');
+
 let Cter = require('../../../models/client/cter');
 let Order = require('../../../models/client/order');
 let Ordfir = require('../../../models/client/ordfir');
@@ -128,6 +130,103 @@ exports.getOrders = function(req, res) {
 	})
 }
 
+exports.bsOrdersMonth = function(req, res) {
+	let crUser = req.session.crUser;
+
+	ctAt = Date.parse(crUser.ctAt);
+	let months = new Array();
+
+	let now = new Date();
+	let tMonth = now.getMonth();
+	let tyear = now.getFullYear();
+	let tFirst = new Date(tyear, tMonth, 1);
+	let timestamps = tFirst.setHours(0, 0, 0, 0);
+	let timestampf = now.setHours(23, 59, 59, 999);
+	// console.log(timestamps)
+	// console.log(timestampf)
+
+	let month = new Object();
+	month.key = String(tyear).slice(2,4)+'年'+(tMonth+1)+'月';
+	month.vals = timestamps
+	month.valf = timestampf
+
+	months.push(month)
+	for(let i=1; i< 24; i++) {
+		tMonth = tMonth-1;
+		if(tMonth < 0) {
+			tyear = tyear -1;
+			tMonth = 11;
+		}
+		tFirst = new Date(tyear, tMonth, 1);
+		timestamps = tFirst.setHours(0, 0, 0, 0);
+		tFirst.setMonth(tFirst.getMonth() + 1);
+		tFirst.setDate(tFirst.getDate() - 1)
+		timestampf = tFirst.setHours(23, 59, 59, 999);
+		months[i] = new Object();
+		months[i].key = String(tyear).slice(2,4)+'年'+(tMonth+1)+'月';
+		months[i].vals = timestamps
+		months[i].valf = timestampf
+		if(timestampf < ctAt) break;
+	}
+
+
+	User.find({'firm': crUser.firm})
+	.where('role').ne(3)
+	.exec(function(err, users) {
+		if(err) {
+			info = "bsOrdersMonth, User.find, Error!";
+			Err.wsError(req, res, info);
+		} else {
+			res.render('./user/bser/order/listMonth', {
+				title : '月订单',
+				crUser: crUser,
+				users : users,
+				selUserCode: req.query.selUserCode,
+				months: months
+			});
+		}
+	})
+}
+exports.bsOrdersMonthAjax = function(req, res) {
+	let crUser = req.session.crUser;
+
+	let symOper = '$ne';
+	let condOper = " ";
+	// 在这的作用是 老板选择查看某人的出售订单使用
+	if(req.query.selUserCode && req.query.selUserCode !=0 ) {
+		symOper = '$eq';
+		condOper = req.query.selUserCode;
+	}
+
+	let condWord = "";
+	if(req.query.keyword) {
+		condWord = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	}
+
+	// 根据创建时间筛选
+	let begin = parseInt(req.query.begin);
+	let ended = parseInt(req.query.ended);
+	symCreatS = "$gte"; condCreatS = begin;
+	symCreatF = "$lt"; condCreatF = ended;
+
+	Order.find({
+		'firm': crUser.firm,
+		'code': new RegExp(condWord + '.*'),
+		'ctAt': {[symCreatS]: condCreatS, [symCreatF]: condCreatF},
+		// 'creater': {[symOper]: condOper},
+	})
+	.populate('cter')
+	.sort({"ctAt": -1})
+	.exec(function(err, orders) {
+		if(err) {
+			res.json({success: 0, info: "bsOrdersMonthAjax, Order.find, Error!"})
+		} else {
+			// console.log(1)
+			// console.log(orders)
+			res.json({success: 1, orders: orders, keyword: req.query.keyword})
+		}
+	})
+}
 
 exports.orderNew = function(req, res) {
 	let crUser = req.session.crUser;
