@@ -110,6 +110,7 @@ module.exports = function(app){
 	// app.get('/bsOrdHis', MdRole.bserIsLogin, Order.bsOrdHis);
 	// app.post('/bsOrdChangeSts', MdRole.bserIsLogin, postForm, Order.bsOrdChangeSts);
 	app.get('/bsOrderTicketing', MdRole.userIsLogin, Order.bsOrderTicketing);
+	app.get('/bsOrderStamping', MdRole.userIsLogin, Order.bsOrderStamping);
 	/* ----------- ordfir 根据 pd 或者 客户 查看销量 ----------- */
 	app.get('/bsOrdfirsPd', MdRole.bserIsLogin, Ordfir.bsOrdfirsPd);
 	app.get('/bsOrdfirsCt', MdRole.bserIsLogin, Ordfir.bsOrdfirsCt);

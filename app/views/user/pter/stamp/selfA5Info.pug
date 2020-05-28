@@ -1,0 +1,50 @@
+.row
+	table.tableA5.table-borderless.border.border-dark
+		thead
+			tr.textCenter
+				th.border.border-dark: h2 Codice
+				th.border.border-dark: h2 Desc
+				th.border.border-dark: h2 QNT
+				th.border.border-dark: h2 Prezzo
+				th.border.border-dark: h2 Total(€)
+		tbody
+			-var firLen = order.ordfirs.length;
+			-var firNum = 0;
+			each ordfir in order.ordfirs
+				-firNum += ordfir.quot;
+				tr
+					- let code = '', nome = '';
+					if ordfir.pdfir
+						- code = ordfir.pdfir.code;
+						- nome = ordfir.pdfir.nome;
+					td(style="font-size: 30px") #{code}
+					td(style="font-size: 30px") #{nome}
+					-let firQuot = 'NaN';
+					if ordfir.quot && !isNaN(ordfir.quot)
+						- firQuot = parseInt(ordfir.quot);
+					td.textRight(style="font-size: 30px") #{firQuot}
+					-let firPrice = 'NaN';
+					if ordfir.price && !isNaN(ordfir.price)
+						- firPrice = (ordfir.price).toFixed(2);
+					td.textRight(style="font-size: 30px") #{firPrice}
+					-let firTotal = 'NaN';
+					if !isNaN(firQuot) && !isNaN(firPrice)
+						- firTotal = (firQuot*firPrice).toFixed(2);
+					td.textRight(style="font-size: 30px") #{firTotal}
+			tr
+				td &nbsp;
+				td &nbsp;
+				td &nbsp;
+				td &nbsp;
+				td &nbsp;
+
+
+		tr
+			th.border.border-dark: h1 T.Art: #{firLen}
+			th.border.border-dark
+			th.border.border-dark.textRight: h1 Tot: #{firNum} pz
+			th.border.border-dark
+			-let odImp = 'NaN'
+			if order.imp && !isNaN(order.imp)
+				-odImp = (order.imp).toFixed(2);
+			th.border.border-dark.textRight: h1 IMP:  #{odImp} €

@@ -85,6 +85,29 @@ exports.bsOrderTicketing = function(req, res) {
 		})
 	}
 }
+exports.bsOrderStamping = function(req, res) {
+	let crUser = req.session.crUser;
+	let orderId = req.query.orderId;
+	let newStamp = parseInt(req.query.newStamp);
+	// console.log(orderId)
+	if(isNaN(newStamp)) {
+		res.json({success: 0, info: "Error! bsOrderStamping stamping isNaN"});
+	} else {
+		Order.findOne({_id: orderId}, function(err, order){
+			if(err) console.log(err);
+			if(order){
+				order.stamping = newStamp;
+				order.save(function(err,objSave) {
+					if(err) console.log(err);
+					// console.log(objSave)
+					res.json({success: 1, info: "已经更改"});
+				})
+			} else {
+				res.json({success: 0, info: "已被删除，按F5刷新页面查看"});
+			}
+		})
+	}
+}
 
 exports.bsOrdHis = function(req, res) {
 	let crUser = req.session.crUser;

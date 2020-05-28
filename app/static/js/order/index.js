@@ -531,7 +531,11 @@ let bsOrderShow = function(order) {
 
 	elem += '<div class="topNav-second pt-2">'
 		elem += '<div class="row p-2">';
-			elem += '<div class="col-12">'
+			elem += '<div class="col-6">'
+				elem += '<button class="btn btn-link btn-block printStamp" type="button" '
+				elem += 'data-id='+order._id+'>打印 <span class="oi oi-print"></span></button>'
+			elem += '</div>'
+			elem += '<div class="col-6">'
 				elem += '<button class="btn btn-link btn-block printTicket" type="button" '
 				elem += 'data-id='+order._id+'>小票 <span class="oi oi-print"></span></button>'
 			elem += '</div>'

@@ -25,6 +25,10 @@ let dbSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	stamping: {
+		type: Number,
+		default: 0
+	},
 
 	ctAt: Date,
 	upAt: Date,

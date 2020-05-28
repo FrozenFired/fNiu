@@ -124,4 +124,20 @@ $( function() {
 			}
 		})
 	})
+	/* ======== 在 订单详情页面 点击打印机打印 ======== */
+	$("#bsOrder_page").on('click', '.printStamp', function(e) {
+		let target = $(e.target);
+		let orderId = target.data('id');
+		$.ajax({
+			type: 'GET',
+			url: '/bsOrderStamping?orderId=' + orderId + '&newStamp=1'
+		})
+		.done(function(results) {
+			if(results.success === 1) {
+				alert("正在打印")
+			} else if(results.success === 0) {
+				alert(results.info)
+			}
+		})
+	})
 });
