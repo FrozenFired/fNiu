@@ -405,142 +405,142 @@ let optOrderChgfir = function(pdfirId, quot) {
 /* ============== 显示订单详细信息 ============== */
 let bsOrderShow = function(order) {
 	let elem = '<div class="bsOrder_class">'
-	elem += '<div style="height:50px"></div>'
-	/* ---------- 客户 订单号 显示操作按钮 --------- */
-	elem += '<div class="row">';
-		elem += '<h4 class="col-4 p-2">'
-			// console.log(order)
-			if(order.cter){
-				elem += order.cter.nome
+		elem += '<div style="height:50px"></div>'
+		/* ---------- 客户 订单号 显示操作按钮 --------- */
+		elem += '<div class="row">';
+			elem += '<h4 class="col-4 p-2">'
+				// console.log(order)
+				if(order.cter){
+					elem += order.cter.nome
+				}
+				else{
+					elem += '散客'
+				}
+			elem += '</h4>'
+			elem += '<div class="col-8 text-right bsOrder_optionShow">'
+				elem += '<h4 class="text-info">'
+					elem += order.code+' &nbsp; <span class="oi oi-chevron-bottom"></span>'
+				elem += '</h4>';
+			elem += '</div>'
+			elem += '<div class="col-8 text-right bsOrder_optionHide" style="display:none">'
+				elem += '<h4 class="text-info">'
+					elem += order.code+' &nbsp; <span class="oi oi-chevron-top"></span>'
+				elem += '</h4>';
+			elem += '</div>'
+		elem += '</div>'
+		/* ------------------------------ 显示操作空间 ----------------------------- */
+		elem += '<div class="row bsOrder_optionPage mt-3" style="display:none">';
+			elem += '<div class="col-4">'
+				elem += '<button class="btn btn-danger bsOrder_delBtn" '
+				elem += 'data-id='+order._id+' type="button"> 删除 </button>'
+			elem += '</div>'
+			elem += '<div class="col-4">'
+				elem += '<button class="btn btn-warning btn-block bsOrder_copyOrder" type="button" '
+				elem += 'data-id='+order._id+'>复制 </button>'
+			elem += '</div>'
+			elem += '<div class="col-4">'
+				elem += '<button class="btn btn-warning btn-block bsOrder_upOrder" type="button" '
+				elem += 'data-id='+order._id+'> 更新</button>'
+			elem += '</div>'
+		elem += '</div>'
+		
+		/* ------------------ 产品基本信息 ------------------ */
+		elem += '<table class="table table-borderless border border-dark mt-4">';
+			elem += '<tr>'
+				elem += '<th class="border border-dark"> Code </th>'
+				elem += '<th class="border border-dark" colspan="2"> Desc </th>'
+				elem += '<th class="border border-dark text-right"> QNT </th>'
+				elem += '<th class="border border-dark text-right"> Prezzo </th>'
+				elem += '<th class="border border-dark text-right"> Total(€) </th>'
+			elem += '</tr>'
+			let firLen = order.ordfirs.length;
+			let pieces = 0;
+			for(let i=0; i<firLen; i++) {
+				let ordfir = order.ordfirs[i];
+				pieces += ordfir.quot;
+				elem += '<tr>'
+					if(ordfir.pdfir) {
+						let pdfir = ordfir.pdfir;
+						elem += '<td>'+pdfir.code+'</td>';
+						let pdname = pdfir.nome;
+						if(pdname && pdname.length > 5){
+							pdname = pdname.slice(0,3)+'...';
+						}
+						elem += '<td colspan="2">'+pdname+'</td>'
+					} else {
+						elem += '<td colspan="3">模特已删除</td>'
+					}
+					elem += '<td class="text-right">'+ordfir.quot+'</td>'
+					elem += '<td class="text-right">'+Math.round(ordfir.price * 100)/100+'</td>'
+					elem += '<td class="text-right">'+Math.round(ordfir.price*ordfir.quot * 100)/100+'</td>'
+				elem += '</tr>'
 			}
-			else{
-				elem += '散客'
-			}
-		elem += '</h4>'
-		elem += '<div class="col-8 text-right bsOrder_optionShow">'
-			elem += '<h4 class="text-info">'
-				elem += order.code+' &nbsp; <span class="oi oi-chevron-bottom"></span>'
-			elem += '</h4>';
+			elem += '<tr>'
+				elem += '<th colspan="2" class="border border-dark"> TOT: '+firLen+'</th>'
+				elem += '<th colspan="2" class="border border-dark text-right">'+pieces+' pz</th>'
+				elem += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.pdPr * 100)/100+' €</th>'
+			elem += '</tr>'
+		elem += '</table>'
+
+		elem += '<div class="row mt-4">'
+			elem += '<div class="col-6">'
+				elem += '原价: '+Math.round(order.real * 100)/100+' €'
+			elem += '</div>'
+			elem += '<div class="col-6 text-right">'
+				elem += '实收: '+Math.round(order.imp * 100)/100+' €'
+			elem += '</div>'
 		elem += '</div>'
-		elem += '<div class="col-8 text-right bsOrder_optionHide" style="display:none">'
-			elem += '<h4 class="text-info">'
-				elem += order.code+' &nbsp; <span class="oi oi-chevron-top"></span>'
-			elem += '</h4>';
-		elem += '</div>'
-	elem += '</div>'
-	/* ------------------------------ 显示操作空间 ----------------------------- */
-	elem += '<div class="row bsOrder_optionPage mt-3" style="display:none">';
-		elem += '<div class="col-4">'
-			elem += '<button class="btn btn-danger bsOrder_delBtn" '
-			elem += 'data-id='+order._id+' type="button"> 删除 </button>'
-		elem += '</div>'
-		elem += '<div class="col-4">'
-			elem += '<button class="btn btn-warning btn-block bsOrder_copyOrder" type="button" '
-			elem += 'data-id='+order._id+'>复制 </button>'
-		elem += '</div>'
-		elem += '<div class="col-4">'
-			elem += '<button class="btn btn-warning btn-block bsOrder_upOrder" type="button" '
-			elem += 'data-id='+order._id+'> 更新</button>'
-		elem += '</div>'
-	elem += '</div>'
-	
-	/* ------------------ 产品基本信息 ------------------ */
-	elem += '<table class="table table-borderless border border-dark mt-4">';
-		elem += '<tr>'
-			elem += '<th class="border border-dark"> Code </th>'
-			elem += '<th class="border border-dark" colspan="2"> Desc </th>'
-			elem += '<th class="border border-dark text-right"> QNT </th>'
-			elem += '<th class="border border-dark text-right"> Prezzo </th>'
-			elem += '<th class="border border-dark text-right"> Total(€) </th>'
-		elem += '</tr>'
-		let firLen = order.ordfirs.length;
-		let pieces = 0;
+		if(order.note) {
+			elem += '<div class="row mt-4">';
+				elem += '<div class="col-12 bg-light">'
+					elem += order.note
+				elem += '</div>'
+			elem += '</div>'
+		}
+
+		elem += '<div style="height:100px"></div>'
 		for(let i=0; i<firLen; i++) {
 			let ordfir = order.ordfirs[i];
 			pieces += ordfir.quot;
-			elem += '<tr>'
+			elem += '<div class="row mt-2 bg-light py-2">'
+				let pdfir = new Object();
+				pdfir.photo = '/1.jpg'
+				pdfir.code = '模特已删除'
 				if(ordfir.pdfir) {
-					let pdfir = ordfir.pdfir;
-					elem += '<td>'+pdfir.code+'</td>';
-					let pdname = pdfir.nome;
-					if(pdname && pdname.length > 5){
-						pdname = pdname.slice(0,3)+'...';
-					}
-					elem += '<td colspan="2">'+pdname+'</td>'
-				} else {
-					elem += '<td colspan="3">模特已删除</td>'
+					pdfir = ordfir.pdfir;
 				}
-				elem += '<td class="text-right">'+ordfir.quot+'</td>'
-				elem += '<td class="text-right">'+Math.round(ordfir.price * 100)/100+'</td>'
-				elem += '<td class="text-right">'+Math.round(ordfir.price*ordfir.quot * 100)/100+'</td>'
-			elem += '</tr>'
-		}
-		elem += '<tr>'
-			elem += '<th colspan="2" class="border border-dark"> TOT: '+firLen+'</th>'
-			elem += '<th colspan="2" class="border border-dark text-right">'+pieces+' pz</th>'
-			elem += '<th colspan="2" class="border border-dark text-right"> IMP: '+Math.round(order.pdPr * 100)/100+' €</th>'
-		elem += '</tr>'
-	elem += '</table>'
-
-	elem += '<div class="row mt-4">'
-		elem += '<div class="col-6">'
-			elem += '原价: '+Math.round(order.real * 100)/100+' €'
-		elem += '</div>'
-		elem += '<div class="col-6 text-right">'
-			elem += '实收: '+Math.round(order.imp * 100)/100+' €'
-		elem += '</div>'
-	elem += '</div>'
-	if(order.note) {
-		elem += '<div class="row mt-4">';
-			elem += '<div class="col-12 bg-light">'
-				elem += order.note
-			elem += '</div>'
-		elem += '</div>'
-	}
-
-	elem += '<div style="height:100px"></div>'
-	for(let i=0; i<firLen; i++) {
-		let ordfir = order.ordfirs[i];
-		pieces += ordfir.quot;
-		elem += '<div class="row mt-2 bg-light py-2">'
-			let pdfir = new Object();
-			pdfir.photo = '/1.jpg'
-			pdfir.code = '模特已删除'
-			if(ordfir.pdfir) {
-				pdfir = ordfir.pdfir;
-			}
-			elem += '<div class="col-4">'
-				elem += '<img src="' + pdfir.photo +'" width="100%" ';
-				elem += 'style="max-width:100px;max-height:100px;"'
-				elem += ' alt="'+pdfir.code+'" />';
-			elem += '</div>'
-			elem += '<div class="col-8">'
-				elem += '<div class="row">'
-					elem += '<h3 class="col-6">'+pdfir.code+'</h3>'
-					elem += '<h4 class="col-6 text-right">'+pdfir.nome+'</h4>'
-					elem += '<div class="col-12 text-right">'
-						elem += ordfir.quot+'pz * '
-						elem += Math.round(ordfir.price * 100)/100+'€ = &nbsp; &nbsp;'
-						elem += Math.round(ordfir.price*ordfir.quot * 100)/100+'€</div>'
+				elem += '<div class="col-4">'
+					elem += '<img src="' + pdfir.photo +'" width="100%" ';
+					elem += 'style="max-width:100px;max-height:100px;"'
+					elem += ' alt="'+pdfir.code+'" />';
+				elem += '</div>'
+				elem += '<div class="col-8">'
+					elem += '<div class="row">'
+						elem += '<h3 class="col-6">'+pdfir.code+'</h3>'
+						elem += '<h4 class="col-6 text-right">'+pdfir.nome+'</h4>'
+						elem += '<div class="col-12 text-right">'
+							elem += ordfir.quot+'pz * '
+							elem += Math.round(ordfir.price * 100)/100+'€ = &nbsp; &nbsp;'
+							elem += Math.round(ordfir.price*ordfir.quot * 100)/100+'€'
+						elem += '</div>'
 					elem += '</div>'
 				elem += '</div>'
 			elem += '</div>'
-		elem += '</div>'
-	}
-	elem += '<div style="height:100px"></div>'
+		}
+		elem += '<div style="height:100px"></div>'
 
-	elem += '<div class="topNav-second pt-2">'
-		elem += '<div class="row p-2">';
-			elem += '<div class="col-6">'
-				elem += '<button class="btn btn-link btn-block printStamp" type="button" '
-				elem += 'data-id='+order._id+'>打印 <span class="oi oi-print"></span></button>'
-			elem += '</div>'
-			elem += '<div class="col-6">'
-				elem += '<button class="btn btn-link btn-block printTicket" type="button" '
-				elem += 'data-id='+order._id+'>小票 <span class="oi oi-print"></span></button>'
+		elem += '<div class="topNav-second pt-2">'
+			elem += '<div class="row p-2">';
+				elem += '<div class="col-6">'
+					elem += '<button class="btn btn-link btn-block printStamp" type="button" '
+					elem += 'data-id='+order._id+'>打印 <span class="oi oi-print"></span></button>'
+				elem += '</div>'
+				elem += '<div class="col-6">'
+					elem += '<button class="btn btn-link btn-block printTicket" type="button" '
+					elem += 'data-id='+order._id+'>小票 <span class="oi oi-print"></span></button>'
+				elem += '</div>'
 			elem += '</div>'
 		elem += '</div>'
-	elem += '</div>'
 
 	elem += '</div>'
 
