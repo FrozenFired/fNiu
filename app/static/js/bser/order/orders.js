@@ -96,7 +96,7 @@ let bsOrdersShow = function() {
 		str += '</div>'
 		str += '<div class="col-6">'
 			str += '<span class="text-warning">'
-			str += tot
+			str += tot.toFixed(2)
 			str += '</span>'
 			str += '<span> €</span>'
 		str += '</div>'
