@@ -87,7 +87,31 @@ exports.ordAddPdfir = function(req, res) {
 
 
 
-
+exports.getOrderAjax = function(req, res) {
+	let crUser = req.session.crUser;
+	let orderId = req.query.orderId
+	Order.findOne({
+		'firm': crUser.firm,
+		_id: orderId
+	})
+	.populate('cter', 'nome')
+	.populate({path: 'ordfirs', populate: {path: 'pdfir'}})
+	.sort({'ctAt': -1})
+	.exec(function(err, order) {
+		if(err) {
+			info = "getOrderAjax, Order.findOne, Error";
+			res.json({success: 0, info: info})
+		} else if(!order) {
+			info = '没有找到此订单, 请重试'
+			res.json({success: 0, info: info})
+		} else if(!order.ordfirs) {
+			info = '没有找到此订单, 请重试'
+			res.json({success: 0, info: info})
+		} else {
+			res.json({success: 1, order: order})
+		}
+	})
+}
 
 
 

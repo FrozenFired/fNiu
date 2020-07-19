@@ -36,6 +36,7 @@ module.exports = function(app){
 	app.get('/orderDelSts', MdRole.userIsLogin, Ord.orderDelSts);
 	// app.get('/orderDel', MdRole.userIsLogin, Ord.orderDel);
 	app.get('/getOrders', MdRole.userIsLogin, Ord.getOrders);
+	app.get('/getOrderAjax', MdRole.userIsLogin, Ord.getOrderAjax);
 
 	app.get('/bsOrdersMonth', MdRole.bserIsLogin, Ord.bsOrdersMonth);
 	app.get('/bsOrdersMonthAjax', MdRole.bserIsLogin, Ord.bsOrdersMonthAjax)

@@ -143,8 +143,6 @@ $( function() {
 
 	/* =========== 重新加载数据 =========== */
 	$(".reloadPdfirs").click(function(e) {
-		$("#loading").show();
-		$("#loaded").hide();
-		ajaxGetpdfirs();
+		window.location.href = "/order";
 	})
 });
