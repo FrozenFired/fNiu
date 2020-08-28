@@ -1,60 +1,71 @@
-- let nome = crCter.code;
-if crCter.nome && crCter.nome.length > 0
-	- nome = crCter.nome;
-.narrows
-	.header-box
-		.container
-			.row.py-2.pb-4
-				.col-6
-					a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
-				.col-6.text-right
-					//- a.btn.btn-link.text-info(href="/ctMyself")
-					a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
-			.row.py-2.scrollDownHide
-				.col-2
-					button.btn.btn-default(type="button") <span class="oi oi-chevron-bottom"></span>
+.container-fluid
+	.mbSpace
+		.topNav-first-header.text-center.text-white
+			.row.text-center(style="line-height: 90px;")
 				.col-10
-					.input-group.input-group-lg
-						input.headPdCode.headNarrrow.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
-						.input-group-prepend.headSearch#headNarrrow
-							<span class="input-group-text">搜索</span>
-.wides
-	.header-box
-		.container
-			.row.pt-2.pb-1
-				.col-md-3
-					a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
-				.col-md-6
-					.input-group.input-group-lg
-						input.headPdCode.headWide.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
-						.input-group-prepend.headSearch#headWide
-							<span class="input-group-text">搜索</span>
-				.col-md-3.text-right
-					a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
-			.row.pt-4.scrollDownHide
-				.col-md-9
-					ul.headerUl.catgSpread
-						each proNome in proNomes
-							- bg = 'btn-info';
-							if proNome.code == keyword
-								- bg = 'btn-success';
-							li.catgList(id="b-5"): h5: a.btn(class=bg href="/products?pdnome="+proNome.code) #{proNome.code}
-						li.catgList(id="b-5"): h5: a.btn.btn-primary(href="/pdnomes") 更多
-				.col-md-3.text-right
-					ul.headerUl
-						li: h5 about &nbsp;
-						li: h5 News &nbsp;
-						li: h5 <span class="oi oi-heart"></span>
-						li: h5 <span class="oi oi-heart"></span>
-	.header-spread
-		.container.catgSpread(style="background-color: #FF00FF")
-			.row.pt-3.navShow(id="a-1", style="display:none")
-				.col-md-8
-					h1 hello
+					a.navb#navHome.text-white(href="/")
+						span(style="font-size: 25px;") #{firm.nome}
+				.col-2
+					a.navb#navHome.text-white(href="/login") <span class="oi oi-account-login"></span>
+	.pcSpace
+		.topNav-first-header.text-center.text-white
+			.row.text-center(style="line-height: 90px;")
 				.col-md-4
-					img(src="/imgs/1.jpg", width="100%", title="公司图标")
-			.row.py-3.navShow(id="a-2", style="display:none")
-				.col-md-8
-					h1 word
+					.row.mx-5
+						.col-6
+							a.navb#navBrand.text-white(href="/products") 产品
+						.col-6
+							a.navb#navCateg.text-white(href="/pdnomes") 分类
 				.col-md-4
-					img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
+					a.navb#navHome.text-white(href="/")
+						//- span(style="font-size: 45px;font-family:'Times New Roman';") Xingda &nbsp;
+						span(style="font-size: 35px;") #{firm.nome}
+				.col-md-4
+					.row.mx-5
+						.col-6
+							a.navb#navContact.text-white(href="#") 联系方式
+						.col-6
+							a.navb#navAbout.text-white(href="/login") 我的订单(开发中)
+		.topNav-second-header.border-top.navCateg(style="display:none")
+			.row.m-5
+				- var i = 0;
+				each pdnome in proNomes
+					- i++;
+					if i > 30
+						- break;
+					.col-2.mt-3
+						a.text-white(href="/products?keyword="+pdnome.code) #{pdnome.code}
+				
+		.topNav-second-header.border-top.navContact(style="display:none")
+			.row.m-5.text-white
+				.col-md-5
+					h4.tel Tel: #{firm.tel}
+					h4.addr Addr.: #{firm.addr}
+				.col-md-7
+					img(src=firm.posts[0].photo, width="100%" height="200px" style="object-fit: scale-down;")
+		.topNav-second-headerHide(style="display:none")
+		//- .row.pt-2.pb-1
+			.col-md-3
+				a(href="/cter"): img(src="/imgs/logo123.jpg", width="100%", title="公司图标")
+			.col-md-6
+				.input-group.input-group-lg
+					input.headPdCode.headWide.form-control(type="text", placeholder='产品搜索', autocomplete="off", aria-label="Large", title="请输入")
+					.input-group-prepend.headSearch#headWide
+						<span class="input-group-text">搜索2</span>
+			.col-md-3.text-right
+				a.btn.btn-success.btn-lg(href="/ctMyself") #{nome}
+		//- .row.pt-4.scrollDownHide
+			.col-md-9
+				ul.headerUl.catgSpread
+					each proNome in proNomes
+						- bg = 'btn-info';
+						if proNome.code == keyword
+							- bg = 'btn-success';
+						li.catgList(id="b-5"): h5: a.btn(class=bg href="/products?pdnome="+proNome.code) #{proNome.code}
+					li.catgList(id="b-5"): h5: a.btn.btn-primary(href="/pdnomes") 更多
+			.col-md-3.text-right
+				ul.headerUl
+					li: h5 about &nbsp;
+					li: h5 News &nbsp;
+					li: h5 <span class="oi oi-heart"></span>
+					li: h5 <span class="oi oi-heart"></span>

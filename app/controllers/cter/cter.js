@@ -6,9 +6,11 @@ let Pdfir = require('../../models/material/pdfir');
 
 exports.cter = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
+	let firm = req.session.firm;
+	if(crCter) frim = crCter.firm;
+
 	Pdfir.find({
-		'firm': crCter.firm,
+		'firm': firm,
 	})
 	.limit(20)
 	.exec(function(err, pdfirs) {
@@ -16,16 +18,11 @@ exports.cter = function(req, res) {
 			info = "bser pdfirs, pdfir find, Error！";
 			Err.usError(req, res, info);
 		} else {
-			Firm.findOne({_id: crCter.firm}, function(err, firm) {
-				if(err) console.log(err);
-
-				res.render('./cter/index/index', {
-					title: '首页',
-					crCter,
-					proNomes,
-					pdfirs,
-					firm
-				})
+			res.render('./cter/index/index', {
+				title: '首页',
+				crCter,
+				pdfirs,
+				firm
 			})
 		}
 	})
@@ -33,10 +30,8 @@ exports.cter = function(req, res) {
 
 exports.ctCter = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
 	res.render('./cter/index/cter', {
 		title: '个人中心',
 		crCter,
-		proNomes,
 	})
 }

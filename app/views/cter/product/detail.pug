@@ -1,0 +1,61 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			.col-12.col-lg-3.text-center.pdfirCard
+			.col-12.col-lg-6.text-center.pdfirCard
+
+				img(src=pdfir.photo width="100%" height="120px" style="object-fit: scale-down;")
+			
+				.text-info.text-muted 名称：#{pdfir.nome}
+				.text-info.text-muted 编号：#{pdfir.code}
+				.text-info.text-muted 价格：#{pdfir.price}
+		hr
+		form.mt-5
+			table.text-center.table-bordered
+				tr
+					td(width="10%")
+					td XS
+					td S
+					td M
+					td L
+					td XL
+					td XXL
+				tr
+					td
+						span 黑色
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+				tr
+					td
+						span 蓝色
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+					td
+						input.iptsty(type="number", value=0)
+			hr
+			.form-group.row
+				.col-md-10.col-sm-6
+				.col-md-2.col-sm-6.col-12
+					input#btnSubmit.btn.btn-info.btn-block(type="submit" value='提交')
+		.footerSpace
+	script(src="/js/cter/pdfir/detail.js")

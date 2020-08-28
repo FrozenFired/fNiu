@@ -25,7 +25,6 @@ let dbSchema = new Schema({
 	/* ------------------ 自动生成 ------------------ */
 
 	status: Number,
-	ftrd: Number, // Featured 精选
 	rcmd: Number, // Recommended 店长推荐
 	weight: Number,
 	photos: [String],

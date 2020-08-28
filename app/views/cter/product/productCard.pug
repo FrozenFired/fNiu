@@ -1,16 +1,14 @@
 .card
 	img.card-img-top(src=pdfir.photo alt=pdfir.code)
 	.card-body
-		h5.card-title
-			.row
-				.col-7 #{pdfir.code}
-				.col-5.text-right #{pdfir.price} €
-		P.card-text
+		h5.card-title.text-center
+			.code #{pdfir.code}
+			.price #{pdfir.price} €
+		P.card-text.text-center
 			span #{pdfir.nome}
 			if !pdfir.nome
 				-a;
 				br
-
 			if pdfir.material
 				-a;
 				span : #{pdfir.material}

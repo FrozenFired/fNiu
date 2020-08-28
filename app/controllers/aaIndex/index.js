@@ -21,7 +21,7 @@ exports.index = function(req, res) {
 		}
 	}
 	else {
-		res.redirect('/login');
+		res.redirect('/cter');
 	}
 }
 
@@ -40,7 +40,7 @@ exports.login = function(req, res) {
 
 let User = require('../../models/login/user');
 let Cter = require('../../models/client/cter');
-let Nome = require('../../models/material/nome');
+
 let bcrypt = require('bcryptjs');
 exports.loginUser = function(req, res) {
 	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -66,7 +66,7 @@ let loginUserf = function(req, res, code, pwd) {
 						if(err) console.log(err)
 					})
 					req.session.crUser = user;
-					// console.log(req.session.crUser.firm)
+
 					if(user.role == 1) {
 						res.redirect('/bser');
 					}
@@ -107,13 +107,10 @@ let loginCterf = function(req, res, code, pwd) {
 					cter.save(function(err, objSave){
 						if(err) console.log(err)
 					})
-					Nome.find({'firm': cter.firm, 'status': 1})
-					.exec(function(err, nomes) {
-						if(err) console.log(err);
-						req.session.crCter = cter;
-						req.session.proNomes = nomes;
-						res.redirect('/cter');
-					})
+					req.session.crCter = cter;
+						
+					res.redirect('/cter');
+					
 				}
 				else {
 					info = "用户名与密码不符，请重新登陆";

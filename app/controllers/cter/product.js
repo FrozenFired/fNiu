@@ -6,37 +6,37 @@ let Ordfir = require('../../models/client/ordfir');
 
 exports.products = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
+	let firm = req.session.firm;
 	let keyword = req.query.keyword;
-	let pdnome = req.query.pdnome;
-	let keywordReg = new RegExp(keyword + '.*');
-	if(pdnome && pdnome.length>0) keyword = pdnome;
 
-	let limit = 120;
+	res.render('./cter/product/list', {
+		title : '产品列表',
+		crCter,
+		keyword,
+	});
+}
 
-	Pdfir.find({
-		'firm': crCter.firm,
-		$or:[
-			{'code': {'$in': keywordReg}},
-			{'nome': {'$in': keywordReg}},
-			{'nome': pdnome},
-		]
-	})
-	.sort({'ctAt': -1})
-	.limit(limit)
-	.exec(function(err, pdfirs) {
+exports.product = function(req, res) {
+	let crCter = req.session.crCter;
+	let firm = req.session.firm;
+	if(crCter) firm = crCter.firm;
+	let id = req.params.id;
+
+	Pdfir.findOne({_id: id})
+	.exec(function(err, pdfir) {
 		if(err) {
 			console.log(err);
-			info = "cter products Pdfir.find, Error!"
+			info = "cter product Pdfir.findone, Error!"
+			Err.usError(req, res, info);
+		} else if(!pdfir) {
+			info = "没有找到产品, 请刷新重试"
 			Err.usError(req, res, info);
 		} else {
-			res.render('./cter/product/list', {
-				title : '产品列表',
-				crCter: crCter,
-				proNomes: proNomes,
-
-				pdfirs: pdfirs,
-				keyword: keyword
+			// console.log(pdfir)
+			res.render('./cter/product/detail', {
+				title : '产品信息',
+				crCter,
+				pdfir,
 			});
 		}
 	})
@@ -44,10 +44,11 @@ exports.products = function(req, res) {
 
 exports.pdnomes = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
+	let firm = req.session.firm;
+	if(crCter) firm = crCter.firm;
 
 	Nome.find({
-		'firm': crCter.firm,
+		'firm': firm,
 	})
 	.sort({'status': -1})
 	.exec(function(err, nomes) {
@@ -59,7 +60,6 @@ exports.pdnomes = function(req, res) {
 			res.render('./cter/product/pdnomes', {
 				title : '产品分类列表',
 				crCter: crCter,
-				proNomes: proNomes,
 
 				nomes: nomes,
 			});
@@ -69,7 +69,6 @@ exports.pdnomes = function(req, res) {
 
 exports.ctGetPdfirs = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
 
 	Pdfir.find({'firm': crCter.firm})
 	.sort({'ctAt': -1})
@@ -86,7 +85,6 @@ exports.ctGetPdfirs = function(req, res) {
 
 exports.ctGetOrdfirs = function(req, res) {
 	let crCter = req.session.crCter;
-	let proNomes = req.session.proNomes;
 
 	let symAtFm = "$gte";
 	let symAtTo = "$lte";

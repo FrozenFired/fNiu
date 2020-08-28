@@ -18,7 +18,7 @@ let multipart = require('connect-multiparty');
 let postForm = multipart();
 
 module.exports = function(app){
-	app.get('/cter', MdRole.cterIsLogin, Cter.cter);
+	app.get('/cter', Cter.cter);
 	app.get('/ctGetPdfirs', MdRole.cterIsLogin, Product.ctGetPdfirs);
 	app.get('/ctGetOrdfirs', MdRole.cterIsLogin, Product.ctGetOrdfirs);
 	/* =================================== Cter =================================== */
@@ -28,12 +28,13 @@ module.exports = function(app){
 
 
 	/* ======================================== product ======================================== */
-	app.get('/products', MdRole.cterIsLogin, Product.products);
+	app.get('/products', Product.products);
+	app.get('/product/:id', Product.product);
 	// app.get('/ctPdfirsAjax', MdRole.cterIsLogin, Product.ctPdfirsAjax);
 	// app.get('/ctpdfir/:id', MdRole.cterIsLogin, Product.ctpdfir);
 	// app.get('/ctPdAjaxCode', MdRole.cterIsLogin, Product.ctPdAjaxCode);
 
-	app.get('/pdnomes', MdRole.cterIsLogin, Product.pdnomes);
+	app.get('/pdnomes', Product.pdnomes);
 	/* ======================================== nome ======================================== */
 	
 

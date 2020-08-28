@@ -1,10 +1,17 @@
 extends ../aalayout/layout
 
 block content
-	.container.mt-5
-		h1 #{keyword}
-		.row.mt-5
-			each pdfir in pdfirs
-				-a;
-				.col-md-4.col-lg-3.mt-3
-					include ./productCard
+	.container
+		div(style="height: 100px")
+		.option.input-group
+			input.form-control.input-lg.pdfirSearch(type="text", placeholder="产品搜索", value=keyword)
+			.input-group-append
+				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+		div(style="height: 100px")
+		.pdfirsList.bg-light.p-5
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@ct")
+			//- input#pdfirFilterAjax(type="hidden", value="?key=xxx@#pdfirsElem")
+			#pdfirsElem
+		.footerSpace
+	script(src="/js/ajaxGet/pdfir.js")
+	script(src="/js/cter/pdfir/list.js")

@@ -13,11 +13,26 @@ $(window).scroll(function(event){
 });
 /* ============= 页面滚动 三级导航事件 ============= */
 $(function() {
-	if($(window).width()<768) {
-		$('.wides').hide()
-	} else {
-		$('.narrows').hide()
+	var resizeWindow = function() {
+		if($(window).width()<768) {
+			$('.pcSpace').hide()
+			$('.mbSpace').show()
+		} else {
+			$('.mbSpace').hide()
+			$('.pcSpace').show()
+		}
+		// console.log($(document.body).height())
+		var browH = $(window).height()
+		var bodyH = $(document.body).height()
+		if(bodyH < browH) {
+			footH = browH - bodyH
+			$('.footerSpace').height(footH)
+		}
 	}
+	resizeWindow();
+	$(window).resize(function () {		//当浏览器大小变化时
+		resizeWindow()
+	});
 })
 
 
