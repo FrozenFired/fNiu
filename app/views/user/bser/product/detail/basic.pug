@@ -1,0 +1,38 @@
+.row.my-3
+	.col-4
+		a.btn.btn-info(href="/bsPdfirs") <span class="oi oi-arrow-thick-left"></span>
+	.col-4.text-center
+		a.btn.btn-danger(href="/bsPdfirDel/"+pdfir._id) 删除
+	.col-4.text-right
+		button.btn.btn-warning#upBtn(type="button") <span class="oi oi-pencil"></span>
+table.table.table-bordered.my-3
+	tr
+		td 推荐
+		td
+			if pdfir.rcmd == 1
+				-a;
+				span.text-info 推荐
+			else
+				span.text-secondary 否
+	tr
+		td 编号
+		td #{pdfir.code}
+	tr
+		td 名称
+		td #{pdfir.nome}
+	tr
+		td 价格
+		td #{pdfir.price}
+	tr
+		td 进价
+		td #{pdfir.cost}
+	tr
+		td 库存
+		td #{pdfir.stock}
+	tr
+		td 销量
+		td #{pdfir.sales}
+
+.row.mt-5
+	.col-12(align="center")
+		img#pdfirUpDefaultImg(src=pdfir.photo, width="100%")

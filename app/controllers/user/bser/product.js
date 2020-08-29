@@ -319,3 +319,194 @@ exports.bsPdfirDel = function(req, res) {
 		}
 	})
 }
+
+
+
+
+
+
+
+
+
+
+
+exports.bsPdAjaxNewColor = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.body.id;
+	let color = req.body.color;
+	color = color.replace(/\s+/g,"").toUpperCase();
+
+	Pdfir.findOne({_id: id, firm: crUser.firm})
+	.exec(function(err, pdfir) {
+		if(err) {
+			console.log(err);
+			info = "bser AjaxNewColor, pdfir findOne, Error！";
+			res.json({success: 0, info: info})
+		} else if(!pdfir) {
+			info = "没有找到此模特";
+			res.json({success: 0, info: info})
+		} else {
+			// console.log(pdfir)
+			var i=0
+			for(; i<pdfir.colors.length; i++) {
+				if(color == pdfir.colors[i]) break;
+			}
+			if(i != pdfir.colors.length) {
+				info = "不能添加相同颜色";
+				res.json({success: 0, info: info})
+			} else {
+				pdfir.colors.unshift(color);
+				pdfir.save(function(err, pdSave) {
+					if(err) {
+						console.log(err);
+						info = "bser AjaxNewColor, pdfir save, Error！";
+						res.json({success: 0, info: info})
+					} else {
+						res.json({success: 1, pdfir})
+					}
+				})
+			}
+			// console.log(pdfir)
+
+		}
+	})
+}
+exports.bsPdAjaxDelColor = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let color = req.query.color;
+
+	Pdfir.findOne({_id: id, firm: crUser.firm})
+	.exec(function(err, pdfir) {
+		if(err) {
+			console.log(err);
+			info = "bser AjaxDelColor, pdfir findOne, Error！";
+			res.json({success: 0, info: info})
+		} else if(!pdfir) {
+			info = "没有找到此模特";
+			res.json({success: 0, info: info})
+		} else {
+			// console.log(pdfir)
+			var i=0
+			for(; i<pdfir.colors.length; i++) {
+				if(color == pdfir.colors[i]) break;
+			}
+			if(i == pdfir.colors.length) {
+				info = "请刷新重试";
+				res.json({success: 0, info: info})
+			} else {
+				pdfir.colors.remove(color)
+
+				pdfir.save(function(err, pdSave) {
+					if(err) {
+						console.log(err);
+						info = "bser AjaxDelColor, pdfir save, Error！";
+						res.json({success: 0, info: info})
+					} else {
+						res.json({success: 1, pdfir})
+					}
+				})
+			}
+			// console.log(pdfir)
+
+		}
+	})
+}
+
+
+exports.bsPdAjaxNewSize = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let size = req.query.size;
+
+	Pdfir.findOne({_id: id, firm: crUser.firm})
+	.exec(function(err, pdfir) {
+		if(err) {
+			console.log(err);
+			info = "bser AjaxNewColor, pdfir findOne, Error！";
+			res.json({success: 0, info: info})
+		} else if(!pdfir) {
+			info = "没有找到此模特";
+			res.json({success: 0, info: info})
+		} else {
+			let newSize = null;
+			if(!pdfir.sizes || pdfir.sizes.length == 0) {
+				newSize = Conf.sizes[10]
+				pdfir.sizes.push(newSize);
+			} else {
+				if(size == "l"){
+					let sizel = pdfir.sizes[0]
+					let sz
+					for(sz in Conf.sizes) {
+						if(sizel == Conf.sizes[sz]){
+							break;
+						}
+					}
+					sz = parseInt(sz) - 1
+					newSize = Conf.sizes[sz]
+					if(newSize) pdfir.sizes.unshift(newSize);
+				} else {
+					let sizer = pdfir.sizes[pdfir.sizes.length-1]
+					let sz
+					for(sz in Conf.sizes) {
+						if(sizer == Conf.sizes[sz]){
+							break;
+						}
+					}
+					sz = parseInt(sz) + 1
+					newSize = Conf.sizes[sz]
+					if(newSize) pdfir.sizes.push(newSize);
+				}
+			}
+			pdfir.save(function(err, pdSave) {
+				if(err) {
+					console.log(err);
+					info = "bser AjaxNewColor, pdfir save, Error！";
+					res.json({success: 0, info: info})
+				} else {
+					res.json({success: 1, pdfir, newSize})
+				}
+			})
+			// console.log(pdfir)
+
+		}
+	})
+}
+exports.bsPdAjaxDelSize = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let size = req.query.size;
+
+	Pdfir.findOne({_id: id, firm: crUser.firm})
+	.exec(function(err, pdfir) {
+		if(err) {
+			console.log(err);
+			info = "bser AjaxDelColor, pdfir findOne, Error！";
+			res.json({success: 0, info: info})
+		} else if(!pdfir) {
+			info = "没有找到此模特";
+			res.json({success: 0, info: info})
+		} else {
+			let delSize = null
+			if(size == "l"){
+				delSize = pdfir.sizes[0]
+				pdfir.sizes.shift();
+			} else {
+				delSize = pdfir.sizes[pdfir.sizes.length-1]
+				pdfir.sizes.pop();
+			}
+
+			pdfir.save(function(err, pdSave) {
+				if(err) {
+					console.log(err);
+					info = "bser AjaxNewColor, pdfir save, Error！";
+					res.json({success: 0, info: info})
+				} else {
+					res.json({success: 1, pdfir, delSize})
+				}
+			})
+			// console.log(pdfir)
+
+		}
+	})
+}

@@ -13,45 +13,21 @@ block content
 				.text-info.text-muted 价格：#{pdfir.price}
 		hr
 		form.mt-5
-			table.text-center.table-bordered
+			table.table.text-center.table-bordered
 				tr
 					td(width="10%")
-					td XS
-					td S
-					td M
-					td L
-					td XL
-					td XXL
-				tr
-					td
-						span 黑色
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-				tr
-					td
-						span 蓝色
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
-					td
-						input.iptsty(type="number", value=0)
+					each size in pdfir.sizes
+						-a;
+						td #{size}
+				each color in pdfir.colors
+					-a;
+					tr
+						td
+							span #{color}
+						each size in pdfir.sizes
+							-a;
+							td
+								input.iptsty(type="number", value=0)
 			hr
 			.form-group.row
 				.col-md-10.col-sm-6

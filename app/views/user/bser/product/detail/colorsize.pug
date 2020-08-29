@@ -1,0 +1,45 @@
+.colors.text-center
+	.row
+		.col-2
+			button.sAdd.btn.btn-success(type="button", data-size="l") +
+		.col-2
+			button.sDel.btn.btn-danger(type="button",  data-size="l") -
+		.col-4
+			h3 尺寸:
+		.col-2
+			button.sAdd.btn.btn-success(type="button", data-size="r") +
+		.col-2
+			button.sDel.btn.btn-danger(type="button",  data-size="r") -
+
+	.row.sizeElem.mt-4.pb-3.border
+		each size in pdfir.sizes
+			-a;
+			.col-2.mt-3(id="colSize-"+size) #{size}
+
+div(style="height: 100px")
+
+.sizes.text-center
+	.row
+		.col-4
+			button.cAdd.btn.btn-success(type="button") +
+		.col-4
+			h3 颜色:
+		.col-4
+			button.cDel.btn.btn-danger(type="button") -
+	form#newColor.mt-3(style="display:none")
+		input#pdfirId(type="hidden", name="id", value=pdfir._id)
+		.form-group.row
+				label.col-3.col-form-label 颜色
+				.col-6
+					input#newColorIpt.form-control(type="text", name="color", autocomplete="off")
+				.col-3
+					button#newColorSub.btn.btn-info.btn-block(type="button") 提交
+	.colorsElem.mt-4
+		each color in pdfir.colors
+			-a;
+			.row.mt-3(id="rowColor-"+color)
+				.col-10 #{color}
+				.col-2
+					button.colorDel.btn.btn-danger(type="button" data-id=pdfir._id, data-color=color, style="display:none") -
+
+script(src="/js/bser/pdfir/colorsize.js")

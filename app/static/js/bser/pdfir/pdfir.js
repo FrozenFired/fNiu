@@ -25,14 +25,14 @@ let pdAjaxShow = function() {
 	$("#sales_btn").removeClass("bg-secondary");
 	$("#sales_btn").addClass("bg-info");
 }
-let pdCtfirsShow = function() {
+let czAjaxShow = function() {
 	$(".page").hide();
-	$("#pdAjaxCter_elem").show();
+	$("#cz_elem").show();
 
 	$(".bomBtn").removeClass("bg-info");
 	$(".bomBtn").addClass("bg-secondary");
-	$("#ctfirs_btn").removeClass("bg-secondary");
-	$("#ctfirs_btn").addClass("bg-info");
+	$("#cz_btn").removeClass("bg-secondary");
+	$("#cz_btn").addClass("bg-info");
 }
 
 
@@ -64,14 +64,14 @@ let pdOrdfirsPage = function(selFirs) {
 			str += '<tr>'
 				str += '<td>'+cterNome+'</td>'
 				str += '<td>'+quot+'</td>'
-				str += '<td>'+price+'</td>'
+				str += '<td>'+price.toFixed(2)+'</td>'
 				str += '<td>'+ctAt.getFullYear()+'年'+(ctAt.getMonth()+1)+'月'+ctAt.getDate()+'日</td>'
 			str += '</tr>'
 		}
 		str += '<tr>'
 			str += '<th> 总数 </th>'
 			str += '<th>'+totQuot+'</th>'
-			str += '<th>'+totPrice+'</th>'
+			str += '<th>'+totPrice.toFixed(2)+'</th>'
 			str += '<th></th>'
 		str += '</tr>'
 	str += '</table>'		
@@ -116,7 +116,7 @@ let pdCtfirsPage = function() {
 			str += '<tr>'
 				str += '<td>'+ctfirs[i].nome+'</td>'
 				str += '<td>'+ctfirs[i].quot+'</td>'
-				str += '<td>'+ctfirs[i].price+'</td>'
+				str += '<td>'+ctfirs[i].price.toFixed(2)+'</td>'
 			str += '</tr>'
 		}
 		// str += '<tr>'
@@ -128,7 +128,7 @@ let pdCtfirsPage = function() {
 
 	str += '</div>'
 	$('.ctfirs_class').remove();
-	$("#pdAjaxCter_elem").append(str);
+	$("#pdAjaxCter_div").append(str);
 }
 
 let ordfirs = new Array();
@@ -205,9 +205,16 @@ $(function() {
 		pdAjaxShow();
 	})
 	$("#ctfirs_btn").click(function(e) {
-		pdCtfirsShow();
+		$(".page").hide();
+		$("#pdAjaxCter_elem").show();
 	})
-
+	$("#sale_btn").click(function(e) {
+		$(".page").hide();
+		$("#pdAjax_elem").show();
+	})
+	$("#cz_btn").click(function(e) {
+		czAjaxShow();
+	})
 
 	$("#cterNome").change(function(e) {
 		let cterNome = $("#cterNome").val();

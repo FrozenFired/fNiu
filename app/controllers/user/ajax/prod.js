@@ -13,6 +13,7 @@ exports.usPdfirsAjax = (req, res) => {
 	} else if(crUser) {
 		firm = crUser.firm;
 	}
+	// console.log(firm)
 
 	let page = 1;
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
@@ -42,21 +43,14 @@ exports.usPdfirsAjax = (req, res) => {
 
 	let rmcdSymb = '$ne';
 	let rmcdConb = -1;
-	if(crCter) {
-		rmcdSymb = '$gt';
-		rmcdConb = 0;
-	}
+
 	if(req.query.rmcd && !isNaN(parseInt(req.query.rmcd))) {
 		rmcdSymb = '$eq';
 		rmcdConb = parseInt(req.query.rmcd)
-
-		if(crCter && rmcdConb == 0) {
-			rmcdSymb = '$gt';
-		}
 	}
 
 	let param = {
-		firm: firm._id,
+		firm: firm,
 		rmcd: {[rmcdSymb]: rmcdConb},
 
 		'nome': {[nomeSymb]: nomeCond},

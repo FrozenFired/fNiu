@@ -11,6 +11,8 @@ let dbSchema = new Schema({
 	nome: String,
 	photo: { type: String, default: '/upload/product/1.jpg' },
 	material: String,
+	colors: [String],
+	sizes: [String],
 	// assists : [{type: ObjectId, ref: 'Assist'}],
 	price: Float,
 	cost: {type: Float, default: 0},	// 成本价格
