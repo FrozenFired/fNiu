@@ -12,24 +12,33 @@ block content
 				.text-info.text-muted 编号：#{pdfir.code}
 				.text-info.text-muted 价格：#{pdfir.price}
 		hr
+		- let colors = ["Unico Color"];
+		if pdfir.colors && pdfir.colors.length > 0
+			- colors = pdfir.colors; 
+		- let sizes = ["Unico Size"];
+		if pdfir.sizes && pdfir.sizes.length > 0
+			- sizes = pdfir.sizes; 
 		form.mt-5
+			input.iptsty(type="hidden", name="obj[pdfirId]", value=pdfir._id)
 			table.table.text-center.table-bordered
 				tr
 					td(width="10%")
-					each size in pdfir.sizes
+					each size in sizes
 						-a;
 						td #{size}
-				each color in pdfir.colors
-					-a;
+				- let c = -1;
+				each color in colors
+					- c++;
 					tr
 						td
 							span #{color}
-						each size in pdfir.sizes
-							-a;
+						- let s = -1;
+						each size in sizes
+							- s++;
 							td
-								input.iptsty(type="number", value=0)
+								input.iptsty(type="number", name="obj[quot]["+c+"]["+s+"]", value=0)
 			hr
-			.form-group.row
+			//- .form-group.row
 				.col-md-10.col-sm-6
 				.col-md-2.col-sm-6.col-12
 					input#btnSubmit.btn.btn-info.btn-block(type="submit" value='提交')

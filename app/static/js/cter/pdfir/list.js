@@ -6,7 +6,10 @@ $(function() {
 	let role = '';
 	let ifload = '';
 	var pdSearchFunction = function() {
-		let keyword = $(".pdfirSearch").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		let keyword = '';
+		if($(".pdfirSearch").val()) {
+			keyword = $(".pdfirSearch").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		}
 		if(keyword && keyword.length > 0) {
 			keyword = "&keyword=" + keyword;
 		} else {

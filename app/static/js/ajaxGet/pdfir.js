@@ -64,7 +64,16 @@ var pdfirRender = (pdfir, role) => {
 		elem += '</a>'
 		
 		elem += '<div class="text-info text-muted '+codeBg+'">'+pdfir.nome+'</div>'
-		elem += '<div class="text-info text-muted '+codeBg+'">'+pdfir.code+'</div>'
+		elem += '<div class="text-info text-muted">'+pdfir.code+'</div>'
+		if($("#crCter").val()) {
+			let price = parseFloat(pdfir.price);
+			if(!isNaN(price)) {
+				price = price.toFixed(2) + ' €';
+			} else {
+				price = ''
+			}
+			elem += '<div class="text-info text-info">'+price+'</div>'
+		}
 	elem += '</div>'
 	return elem;
 }

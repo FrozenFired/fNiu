@@ -9,22 +9,10 @@ exports.cter = function(req, res) {
 	let firm = req.session.firm;
 	if(crCter) frim = crCter.firm;
 
-	Pdfir.find({
-		'firm': firm,
-	})
-	.limit(20)
-	.exec(function(err, pdfirs) {
-		if(err) {
-			info = "bser pdfirs, pdfir find, Error！";
-			Err.usError(req, res, info);
-		} else {
-			res.render('./cter/index/index', {
-				title: '首页',
-				crCter,
-				pdfirs,
-				firm
-			})
-		}
+	res.render('./cter/index/index', {
+		title: '首页',
+		crCter,
+		firm
 	})
 }
 

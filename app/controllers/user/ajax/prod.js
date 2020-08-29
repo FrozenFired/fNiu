@@ -41,17 +41,17 @@ exports.usPdfirsAjax = (req, res) => {
 		keyReg = new RegExp(keyReg + '.*');
 	}
 
-	let rmcdSymb = '$ne';
-	let rmcdConb = -1;
+	let rcmdSymb = '$ne';
+	let rcmdConb = -1;
 
-	if(req.query.rmcd && !isNaN(parseInt(req.query.rmcd))) {
-		rmcdSymb = '$eq';
-		rmcdConb = parseInt(req.query.rmcd)
+	if(req.query.rcmd && !isNaN(parseInt(req.query.rcmd))) {
+		rcmdSymb = '$eq';
+		rcmdConb = parseInt(req.query.rcmd)
 	}
 
 	let param = {
 		firm: firm,
-		rmcd: {[rmcdSymb]: rmcdConb},
+		rcmd: {[rcmdSymb]: rcmdConb},
 
 		'nome': {[nomeSymb]: nomeCond},
 		$or:[
@@ -66,7 +66,7 @@ exports.usPdfirsAjax = (req, res) => {
 		} else {
 			Pdfir.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'rmcd': -1, 'weight': -1, 'upAt': -1})
+			.sort({'rcmd': -1, 'weight': -1, 'upAt': -1})
 			.exec((err, pdfirs) => {
 				if(err) {
 					info = "cter PdfirsAjax, Pdfir.find(), Error!";
