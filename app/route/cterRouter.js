@@ -4,8 +4,8 @@ let Cter = require('../controllers/cter/cter');
 
 let Product = require('../controllers/cter/product');
 
+let Order = require('../controllers/cter/order');
 // let Cter = require('../controllers/cter/cter/order/cter');
-// let Order = require('../controllers/cter/cter/order/order');
 // let Ordfir = require('../controllers/cter/cter/order/ordfir');
 
 
@@ -22,7 +22,7 @@ module.exports = function(app){
 	app.get('/ctGetPdfirs', MdRole.cterIsLogin, Product.ctGetPdfirs);
 	app.get('/ctGetOrdfirs', MdRole.cterIsLogin, Product.ctGetOrdfirs);
 	/* =================================== Cter =================================== */
-	app.get('/ctMyself', MdRole.cterIsLogin, Cter.ctCter)
+	app.get('/ctMyself', Cter.ctCter)
 	// app.post('/ctCterUpdInfo', MdRole.cterIsLogin, postForm, Cter.ctCterUpd)
 	// app.post('/ctCterUpdPwd', MdRole.cterIsLogin, postForm, MdBcrypt.rqBcrypt, Cter.ctCterUpd)
 
@@ -30,9 +30,6 @@ module.exports = function(app){
 	/* ======================================== product ======================================== */
 	app.get('/products', Product.products);
 	app.get('/product/:id', Product.product);
-	// app.get('/ctPdfirsAjax', MdRole.cterIsLogin, Product.ctPdfirsAjax);
-	// app.get('/ctpdfir/:id', MdRole.cterIsLogin, Product.ctpdfir);
-	// app.get('/ctPdAjaxCode', MdRole.cterIsLogin, Product.ctPdAjaxCode);
 
 	app.get('/pdnomes', Product.pdnomes);
 	/* ======================================== nome ======================================== */

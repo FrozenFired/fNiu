@@ -10,7 +10,11 @@ block content
 			
 				.text-info.text-muted 名称：#{pdfir.nome}
 				.text-info.text-muted 编号：#{pdfir.code}
-				.text-info.text-muted 价格：#{pdfir.price}
+				if crCter
+					- let price = pdfir.price;
+					if !isNaN(parseFloat(price))
+						- price = price.toFixed(2);
+					.text-info.text-info 价格：#{price}
 		hr
 		- let colors = ["Unico Color"];
 		if pdfir.colors && pdfir.colors.length > 0
@@ -18,8 +22,8 @@ block content
 		- let sizes = ["Unico Size"];
 		if pdfir.sizes && pdfir.sizes.length > 0
 			- sizes = pdfir.sizes; 
-		form.mt-5
-			input.iptsty(type="hidden", name="obj[pdfirId]", value=pdfir._id)
+		form#cartForm.mt-5
+			input(type="hidden", name="obj[pdfirId]", value=pdfir._id)
 			table.table.text-center.table-bordered
 				tr
 					td(width="10%")
@@ -37,10 +41,15 @@ block content
 							- s++;
 							td
 								input.iptsty(type="number", name="obj[quot]["+c+"]["+s+"]", value=0)
+			h3.text-right
+				span 总数: 
+				span.text-info#quotSapn 0
 			hr
-			//- .form-group.row
-				.col-md-10.col-sm-6
-				.col-md-2.col-sm-6.col-12
-					input#btnSubmit.btn.btn-info.btn-block(type="submit" value='提交')
+			if crCter
+				-a;
+				.form-group.row
+					.col-md-10.col-sm-6
+					.col-md-2.col-sm-6.col-12
+						button#cartFormSub.btn.btn-success.btn-block(type="button") 提交
 		.footerSpace
 	script(src="/js/cter/pdfir/detail.js")

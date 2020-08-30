@@ -3,10 +3,20 @@ extends ../aalayout/layout
 block content
 	.container.mt-3
 		.row
-			.col-12
-				h1 个人中心
-		.row.text-right.mt-5
-			.col-12
+			.col-8.mt-2
+				h4
+					span #{crCter.code}
+					if crCter.nome
+						-a;
+						span [#{crCter.nome}]
+			.col-4.text-right
 				a.btn.btn-danger(href='/logout') 退出
-
+		.row.mt-4.text-center
+			.col-4
+				span 购物车
+			.col-4
+				span 我的订单
+			.col-4
+				span 个人信息
+	.footerSpace
 	script(src="/js/aaViews/cter.js")

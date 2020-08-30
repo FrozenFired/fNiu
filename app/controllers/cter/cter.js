@@ -18,8 +18,12 @@ exports.cter = function(req, res) {
 
 exports.ctCter = function(req, res) {
 	let crCter = req.session.crCter;
-	res.render('./cter/index/cter', {
-		title: '个人中心',
-		crCter,
-	})
+	if(!crCter) {
+		res.redirect('/login');
+	} else {
+		res.render('./cter/index/cter', {
+			title: '个人中心',
+			crCter,
+		})
+	}
 }
