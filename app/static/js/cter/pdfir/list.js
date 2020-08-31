@@ -92,7 +92,7 @@ $(function() {
 			if(scrollTop + windowHeight + 58 > scrollHeight){
 				// alert('page:'+page+' count:'+count)
 				if(isMore == 1) {
-					$(pdfirElemId).append('<h3 class="text-center mt-3 text-info timeloading"> 正在加载... </h3>')
+					// $(pdfirElemId).append('<h3 class="text-center mt-3 text-info timeloading"> 正在加载... </h3>')
 					setTimeout(function(){
 						getPdfirs(urlQuery+'&page='+(parseInt(page)+1), pdfirElemId, 0, role);
 						var browH = $(window).height()
@@ -103,8 +103,8 @@ $(function() {
 						} else {
 							$('.footerSpace').height(0)
 						}
-						$(".timeloading").remove();
-					}, 2000)
+						// $(".timeloading").remove();
+					}, 1000)
 					
 				}
 			}

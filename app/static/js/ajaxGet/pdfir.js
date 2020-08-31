@@ -60,11 +60,16 @@ var pdfirRender = (pdfir, role) => {
 	let elem = '';
 	elem += '<div class="col-6 col-lg-4 mt-2 text-center border-bottom border-left pdfirCard">'
 
-
-		elem += '<img class="smlImg" id="img-'+pdfir._id+'" src="'+pdfir.photo+'" '
+		elem += '<a href="'+pdfir.photo+'" target="_blank">'
+		elem += '<img id="img-'+pdfir._id+'" src="'+pdfir.photo+'" '
 			elem += 'width="100%" height="120px" '
 			elem += 'style="object-fit: scale-down;"'
 		elem += '/>'
+		elem += '</a>'
+		// elem += '<img class="smlImg" id="img-'+pdfir._id+'" src="'+pdfir.photo+'" '
+		// 	elem += 'width="100%" height="120px" '
+		// 	elem += 'style="object-fit: scale-down;"'
+		// elem += '/>'
 		
 		elem += '<div class="mt-3 '+codeBg+'">'
 			elem += '<a class="text-primary '+codeBg+'" href='+pdfirDetail+'>'
