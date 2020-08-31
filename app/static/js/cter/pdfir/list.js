@@ -92,17 +92,55 @@ $(function() {
 			if(scrollTop + windowHeight + 58 > scrollHeight){
 				// alert('page:'+page+' count:'+count)
 				if(isMore == 1) {
-					getPdfirs(urlQuery+'&page='+(parseInt(page)+1), pdfirElemId, 0, role);
-					var browH = $(window).height()
-					var bodyH = $(document.body).height()
-					if(bodyH < browH) {
-						footH = browH - bodyH
-						$('.footerSpace').height(footH)
-					} else {
-						$('.footerSpace').height(0)
-					}
+					$(pdfirElemId).append('<h3 class="text-center mt-3 text-info timeloading"> 正在加载... </h3>')
+					setTimeout(function(){
+						getPdfirs(urlQuery+'&page='+(parseInt(page)+1), pdfirElemId, 0, role);
+						var browH = $(window).height()
+						var bodyH = $(document.body).height()
+						if(bodyH < browH) {
+							footH = browH - bodyH
+							$('.footerSpace').height(footH)
+						} else {
+							$('.footerSpace').height(0)
+						}
+						$(".timeloading").remove();
+					}, 2000)
+					
 				}
 			}
 		}
 	});
+
+	var getPdfir = function(pdfirId) {
+		if(!pdfirsAll) return null;
+		let pdfir = null;
+		for(let i=0; i<pdfirsAll.length; i++) {
+			if(String(pdfirsAll[i]._id) == pdfirId) {
+				pdfir = pdfirsAll[i];
+				break;
+			}
+		}
+		return pdfir;
+	}
+	$(pdfirElemId).on('click', ".smlImg", function(e) {
+		let pdfirId = $(this).attr("id").split("-")[1];
+		let pdfir = getPdfir(pdfirId);
+		if(!pdfir) return;
+		var browH = $(window).height()
+		let elem = '';
+		// elem += '<div style="height:90px"></div>'
+		elem += '<img class="bigImg" id="img-'+pdfir._id+'" src="'+pdfir.photo+'" '
+			elem += 'width="100%" height='+browH
+			elem += ' style="object-fit: scale-down;"'
+		elem += '/>'
+		$(".containerPage").hide();
+		$(".bigImg").remove();
+		$(".bigImgBox").show();
+		$(".bigImgBox").append(elem);
+	})
+	$(".bigImgBox").click(function(e) {
+		$(".bigImg").remove();
+		$(".bigImgBox").hide();
+		$(".containerPage").show();
+	})
 })

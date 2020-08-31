@@ -42,4 +42,13 @@ $(function() {
 			}
 		});
 	})
+
+	$(".smlImg").click(function(e) {
+		$(".container").hide();
+		$(".bigImg").show();
+	})
+	$(".bigImg").click(function(e) {
+		$(".bigImg").hide();
+		$(".container").show();
+	})
 })

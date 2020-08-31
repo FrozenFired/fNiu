@@ -1,7 +1,9 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.bigImgBox(style="display:none")
+
+	.container.containerPage
 		div(style="height: 100px")
 		.option.input-group
 			input.form-control.input-lg.pdfirSearch(type="text", placeholder="产品搜索", value=keyword)

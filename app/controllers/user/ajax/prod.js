@@ -19,7 +19,7 @@ exports.usPdfirsAjax = (req, res) => {
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
 		page = parseInt(req.query.page);
 	}
-	let pagesize = 24;
+	let pagesize = 12;
 	if(req.query.pagesize && !isNaN(parseInt(req.query.pagesize))) {
 		pagesize = parseInt(req.query.pagesize);
 	}

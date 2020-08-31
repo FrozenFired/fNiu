@@ -1,6 +1,7 @@
 var page = 0;
 var count;
 var isMore;
+var pdfirsAll = new Array();
 var getPdfirs = (urlQuery, elemId, isReload, role) => {
 	// console.log(urlQuery)
 	// console.log(elemId)
@@ -16,6 +17,9 @@ var getPdfirs = (urlQuery, elemId, isReload, role) => {
 					// 如果数据错误 则不输出
 				} else {
 					let pdfirs = results.data.pdfirs;
+					for(let j=0; j<pdfirs.length; j++) {
+						pdfirsAll.push(pdfirs[j])
+					}
 					page = results.data.page
 					isMore = results.data.isMore
 					count = results.data.count
@@ -56,15 +60,18 @@ var pdfirRender = (pdfir, role) => {
 	let elem = '';
 	elem += '<div class="col-6 col-lg-4 mt-2 text-center border-bottom border-left pdfirCard">'
 
-		elem += '<a href='+pdfirDetail+'>'
-			elem += '<img src="'+pdfir.photo+'" '
-				elem += 'width="100%" height="120px" '
-				elem += 'style="object-fit: scale-down;"'
-			elem += '/>'
-		elem += '</a>'
+
+		elem += '<img class="smlImg" id="img-'+pdfir._id+'" src="'+pdfir.photo+'" '
+			elem += 'width="100%" height="120px" '
+			elem += 'style="object-fit: scale-down;"'
+		elem += '/>'
 		
-		elem += '<div class="text-info text-muted '+codeBg+'">'+pdfir.nome+'</div>'
-		elem += '<div class="text-info text-muted">'+pdfir.code+'</div>'
+		elem += '<div class="mt-3 '+codeBg+'">'
+			elem += '<a class="text-primary '+codeBg+'" href='+pdfirDetail+'>'
+				elem += '<div>'+pdfir.nome+'</div>'
+				elem += '<div>'+pdfir.code+'</div>'
+			elem += '</a>'
+		elem += '</div>'
 		if($("#crCter").val()) {
 			let price = parseFloat(pdfir.price);
 			if(!isNaN(price)) {
@@ -72,7 +79,7 @@ var pdfirRender = (pdfir, role) => {
 			} else {
 				price = ''
 			}
-			elem += '<div class="text-info text-info">'+price+'</div>'
+			elem += '<div class="text-info">'+price+'</div>'
 		}
 	elem += '</div>'
 	return elem;
