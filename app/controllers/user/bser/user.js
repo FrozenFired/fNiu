@@ -5,6 +5,7 @@ let Conf = require('../../../../conf');
 
 let User = require('../../../models/login/user')
 let Firm = require('../../../models/login/firm')
+let Color = require('../../../models/material/color');
 
 let _ = require('underscore')
 
@@ -230,6 +231,90 @@ exports.bsPostDel = function(req, res) {
 			firm.save(function(err, firmSave) {
 				if(err) console.log(err);
 				res.redirect('/bsFirm')
+			})
+		}
+	})
+}
+
+exports.bsColors = function(req, res) {
+	let crUser = req.session.crUser;
+	Color.find({firm: crUser.firm})
+	.exec(function(err, colors) {
+		if(err) {
+			console.log(err);
+			info = "修改公司信息时，数据库保存错误 请联系管理员";
+			Err.usError(req, res, info);
+		} else {
+			res.render('./user/bser/index/color/list', {
+				title: '颜色库',
+				crUser,
+				colors
+			})
+		}
+	})
+}
+exports.bsColorAdd = function(req, res) {
+	let crUser = req.session.crUser;
+	res.render('./user/bser/index/color/add', {
+		title: '添加颜色',
+		crUser,
+	})
+}
+exports.bsColorNew = function(req, res) {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+	obj.firm = crUser.firm;
+	Color.findOne({
+		firm: crUser.firm,
+		code: obj.code
+	})
+	.exec(function(err, colorSame) {
+		if(err) {
+			console.log(err);
+			info = "bser ColorAdd, Color.findOne, Error!";
+			Err.usError(req, res, info);
+		} else if(colorSame) {
+			info = "颜色库中已经存在此颜色";
+			Err.usError(req, res, info);
+		} else {
+			let _color = new Color(obj);
+			_color.save(function(err, colorSave) {
+				if(err) {
+					console.log(err);
+					info = "bser ColorAdd, Color.findOne, Error!";
+					Err.usError(req, res, info);
+				} else {
+					res.redirect("/bsColors")
+				}
+			})
+		}
+	})
+}
+
+exports.bsColorDelAjax = function(req, res) {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+
+	Color.findOne({
+		firm: crUser.firm,
+		_id: id
+	})
+	.exec(function(err, color) {
+		if(err) {
+			console.log(err);
+			info = "bser ColorAdd, Color.findOne, Error!";
+			res.json({success: 0, info: info})
+		} else if(!color) {
+			info = "颜色库中不存在此颜色";
+			res.json({success: 0, info: info})
+		} else {
+			Color.deleteOne({_id: id}, function(err, objRm) {
+				if(err) {
+					info = "bser ColorDelAjax, Color.deleteOne, Error!";
+					Index.adOptionWrong(req, res, info);
+				} else {
+					res.json({success: 1})
+				}
 			})
 		}
 	})

@@ -61,6 +61,11 @@ module.exports = function(app){
 
 	app.post('/bsPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotoOrg, User.bsPostAdd);
 	app.get('/bsPostDel/:id', MdRole.bserIsLogin, User.bsPostDel);
+
+	app.get('/bsColors', MdRole.bserIsLogin, User.bsColors)
+	app.get('/bsColorAdd', MdRole.bserIsLogin, User.bsColorAdd)
+	app.post('/bsColorNew', MdRole.bserIsLogin, postForm, User.bsColorNew);
+	app.get('/bsColorDelAjax', MdRole.bserIsLogin, User.bsColorDelAjax)
 	/* =================================== Firm =================================== */
 
 	/* ======================================== product ======================================== */
