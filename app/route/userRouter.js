@@ -93,6 +93,7 @@ module.exports = function(app){
 	app.get('/bsNomeDel/:id', MdRole.bserIsLogin, Nome.bsNomeDel)
 
 	app.get('/bsNomeChStsAjax', MdRole.bserIsLogin, Nome.bsNomeChStsAjax);
+	app.get('/bsGetNomesAjax', MdRole.bserIsLogin, Nome.bsGetNomesAjax);
 
 	
 

@@ -96,4 +96,35 @@ $(function() {
 			e.preventDefault();
 		}
 	})
+
+	$("#bsProdNew").on('input', "#iptNome", function(e) {
+		let str = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		$.ajax({
+			type: "GET",
+			url: "/bsGetNomesAjax?keyword="+str,
+			success: function(results) {
+				if(results.success === 1) {
+					let nomes = results.nomes
+					let elem = "";
+					for(let i=0; i<nomes.length; i++) {
+						let nome = nomes[i];
+						elem += '<div class="col-6 col-md-2 nomeBtnBox">'
+							elem += '<button class="nomeBtn btn btn-default" data-nome="'
+							elem += nome.code+'" type="button">'+ nome.code + '</button>'
+						elem += '</div>'
+					}
+					$(".nomeBtnBox").remove();
+					$("#nomeShow").append(elem)
+				} else if(results.success === 0) {
+					alert(results.msg);
+				}
+			}
+		});
+	})
+	$("#nomeShow").on('click', '.nomeBtn', function(e) {
+		let target = $(e.target);
+		let nome = target.data('nome');
+		$("#iptNome").val(nome);
+		$(".nomeBtnBox").remove();
+	})
 })

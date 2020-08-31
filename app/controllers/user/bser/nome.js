@@ -322,3 +322,28 @@ exports.bsNomeChStsAjax = function(req, res) {
 		}
 	})
 }
+
+exports.bsGetNomesAjax = function(req, res) {
+	let crUser = req.session.crUser;
+	let keyword = req.query.keyword;
+	let keyReg = '';
+	if(req.query.keyword) {
+		keySymb = '$in';
+		keyReg = String(req.query.keyword);
+		keyReg = keyReg.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		keyReg = new RegExp(keyReg + '.*');
+	}
+	let status = req.query.status;
+	Nome.find({
+		'firm': crUser.firm,
+		'code': {'$in': keyReg}
+	})
+	.exec(function(err, nomes) {
+		if(err) {
+			console.log(err);
+			res.json({success: 0, info: "bser GetNomesAjax, Cter.find, Error!"})
+		} else {
+			res.json({success: 1, nomes})
+		}
+	})
+}
