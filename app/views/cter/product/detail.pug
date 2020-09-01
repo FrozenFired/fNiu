@@ -19,40 +19,50 @@ block content
 						- price = price.toFixed(2);
 					.text-info.text-info 价格：#{price}
 		hr
-		- let colors = [{nome:"Unico Color"}];
-		if pdfir.colors && pdfir.colors.length > 0
-			- colors = pdfir.colors; 
-		- let sizes = ["Unico Size"];
-		if pdfir.sizes && pdfir.sizes.length > 0
-			- sizes = pdfir.sizes; 
-		form#cartForm.mt-5
-			input(type="hidden", name="obj[pdfirId]", value=pdfir._id)
-			table.table.text-center.table-bordered
-				tr
-					td(width="10%")
-					each size in sizes
-						-a;
-						td #{size}
-				- let c = -1;
-				each color in colors
-					- c++;
+		if orcpd
+			-a;
+			h1.text-center 已加入购物车
+		else 
+			- let colors = [{nome:"Unico Color"}];
+			if pdfir.colors && pdfir.colors.length > 0
+				- colors = pdfir.colors; 
+			- let sizes = ["Unico Size"];
+			if pdfir.sizes && pdfir.sizes.length > 0
+				- sizes = pdfir.sizes; 
+			form#cartForm.mt-5
+				input(type="hidden", name="obj[orc]", value=orc._id)
+				input(type="hidden", name="obj[pdfir]", value=pdfir._id)
+				input#priceIpt(type="hidden", name="obj[price]", value=pdfir.price)
+				table.table.text-center.table-bordered
 					tr
-						td(style="background-color:#"+color.code)
-							span(style="background-color:#FFF") #{color.nome}
-						- let s = -1;
+						td(width="10%")
 						each size in sizes
-							- s++;
-							td
-								input.iptsty(type="number", name="obj[quot]["+c+"]["+s+"]", value=0)
-			h3.text-right
-				span 总数: 
-				span.text-info#quotSapn 0
-			hr
-			if crCter
-				-a;
-				.form-group.row
-					.col-md-10.col-sm-6
-					.col-md-2.col-sm-6.col-12
-						button#cartFormSub.btn.btn-success.btn-block(type="button") 提交
+							-a;
+							td #{size}
+					- let c = -1;
+					each color in colors
+						- c++;
+						tr
+							td(style="background-color:#"+color.code)
+								span(style="background-color:#FFF") #{color.nome}
+								input(type="hidden", name="obj[colors]["+c+"][colorcode]", value=color.code)
+								input(type="hidden", name="obj[colors]["+c+"][colornome]", value=color.nome)
+							- let s = -1;
+							each size in sizes
+								- s++;
+								td
+									input(type="hidden", name="obj[colors]["+c+"][sizes]["+s+"][size]", value=size)
+									input.iptsty(type="number", name="obj[colors]["+c+"][sizes]["+s+"][quot]", value=0)
+				h3.text-right
+					span 总数: 
+					span.text-info#quotSapn 0
+					input#quotIpt(type="hidden", name="obj[quot]", value=0)
+				hr
+				if crCter
+					-a;
+					.form-group.row
+						.col-md-10.col-sm-6
+						.col-md-2.col-sm-6.col-12
+							button#cartFormSub.btn.btn-success.btn-block(type="button") 提交
 		.footerSpace
 	script(src="/js/cter/pdfir/detail.js")

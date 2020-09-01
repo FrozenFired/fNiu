@@ -2,7 +2,8 @@ let Err = require('../aaIndex/err');
 
 let Pdfir = require('../../models/material/pdfir');
 let Nome = require('../../models/material/nome');
-let Ordfir = require('../../models/client/ordfir');
+let Orc = require('../../models/client/orc');
+let Orcpd = require('../../models/client/orcpd');
 
 exports.products = function(req, res) {
 	let crCter = req.session.crCter;
@@ -22,23 +23,67 @@ exports.product = function(req, res) {
 	if(crCter) firm = crCter.firm;
 	let id = req.params.id;
 
+
 	Pdfir.findOne({_id: id})
 	.populate('colors')
 	.exec(function(err, pdfir) {
 		if(err) {
 			console.log(err);
-			info = "cter product Pdfir.findone, Error!"
+			info = "cter product Pdfir.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!pdfir) {
 			info = "没有找到产品, 请刷新重试"
 			Err.usError(req, res, info);
 		} else {
-			// console.log(pdfir)
-			res.render('./cter/product/detail', {
-				title : '产品信息',
-				crCter,
-				pdfir,
-			});
+			Orc.findOne({
+				'firm': firm,
+				'cter': crCter._id,
+				'status': 1
+			})
+			.populate('orcpds')
+			.exec(function(err, orc) {
+				if(err) {
+					console.log(err);
+					info = "cter product Pdfir.findOne, Error!"
+					Err.usError(req, res, info);
+				} else if(!orc) {
+					let objOrc = new Object();
+					objOrc.firm = crCter.firm;
+					objOrc.cter = crCter._id;
+					let _objOrc = new Orc(objOrc)
+					_objOrc.save(function(err, orc){
+						if(err) {
+							console.log(err);
+							info = "product, _objOrc.save, Error!";
+							Index.adOptionWrong(req, res, info);
+						} else {
+							let orcpd = null;
+							res.render('./cter/product/detail', {
+								title : '产品信息',
+								crCter,
+								pdfir,
+								orc,
+								orcpd
+							});
+						}
+					})
+				} else {
+					let orcpd = null;
+					for(let i=0; i<orc.orcpds.length; i++) {
+						if(String(orc.orcpds[i].pdfir) == String(pdfir._id)) {
+							orcpd = orc.orcpds[i];
+						}
+					}
+					// console.log(orcpd)
+					res.render('./cter/product/detail', {
+						title : '产品信息',
+						crCter,
+						pdfir,
+						orc,
+						orcpd
+					});
+				}
+			})
 		}
 	})
 }
@@ -64,52 +109,6 @@ exports.pdnomes = function(req, res) {
 
 				nomes: nomes,
 			});
-		}
-	})
-}
-
-exports.ctGetPdfirs = function(req, res) {
-	let crCter = req.session.crCter;
-
-	Pdfir.find({'firm': crCter.firm}, Conf.findPdfirs)
-	.sort({'ctAt': -1})
-	.exec(function(err, pdfirs) {
-		if(err) {
-			console.log(err);
-			info = "cter pdfir find, Error!"
-			res.json({success: 0, info: info})
-		} else {
-			res.json({success: 1, pdfirs: pdfirs})
-		}
-	})
-}
-
-exports.ctGetOrdfirs = function(req, res) {
-	let crCter = req.session.crCter;
-
-	let symAtFm = "$gte";
-	let symAtTo = "$lte";
-	let condAtFm = new Date(new Date().setHours(0, 0, 0, 0));
-	let condAtTo = new Date(new Date().setHours(23, 59, 59, 999))
-	if(req.query.atFm && req.query.atFm.length == 10){
-		condAtFm = new Date(req.query.atFm).setHours(0,0,0,0);
-	}
-	if(req.query.atTo && req.query.atTo.length == 10){
-		condAtTo = new Date(req.query.atTo).setHours(23,59,59,999);
-	}
-
-	Ordfir.find({
-		'firm': crCter.firm,
-		'ctAt': {[symAtFm]: condAtFm, [symAtTo]: condAtTo}
-	})
-	.sort({'ctAt': -1})
-	.exec(function(err, ordfirs) {
-		if(err) {
-			console.log(err);
-			info = "cter pdfir find, Error!"
-			res.json({success: 0, info: info})
-		} else {
-			res.json({success: 1, ordfirs: ordfirs})
 		}
 	})
 }

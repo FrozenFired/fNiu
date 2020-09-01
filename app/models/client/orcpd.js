@@ -4,25 +4,26 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 let Float = require('mongoose-float').loadType(mongoose, 2);
 
-const colection = 'Ctpdfir';
+const colection = 'Orcpd';
 let dbSchema = new Schema({
 	firm: {type: ObjectId, ref: 'Firm'},
+	cter: {type: ObjectId, ref: 'Cter'},
 	ctAt: Date,
 	upAt: Date,
-
 	orc: {type: ObjectId, ref: 'Orc'},
 
-	cter: {type: ObjectId, ref: 'Cter'},
-
 	pdfir: {type: ObjectId, ref: 'Pdfir'},
+	price: Float,
 
-	quot : [{
-		color: [{
-			size: quot,
+	colors : [{
+		colorcode: String,
+		colornome: String,
+		sizes: [{
+			size: String,
+			quot: Number,
 		}]
 	}],
-
-	price: Float,
+	quot: Number,
 });
 
 dbSchema.pre('save', function(next) {

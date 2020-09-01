@@ -13,7 +13,7 @@ let dbSchema = new Schema({
 
 	code: String,	// 本公司唯一 暂时简单
 
-	orcp: [{type: ObjectId, ref: 'Orcp'}],
+	orcpds: [{type: ObjectId, ref: 'Orcpd'}],
 	imp: Float,		// 实际收费
 
 	ctAt: Date,
@@ -23,7 +23,7 @@ let dbSchema = new Schema({
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		if(!this.status) this.status = 0;
+		if(!this.status) this.status = 1;
 		this.ctAt = this.upAt = Date.now();
 	} else {
 		this.upAt = Date.now();

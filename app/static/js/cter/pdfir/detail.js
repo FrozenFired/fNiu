@@ -8,6 +8,10 @@ $(function() {
 			}
 		})
 		$("#quotSapn").text(quot)
+		$("#quotIpt").val(quot)
+		$("#quotIpt").val(quot)
+		let price = parseFloat($("#priceIpt").val());
+		$("#impIpt").val(price*quot);
 	}
 	totQuotFunc();
 
@@ -31,7 +35,7 @@ $(function() {
 		let data = form.serialize();
 		$.ajax({
 			type: "POST",
-			url: '/bsCterUpdLogin',
+			url: '/ctOrcNewAjax',
 			data: data,
 			success: function(results) {
 				if(results.success == 1) {
