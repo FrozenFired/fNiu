@@ -64,7 +64,7 @@ exports.usPdfirsAjax = (req, res) => {
 			info = "bser PdfirsAjax, Pdfir.countDocuments(), Error!";
 			Err.jsonErr(req, res, info);
 		} else {
-			Pdfir.find(param)
+			Pdfir.find(param, Conf.findPdfirs)
 			.skip(skip).limit(pagesize)
 			.sort({'rcmd': -1, 'weight': -1, 'upAt': -1})
 			.exec((err, pdfirs) => {

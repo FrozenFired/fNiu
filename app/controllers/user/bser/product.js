@@ -4,6 +4,7 @@ let MdPicture = require('../../../middle/middlePicture');
 let Conf = require('../../../../conf');
 
 let Pdfir = require('../../../models/material/pdfir');
+let Color = require('../../../models/material/color');
 
 let _ = require('underscore');
 
@@ -47,7 +48,7 @@ exports.bsPdfirs = function(req, res) {
 		'firm': crUser.firm,
 		'photo': {[symPhoto]: keyPhoto},
 		'rcmd': {[symRcmd]: keyRcmd}
-	})
+	}, Conf.findPdfirs)
 	.sort({[sortBy]: sortVal})
 	// .limit(limit)
 	.exec(function(err, pdfirs) {
@@ -55,6 +56,7 @@ exports.bsPdfirs = function(req, res) {
 			info = "bser pdfirs, pdfir find, Error！";
 			Err.usError(req, res, info);
 		} else {
+			// console.log(pdfirs)
 			res.render('./user/bser/product/list', {
 				title : '模特记录',
 				crUser: crUser,
@@ -72,7 +74,7 @@ exports.bsPdfirsAjax = function(req, res) {
 	Pdfir.find({
 		'firm': crUser.firm,
 		'code': {'$in': keywordReg}
-	})
+	}, Conf.findPdfirs)
 	.sort({'upAt': -1})
 	.limit(limit)
 	.exec(function(err, pdfirs) {
@@ -110,23 +112,29 @@ exports.bspdfir = function(req, res) {
 	
 	let id = req.params.id;
 
-	Pdfir.findOne({
-		'firm': crUser.firm,
-		'_id': id
-	})
-	.exec(function(err, pdfir) {
+	Color.find({'firm': crUser.firm}, function(err, colors) {
 		if(err) {
-			info = "bser pdfir, pdfir findOne, Error！";
+			info = "bser pdfir, Color find, Error！";
 			Err.usError(req, res, info);
-		} else if(!pdfir) {
-			info = "没有找到此模特, 请刷新重试"
 		} else {
-			res.render('./user/bser/product/detail', {
-				title : '模特记录',
-				crUser: crUser,
+			Pdfir.findOne({'firm': crUser.firm, '_id': id })
+			.populate('colors')
+			.exec(function(err, pdfir) {
+				if(err) {
+					info = "bser pdfir, pdfir findOne, Error！";
+					Err.usError(req, res, info);
+				} else if(!pdfir) {
+					info = "没有找到此模特, 请刷新重试"
+				} else {
+					res.render('./user/bser/product/detail', {
+						title : '模特记录',
+						crUser,
 
-				pdfir: pdfir,
-			});
+						pdfir,
+						colors,
+					});
+				}
+			})
 		}
 	})
 }
@@ -330,53 +338,12 @@ exports.bsPdfirDel = function(req, res) {
 
 
 
-exports.bsPdAjaxNewColor = function(req, res) {
-	let crUser = req.session.crUser;
-	let id = req.body.id;
-	let color = req.body.color;
-	color = color.replace(/\s+/g,"").toUpperCase();
-
-	Pdfir.findOne({_id: id, firm: crUser.firm})
-	.exec(function(err, pdfir) {
-		if(err) {
-			console.log(err);
-			info = "bser AjaxNewColor, pdfir findOne, Error！";
-			res.json({success: 0, info: info})
-		} else if(!pdfir) {
-			info = "没有找到此模特";
-			res.json({success: 0, info: info})
-		} else {
-			// console.log(pdfir)
-			var i=0
-			for(; i<pdfir.colors.length; i++) {
-				if(color == pdfir.colors[i]) break;
-			}
-			if(i != pdfir.colors.length) {
-				info = "不能添加相同颜色";
-				res.json({success: 0, info: info})
-			} else {
-				pdfir.colors.unshift(color);
-				pdfir.save(function(err, pdSave) {
-					if(err) {
-						console.log(err);
-						info = "bser AjaxNewColor, pdfir save, Error！";
-						res.json({success: 0, info: info})
-					} else {
-						res.json({success: 1, pdfir})
-					}
-				})
-			}
-			// console.log(pdfir)
-
-		}
-	})
-}
-exports.bsPdAjaxDelColor = function(req, res) {
+exports.bsPdColorAjax = function(req, res) {
 	let crUser = req.session.crUser;
 	let id = req.query.id;
-	let color = req.query.color;
-
-	Pdfir.findOne({_id: id, firm: crUser.firm})
+	let colorId = req.query.colorId;
+	let sym = parseInt(req.query.sym);
+	Pdfir.findOne({_id: id, firm: crUser.firm}, {colors: 1})
 	.exec(function(err, pdfir) {
 		if(err) {
 			console.log(err);
@@ -387,32 +354,54 @@ exports.bsPdAjaxDelColor = function(req, res) {
 			res.json({success: 0, info: info})
 		} else {
 			// console.log(pdfir)
-			var i=0
-			for(; i<pdfir.colors.length; i++) {
-				if(color == pdfir.colors[i]) break;
-			}
-			if(i == pdfir.colors.length) {
-				info = "请刷新重试";
-				res.json({success: 0, info: info})
+			if(sym == 0) {
+				var i=0
+				for(; i<pdfir.colors.length; i++) {
+					if(colorId == pdfir.colors[i]) break;
+				}
+				if(i == pdfir.colors.length) {
+					info = "请刷新重试";
+					res.json({success: 0, info: info})
+				} else {
+					pdfir.colors.remove(colorId)
+
+					pdfir.save(function(err, pdSave) {
+						if(err) {
+							console.log(err);
+							info = "bser AjaxDelColor, pdfir save, Error！";
+							res.json({success: 0, info: info})
+						} else {
+							res.json({success: 1, sym})
+						}
+					})
+				}
+			} else if(sym == 1) {
+				var i=0
+				for(; i<pdfir.colors.length; i++) {
+					if(colorId == pdfir.colors[i]) break;
+				}
+				if(i != pdfir.colors.length) {
+					info = "不能添加相同颜色";
+					res.json({success: 0, info: info})
+				} else {
+					pdfir.colors.unshift(colorId);
+					pdfir.save(function(err, pdSave) {
+						if(err) {
+							console.log(err);
+							info = "bser AjaxNewColor, pdfir save, Error！";
+							res.json({success: 0, info: info})
+						} else {
+							res.json({success: 1, sym})
+						}
+					})
+				}
 			} else {
-				pdfir.colors.remove(color)
-
-				pdfir.save(function(err, pdSave) {
-					if(err) {
-						console.log(err);
-						info = "bser AjaxDelColor, pdfir save, Error！";
-						res.json({success: 0, info: info})
-					} else {
-						res.json({success: 1, pdfir})
-					}
-				})
+				info = "操作错误";
+				res.json({success: 0, info: info})
 			}
-			// console.log(pdfir)
-
 		}
 	})
 }
-
 
 exports.bsPdAjaxNewSize = function(req, res) {
 	let crUser = req.session.crUser;

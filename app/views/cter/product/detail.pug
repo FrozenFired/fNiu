@@ -19,7 +19,7 @@ block content
 						- price = price.toFixed(2);
 					.text-info.text-info 价格：#{price}
 		hr
-		- let colors = ["Unico Color"];
+		- let colors = [{nome:"Unico Color"}];
 		if pdfir.colors && pdfir.colors.length > 0
 			- colors = pdfir.colors; 
 		- let sizes = ["Unico Size"];
@@ -37,8 +37,8 @@ block content
 				each color in colors
 					- c++;
 					tr
-						td
-							span #{color}
+						td(style="background-color:#"+color.code)
+							span(style="background-color:#FFF") #{color.nome}
 						- let s = -1;
 						each size in sizes
 							- s++;

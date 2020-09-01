@@ -23,6 +23,7 @@ exports.product = function(req, res) {
 	let id = req.params.id;
 
 	Pdfir.findOne({_id: id})
+	.populate('colors')
 	.exec(function(err, pdfir) {
 		if(err) {
 			console.log(err);
@@ -70,7 +71,7 @@ exports.pdnomes = function(req, res) {
 exports.ctGetPdfirs = function(req, res) {
 	let crCter = req.session.crCter;
 
-	Pdfir.find({'firm': crCter.firm})
+	Pdfir.find({'firm': crCter.firm}, Conf.findPdfirs)
 	.sort({'ctAt': -1})
 	.exec(function(err, pdfirs) {
 		if(err) {

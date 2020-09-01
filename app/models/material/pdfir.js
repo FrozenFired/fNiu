@@ -9,9 +9,9 @@ let dbSchema = new Schema({
 	/* ------------------ 创建时 ------------------ */
 	code: String,	// 本公司唯一
 	nome: String,
-	photo: { type: String, default: '/upload/product/1.jpg' },
+	photo: {type: String, default: '/upload/product/1.jpg' },
 	material: String,
-	colors: [String],
+	colors: [{type: ObjectId, ref: 'Color'}],
 	sizes: [String],
 	// assists : [{type: ObjectId, ref: 'Assist'}],
 	price: Float,

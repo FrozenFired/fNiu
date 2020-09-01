@@ -1,63 +1,59 @@
 $(function() {
-	$(".cAdd").click(function(e) {
-		$(".colorDel").hide();
-		$("#newColor").toggle();
-	})
-	$("#newColorSub").click(function(e) {
+	/* ============= 颜色 增删 ============= */
+	$(".colorIptBox").on('click', '.colorIpt', function(e) {
+		let target = $(e.target);
+		let colorId = target.data('id');
+		let color = target.data('color');
+		let nome = target.data('nome');
+		if(!nome) nome = ' ';
+		let colornome = nome;
+		if(colornome.length > 8)
+			colornome = colornome.slice(0,6) + '...';
+		let sym = target.data('sym');
 		let id = $("#pdfirId").val();
-		let color = $("#newColorIpt").val().replace(/\s+/g,"").toUpperCase();
-		// console.log(color)
-
-		let form = $("#newColor");
-		let data = form.serialize();
 		$.ajax({
-			type: "POST",
-			url: '/bsPdAjaxNewColor',
-			data: data,
+			type: "GET",
+			url: '/bsPdColorAjax?id='+id+'&colorId='+colorId+'&sym='+sym,
 			success: function(results) {
 				if(results.success == 1) {
-					let elem = "";
-					elem += '<div class="row mt-3" id="rowColor-'+color+'">'
-						elem += '<div class="col-10">'
-							elem += color
+					sym = results.sym;
+					if(sym == 1) {
+						let elem = "";
+						elem += '<div class="col-4 col-md-6 col-xl-1 mt-3" id="colored-'+colorId+'">'
+							elem += '<div class="colorIpt" style="background-color:#'+color+'; height: 30px" '
+							elem += 'data-id='+colorId+' data-color='+color+' data-nome='+nome
+							elem +=' data-sym=0, title='+nome+'>'
+							elem += '</div>'
+							elem += '<div class="nome text-success" style="Font-size: 8px" title='+nome+'>'
+								elem += colornome
+							elem += '</div>'
 						elem += '</div>'
-						elem += '<div class="col-2">'
-							elem += '<button class="colorDel btn btn-danger" type="button" '
-							elem += 'data-id='+id+' data-color='+color+' style="display:none"> -'
+						$("#coloredsBox").prepend(elem)
+						$("#colorPool-"+colorId).remove()
+					} else {
+						let elem = "";
+						elem += '<div class="col-4 col-md-6 col-xl-1 mt-3" id="colorPool-'+colorId+'">'
+							elem += '<div class="colorIpt" style="background-color:#'+color+'; height: 30px" '
+							elem += 'data-id='+colorId+' data-color='+color+' data-nome='+nome
+							elem +=' data-sym=1, title='+nome+'>'
+							elem += '</div>'
+							elem += '<div class="nome" style="Font-size: 8px" title='+nome+'>'
+								elem += colornome
+							elem += '</div>'
 						elem += '</div>'
-					elem += '</div>'
-					$(".colorsElem").prepend(elem)
-					$("#newColorIpt").val('')
-					$("#newColor").hide();
+						$("#colorPoolsBox").prepend(elem)
+						$("#colored-"+colorId).remove()
+					}
 				} else {
 					alert(results.info);
 				}
 			}
 		});
 	})
+	/* ============= 颜色 增删 ============= */
 
-	$(".cDel").click(function(e) {
-		$("#newColor").hide();
-		$(".colorDel").toggle();
-	})
-	$(".colorDel").click(function(e) {
-		let target = $(e.target);
-		let id = target.data('id');
-		let color = target.data('color');
-		$.ajax({
-			type: "GET",
-			url: '/bsPdAjaxDelColor?id='+id+'&color='+color,
-			success: function(results) {
-				if(results.success == 1) {
-					$("#rowColor-"+color).remove();
-				} else {
-					alert(2)
-					// alert(results.info);
-				}
-			}
-		});
-	})
 
+	/* ============= 尺寸 添加 ============= */
 	$(".sAdd").click(function(e) {
 		let id = $("#pdfirId").val();
 
@@ -86,6 +82,8 @@ $(function() {
 			}
 		});
 	})
+	/* ============= 尺寸 添加 ============= */
+	/* ============= 尺寸 删除 ============= */
 	$(".sDel").click(function(e) {
 		let id = $("#pdfirId").val();
 
@@ -106,4 +104,6 @@ $(function() {
 			}
 		});
 	})
+	/* ============= 尺寸 增删 ============= */
+
 })

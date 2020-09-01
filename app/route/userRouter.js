@@ -80,8 +80,7 @@ module.exports = function(app){
 
 	app.get('/bsPdAjaxCode', MdRole.bserIsLogin, Product.bsPdAjaxCode);
 	/* ===================== product color size ===================== */
-	app.post('/bsPdAjaxNewColor', MdRole.bserIsLogin, postForm, Product.bsPdAjaxNewColor);
-	app.get('/bsPdAjaxDelColor', MdRole.bserIsLogin, Product.bsPdAjaxDelColor);
+	app.get('/bsPdColorAjax', MdRole.bserIsLogin, Product.bsPdColorAjax);
 
 	app.get('/bsPdAjaxNewSize', MdRole.bserIsLogin, Product.bsPdAjaxNewSize);
 	app.get('/bsPdAjaxDelSize', MdRole.bserIsLogin, Product.bsPdAjaxDelSize);
