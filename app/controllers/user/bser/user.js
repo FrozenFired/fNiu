@@ -6,6 +6,7 @@ let Conf = require('../../../../conf');
 let User = require('../../../models/login/user')
 let Firm = require('../../../models/login/firm')
 let Color = require('../../../models/material/color');
+let Pdfir = require('../../../models/material/pdfir');
 
 let _ = require('underscore')
 
@@ -308,12 +309,26 @@ exports.bsColorDelAjax = function(req, res) {
 			info = "颜色库中不存在此颜色";
 			res.json({success: 0, info: info})
 		} else {
-			Color.deleteOne({_id: id}, function(err, objRm) {
+			Pdfir.find({'colors': id}, {'colors': 1, 'code': 1}, function(err, pdfirs) {
 				if(err) {
-					info = "bser ColorDelAjax, Color.deleteOne, Error!";
-					Index.adOptionWrong(req, res, info);
+					console.log(err);
+					info = "bser ColorAdd, Pdfir.find, Error!";
+					res.json({success: 0, info: info})
+				} else if(pdfirs && pdfirs.length > 0) {
+					info = "请先删除以下产品中的此颜色: "
+					for(let i=0; i<pdfirs.length; i++) {
+						info += pdfirs[i].code + ' ';
+					}
+					res.json({success: 0, info: info})
 				} else {
-					res.json({success: 1})
+					Color.deleteOne({_id: id}, function(err, objRm) {
+						if(err) {
+							info = "bser ColorDelAjax, Color.deleteOne, Error!";
+							Index.adOptionWrong(req, res, info);
+						} else {
+							res.json({success: 1})
+						}
+					})
 				}
 			})
 		}
