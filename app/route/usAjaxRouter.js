@@ -1,4 +1,5 @@
 const Prod = require('../controllers/user/ajax/prod');
+const Orc = require('../controllers/user/ajax/orc');
 
 const MdRole = require('../middle/middleRole');
 
@@ -8,6 +9,7 @@ const postForm = multipart();
 module.exports = function(app){
 	/* =================================== Prod =================================== */
 	app.get('/usPdfirsAjax', Prod.usPdfirsAjax)
+	app.get('/usOrcsAjax', Orc.usOrcsAjax)
 
 	/* ===================== 状态更改 ===================== */
 	// app.get('/usInquotStatusAjax', MdRole.userIsLogin, Status.usInquotStatusAjax)

@@ -35,7 +35,7 @@ $(function() {
 		let data = form.serialize();
 		$.ajax({
 			type: "POST",
-			url: '/ctOrcNewAjax',
+			url: '/ctOrcpdNewAjax',
 			data: data,
 			success: function(results) {
 				if(results.success == 1) {

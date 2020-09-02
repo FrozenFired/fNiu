@@ -15,6 +15,8 @@ let Cter = require('../controllers/user/bser/order/cter');
 let Order = require('../controllers/user/bser/order/order');
 let Ordfir = require('../controllers/user/bser/order/ordfir');
 
+let Orc = require('../controllers/user/bser/orc');
+
 
 let MdBcrypt = require('../middle/middleBcrypt');
 let MdRole = require('../middle/middleRole');
@@ -130,4 +132,11 @@ module.exports = function(app){
 	app.get('/bsOrdfirsPd', MdRole.bserIsLogin, Ordfir.bsOrdfirsPd);
 	app.get('/bsOrdfirsCt', MdRole.bserIsLogin, Ordfir.bsOrdfirsCt);
 	app.get('/bsOrdfirsCter', MdRole.bserIsLogin, Ordfir.bsOrdfirsCter);
+
+	/* ======================================== orc 客户线上订单 ======================================== */
+	app.get('/bsOrcs', MdRole.bserIsLogin, Orc.bsOrcs);
+	app.get('/bsHisOrcs', MdRole.bserIsLogin, Orc.bsHisOrcs);
+
+	app.get('/bsOrc/:id', MdRole.bserIsLogin, Orc.bsOrc);
+	app.get('/bsOrcSubAjax', MdRole.bserIsLogin, Orc.bsOrcSubAjax);
 };

@@ -11,49 +11,23 @@ block content
 						span [#{crCter.nome}]
 			.col-4.text-right
 				a.btn.btn-danger(href='/logout') 退出
-		.row.mt-4.text-center
+		.row.mt-4.mb-5.text-center
 			.col-4
-				span 购物车
+				button.navBtn.btn.btn-info#cart(type="button") 购物车
 			.col-4
-				span 我的订单
+				button.navBtn.btn.btn-default#orders(type="button") 处理订单
 			.col-4
-				span 个人信息
-		#cart.mt-5
-			if orc
-				-a;
-				h5.text-center [#{moment(orc.ctAt).format("YYYY-MM-DD")}] #{orc.firm.nome}
-				hr
-				each orcpd in orc.orcpds
-					-a;
-					if orcpd.pdfir
-						- pdfir = orcpd.pdfir;
-						.row.mt-4.text-center
-							.col-4.col-lg-2 
-								div #{pdfir.code} [#{pdfir.nome}]
-								div
-									img(src=pdfir.photo, width="100%", style="max-width:100px")
-								div
-									button.btn.btn-link.text-danger.orcpdDel(type="button") 删除
-							.col-8.col-lg-10
-								table.table.table-bordered
-									- let c = -1;
-									each color in orcpd.colors
-										- c++;
-										tr
-											td(style="background-color:#"+color.colorcode, width="10%")
-												.colornome.bg-light #{color.colornome}
-											- let s = -1;
-											each size in color.sizes
-												- s++;
-												td
-													span #{size.size}
-													//- input.iptsty2(type="number", name="obj[orcpd][colors]["+c+"][sizes]["+s+"][quot]", value=size.quot)
-													input.iptsty2.quotIpt(type="number", data-id=orcpd._id, data-color=color.colorcode, data-size=size.size, value=size.quot)
-				hr
-				.row
-					.col-12.text-right
-						button.btn.btn-success(type="button") 确认订单
+				button.navBtn.btn.btn-default#basic(type="button") 个人信息
 
+		.cart.navPage
+			include ./self/cart
+		.orders.navPage(style="display:none")
+			input#orcFilterAjax(type="hidden", value="/usOrcsAjax?@#orcsElem@ct")
+			//- input#orcFilterAjax(type="hidden", value="?key=xxx@#orcsElem")
+			#orcsElem
+		.basic.navPage(style="display:none")
 	.footerSpace
 	script(src="/js/aaViews/cter.js")
-	script(src="/js/cter/self/cart.js")
+	script(src="/js/cter/orc/list.js")
+	script(src="/js/ajaxGet/orc.js")
+	

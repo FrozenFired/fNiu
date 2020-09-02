@@ -43,6 +43,14 @@ let Cter = require('../../models/client/cter');
 
 let bcrypt = require('bcryptjs');
 exports.loginUser = function(req, res) {
+	// User
+	if(req.session.crUser) delete req.session.crUser;
+	// Cter
+	if(req.session.crCter) delete req.session.crCter;
+	if(req.session.proNomes) delete req.session.proNomes;
+	// Ader
+	if(req.session.crAder) delete req.session.crAder;
+
 	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	let pwd = String(req.body.pwd).replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	if(pwd.length == 0) pwd = " ";

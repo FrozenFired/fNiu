@@ -34,16 +34,10 @@ module.exports = function(app){
 	
 
 	/* ======================================== order ======================================== */
-	app.post('/ctOrcNewAjax', MdRole.cterIsLogin, postForm, Orc.ctOrcNewAjax);
-	// app.get('/ctOrderDel', MdRole.cterIsLogin, Order.ctOrderDel)
+	app.post('/ctOrcpdNewAjax', MdRole.cterIsLogin, postForm, Orc.ctOrcpdNewAjax);
+	app.get('/ctOrcpdDelAjax', MdRole.cterIsLogin, Orc.ctOrcpdDelAjax);
+	app.get('/ctOrcpdUpdAjax', MdRole.cterIsLogin, Orc.ctOrcpdUpdAjax);
+	app.get('/ctOrcSubAjax', MdRole.cterIsLogin, Orc.ctOrcSubAjax);
 
-	// app.get('/ctOrders', MdRole.cterIsLogin, Order.ctOrders);
-	// app.get('/ctOrdersAjax', MdRole.cterIsLogin, Order.ctOrdersAjax);
-	// app.get('/ctOrdHis', MdRole.cterIsLogin, Order.ctOrdHis);
-	// app.post('/ctOrdChangeSts', MdRole.cterIsLogin, postForm, Order.ctOrdChangeSts);
-	// app.get('/ctOrderTicketing', MdRole.userIsLogin, Order.ctOrderTicketing);
-	/* ----------- ordfir 根据 pd 或者 客户 查看销量 ----------- */
-	// app.get('/ctOrdfirsPd', MdRole.cterIsLogin, Ordfir.ctOrdfirsPd);
-	// app.get('/ctOrdfirsCt', MdRole.cterIsLogin, Ordfir.ctOrdfirsCt);
-	// app.get('/ctOrdfirsCter', MdRole.cterIsLogin, Ordfir.ctOrdfirsCter);
+	app.get('/order/:id', MdRole.cterIsLogin, Orc.order);
 };

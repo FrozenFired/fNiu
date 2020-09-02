@@ -50,6 +50,7 @@ exports.product = function(req, res) {
 					let objOrc = new Object();
 					objOrc.firm = crCter.firm;
 					objOrc.cter = crCter._id;
+					objOrc.imp = 0;
 					let _objOrc = new Orc(objOrc)
 					_objOrc.save(function(err, orc){
 						if(err) {

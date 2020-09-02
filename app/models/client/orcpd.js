@@ -15,9 +15,11 @@ let dbSchema = new Schema({
 	pdfir: {type: ObjectId, ref: 'Pdfir'},
 	price: Float,
 
+	sizes: [String],
 	colors : [{
 		colorcode: String,
 		colornome: String,
+		cquot: Number,
 		sizes: [{
 			size: String,
 			quot: Number,
