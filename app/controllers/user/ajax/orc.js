@@ -69,6 +69,7 @@ exports.usOrcsAjax = (req, res) => {
 			} else {
 				Orc.find(param)
 				.populate('firm')
+				.populate('cter')
 				// .populate({path: 'orcpd', populate: {path: 'pdfir'}})
 				.skip(skip).limit(pagesize)
 				.sort({'ctAt': -1})

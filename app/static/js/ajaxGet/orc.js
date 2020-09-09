@@ -49,16 +49,33 @@ var orcRender = (orc, role) => {
 	if(role == 'ct') {
 		orcDetail = '/order/'+orc._id;
 	}
+	let bsCter = '#';
+	if(role != 'ct' && orc.cter) {
+		bsCter = '/bsCter/'+orc.cter._id;
+	}
 
 	let elem = '';
-	elem += '<div class="col-md-6 col-lg-4 mt-2 orcCard card py-3">'		
+	elem += '<div class="col-lg-6 my-2 orcCard card py-3">'		
 		elem += '<div class="row">'
-			elem += '<div class="col-6">'
+			elem += '<div class="col-5">'
 				elem += '<a class="text-primary" href='+orcDetail+'>'
 					elem += '<div>'+orc.code+'</div>'
 				elem += '</a>'
 			elem += '</div>'
-			elem += '<div class="col-6 text-right">'
+			elem += '<div class="col-4">'
+				if(role == 'ct') {
+					
+				} else {
+					if(orc.cter) {
+						elem += '<a class="text-primary" href='+bsCter+'>'
+							elem += '<div>'+orc.cter.nome+'['+orc.cter.code+']</div>'
+						elem += '</a>'
+					} else {
+						elem += '<div>客户数据丢失</div>'
+					}
+				}
+			elem += '</div>'
+			elem += '<div class="col-3 text-right">'
 					elem += '<div>'+orc.imp+' €</div>'
 			elem += '</div>'
 		elem += '</div>'
