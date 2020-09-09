@@ -28,7 +28,7 @@ exports.index = function(req, res) {
 
 
 exports.login = function(req, res) {
-	res.render('./aaViews/index/login', {
+	res.render('./login', {
 		title: 'Login',
 		action: "/loginUser",
 		code: "code",

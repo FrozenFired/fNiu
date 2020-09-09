@@ -20,73 +20,92 @@ exports.products = function(req, res) {
 exports.product = function(req, res) {
 	let crCter = req.session.crCter;
 	let firm = req.session.firm;
-	if(crCter) firm = crCter.firm;
 	let id = req.params.id;
-
-
-	Pdfir.findOne({_id: id})
-	.populate('colors')
-	.exec(function(err, pdfir) {
-		if(err) {
-			console.log(err);
-			info = "cter product Pdfir.findOne, Error!"
-			Err.usError(req, res, info);
-		} else if(!pdfir) {
-			info = "没有找到产品, 请刷新重试"
-			Err.usError(req, res, info);
-		} else {
-			Orc.findOne({
-				'firm': firm,
-				'cter': crCter._id,
-				'status': 1
-			})
-			.populate('orcpds')
-			.exec(function(err, orc) {
-				if(err) {
-					console.log(err);
-					info = "cter product Pdfir.findOne, Error!"
-					Err.usError(req, res, info);
-				} else if(!orc) {
-					let objOrc = new Object();
-					objOrc.firm = crCter.firm;
-					objOrc.cter = crCter._id;
-					objOrc.imp = 0;
-					let _objOrc = new Orc(objOrc)
-					_objOrc.save(function(err, orc){
-						if(err) {
-							console.log(err);
-							info = "product, _objOrc.save, Error!";
-							Index.adOptionWrong(req, res, info);
-						} else {
-							let orcpd = null;
-							res.render('./cter/product/detail', {
-								title : '产品信息',
-								crCter,
-								pdfir,
-								orc,
-								orcpd
-							});
+	if(crCter) {
+		firm = crCter.firm;
+		Pdfir.findOne({_id: id})
+		.populate('colors')
+		.exec(function(err, pdfir) {
+			if(err) {
+				console.log(err);
+				info = "cter product Pdfir.findOne, Error!"
+				Err.usError(req, res, info);
+			} else if(!pdfir) {
+				info = "没有找到产品, 请刷新重试"
+				Err.usError(req, res, info);
+			} else {
+				Orc.findOne({
+					'firm': firm,
+					'cter': crCter._id,
+					'status': 1
+				})
+				.populate('orcpds')
+				.exec(function(err, orc) {
+					if(err) {
+						console.log(err);
+						info = "cter product Pdfir.findOne, Error!"
+						Err.usError(req, res, info);
+					} else if(!orc) {
+						let objOrc = new Object();
+						objOrc.firm = crCter.firm;
+						objOrc.cter = crCter._id;
+						objOrc.imp = 0;
+						let _objOrc = new Orc(objOrc)
+						_objOrc.save(function(err, orc){
+							if(err) {
+								console.log(err);
+								info = "product, _objOrc.save, Error!";
+								Index.adOptionWrong(req, res, info);
+							} else {
+								let orcpd = null;
+								res.render('./cter/product/detail', {
+									title : '产品信息',
+									crCter,
+									pdfir,
+									orc,
+									orcpd
+								});
+							}
+						})
+					} else {
+						let orcpd = null;
+						for(let i=0; i<orc.orcpds.length; i++) {
+							if(String(orc.orcpds[i].pdfir) == String(pdfir._id)) {
+								orcpd = orc.orcpds[i];
+							}
 						}
-					})
-				} else {
-					let orcpd = null;
-					for(let i=0; i<orc.orcpds.length; i++) {
-						if(String(orc.orcpds[i].pdfir) == String(pdfir._id)) {
-							orcpd = orc.orcpds[i];
-						}
+						// console.log(orcpd)
+						res.render('./cter/product/detail', {
+							title : '产品信息',
+							crCter,
+							pdfir,
+							orc,
+							orcpd
+						});
 					}
-					// console.log(orcpd)
-					res.render('./cter/product/detail', {
-						title : '产品信息',
-						crCter,
-						pdfir,
-						orc,
-						orcpd
-					});
-				}
-			})
-		}
-	})
+				})
+			}
+		})
+	} else {
+		Pdfir.findOne({_id: id})
+		.populate('colors')
+		.exec(function(err, pdfir) {
+			if(err) {
+				console.log(err);
+				info = "cter product Pdfir.findOne, Error!"
+				Err.usError(req, res, info);
+			} else if(!pdfir) {
+				info = "没有找到产品, 请刷新重试"
+				Err.usError(req, res, info);
+			} else {
+				res.render('./cter/product/detail', {
+					title : '产品信息',
+					pdfir,
+				});
+			}
+		})
+	}
+
 }
 
 exports.pdnomes = function(req, res) {
