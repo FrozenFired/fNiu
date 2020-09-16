@@ -44,7 +44,9 @@
 					h4.tel Tel: #{firm.tel}
 					h4.addr Addr.: #{firm.addr}
 				.col-md-7
-					img(src=firm.posts[0].photo, width="100%" height="200px" style="object-fit: scale-down;")
+					if firm.posts && firm.posts.length > 0
+						-a;
+						img(src=firm.posts[0].photo, width="100%" height="200px" style="object-fit: scale-down;")
 		.topNav-second-headerHide(style="display:none")
 		//- .row.pt-2.pb-1
 			.col-md-3
