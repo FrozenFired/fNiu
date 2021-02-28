@@ -22,6 +22,9 @@ let MiddlePicture = {
 		let photoDir = obj.photoDir;
 		// console.log(photoDir)
 		let photoData = req.files.uploadPhoto;
+		console.log(obj)
+		console.log(photoData)
+		return;
 		if(photoData && photoData.originalFilename) {
 			let filePath = photoData.path;
 			if(obj.orgPhoto){

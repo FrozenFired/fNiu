@@ -1,5 +1,5 @@
 $(function() {
-	$(".scrollDownHide").hide();
+	$(".js-scroll-DwHideUpShow").hide();
 	$(".navBtn").click(function(e) {
 		let id = $(this).attr('id');
 

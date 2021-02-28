@@ -8,6 +8,7 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 	input(type="hidden", name="obj[_id]", value=pdfir._id)
 	input(type="hidden", name="obj[orgPhoto]", value=pdfir.photo)
 	input(type="hidden", name="obj[photoDir]", value=Conf.photoPath.proPhoto)
+
 	.row
 		.offset-3.col-6
 			img#crtImg(src=pdfir.photo, width='100%')
@@ -16,17 +17,6 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 		.col-8
 			input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
 	hr
-	.form-group.row
-		label.col-4.col-form-label(for="iptRcmd") 帐号
-		.col-8
-			select.form-control(name="obj[rcmd]", data-style="btn-info")
-				if pdfir.rcmd == 1
-					-a;
-					option(value=1) 推荐
-					option(value=0) 不推荐
-				else
-					option(value=0) 不推荐
-					option(value=1) 推荐
 	.form-group.row
 		label.col-4.col-form-label(for="iptCode") 编号
 		.col-8
@@ -67,5 +57,39 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 		.col-4
 		.col-8
 			span#optAddquot(style="display:none").text-danger 必须是数字
-
+	hr
+	.form-group.row
+		label.col-4.col-form-label(for="iptRcmd") 推荐
+		.col-8
+			select.form-control(name="obj[rcmd]", data-style="btn-info")
+				if pdfir.rcmd == 1
+					-a;
+					option(value=1) 推荐
+					option(value=0) 不推荐
+				else
+					option(value=0) 不推荐
+					option(value=1) 推荐
+	.form-group.row
+		label.col-4.col-form-label(for="weightIpt") 排序
+		.col-8
+			input#weightIpt.form-control(type="number", name="obj[weight]", autocomplete="off", value=pdfir.weight, placeholder="填写数值越大越越靠前排序")
+	.form-group.row.my-3
+		.col-md-2.mt-3 添加图片:
+		.col-md-2.mt-3(align="center")
+			img.thumbnailImg#img-photos0(src="", width="120px")
+			.changeImg#imgEdit-photos0.text-info <span class="oi oi-pencil"></span>[点击]
+			input.picIpt#ipt-photos0.btn.btn-info.btn-block(type="file", name="photos[0]", style="display:none")
+		.col-md-2.mt-3(align="center")
+			img.thumbnailImg#img-photos1(src="", width="120px")
+			.changeImg#imgEdit-photos1.text-info <span class="oi oi-pencil"></span>[点击]
+			input.picIpt#ipt-photos1.btn.btn-info.btn-block(type="file", name="photos[1]", style="display:none")
+		.col-md-2.mt-3(align="center")
+			img.thumbnailImg#img-photos2(src="", width="120px")
+			.changeImg#imgEdit-photos2.text-info <span class="oi oi-pencil"></span>[点击]
+			input.picIpt#ipt-photos2.btn.btn-info.btn-block(type="file", name="photos[2]", style="display:none")
+		.col-md-2.mt-3(align="center")
+			img.thumbnailImg#img-photos3(src="", width="120px")
+			.changeImg#imgEdit-photos3.text-info <span class="oi oi-pencil"></span>[点击]
+			input.picIpt#ipt-photos3.btn.btn-info.btn-block(type="file", name="photos[3]", style="display:none")
+	hr
 script(src="/js/bser/pdfir/update.js")

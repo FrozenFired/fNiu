@@ -9,23 +9,28 @@ $(function() {
 		$("#crtImg").removeClass("rounded-circle")
 	})
 
+	let updFlag = false;
+	let clearData = () => {
+		if(updFlag == true) {
+			document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
+			$("#crtImg").addClass("rounded-circle")
+		}
+		$("#bsProdNew").attr('action', '/bsPdfirNew');
+		$("#objId").val('')
+		$("#iptNome").val('')
+		$("#iptMaterial").val('')
+		$("#iptPrice").val('')
+		$("#iptCost").val(0)
+		$("#rowStock").show();
+		$("#rowStockPlus").hide();
+		$("#iptStockPlus").val(0);
+	}
 	$("#iptCode").blur(function(e) {
 		let code = $("#iptCode").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		if(code.length < 2) {
 			$("#optCode").text("请输入编号, 至少两个编号");
 			$("#optCode").show();
-
-			document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
-			$("#crtImg").addClass("rounded-circle")
-			$("#bsProdNew").attr('action', '/bsPdfirNew');
-			$("#objId").val('')
-			$("#iptNome").val('')
-			$("#iptMaterial").val('')
-			$("#iptPrice").val('')
-			$("#iptCost").val(0)
-			$("#rowStock").show();
-			$("#rowStockPlus").hide();
-			$("#iptStockPlus").val(0);
+			clearData();
 		} else {
 			let codeUrI = encodeURIComponent(code)
 			$.ajax({
@@ -46,27 +51,20 @@ $(function() {
 					$("#rowStock").hide();
 					$("#nowStock").text(pdfir.stock)
 					$("#rowStockPlus").show();
+
+					updFlag = true;
 				} else {
-					document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
-					$("#crtImg").addClass("rounded-circle")
-					$("#bsProdNew").attr('action', '/bsPdfirNew');
-					$("#objId").val('')
-					$("#iptNome").val('')
-					$("#iptMaterial").val('')
-					$("#iptPrice").val('')
-					$("#iptCost").val(0)
-					$("#rowStock").show();
-					$("#rowStockPlus").hide();
-					$("#iptStockPlus").val(0);
+					clearData();
 
 					$("#optCode").hide();
+					updFlag = false;
 				}
 			})
 		}
 	})
 	$("#iptPrice").blur(function(e) {
 		let price = $(this).val();
-		if(!isFloat(price)) {
+		if(!jsFunc_isFloat(price)) {
 			$("#optPrice").show();
 		} else {
 			$("#optPrice").hide();
@@ -74,7 +72,7 @@ $(function() {
 	})
 	$("#iptCost").blur(function(e) {
 		let cost = $(this).val();
-		if(!isFloat(cost)) {
+		if(!jsFunc_isFloat(cost)) {
 			$("#optCost").show();
 		} else {
 			$("#optCost").hide();
@@ -83,15 +81,15 @@ $(function() {
 	$("#bsProdNew").submit(function(e) {
 		let code = $("#iptCode").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		let price = $("#iptPrice").val();
-		let cost = $("#cost").val();
+		let cost = $("#iptCost").val();
 		if(code.length < 2) {
 			$("#optCode").text("请输入编号, 至少两个编号");
 			$("#optCode").show();
 			e.preventDefault();
-		} else if(!isFloat(price)) {
+		} else if(!jsFunc_isFloat(price)) {
 			$("#optPrice").show();
 			e.preventDefault();
-		} else if(!isFloat(cost)) {
+		} else if(!jsFunc_isFloat(cost)) {
 			$("#optCost").show();
 			e.preventDefault();
 		}

@@ -131,7 +131,7 @@ $( function() {
 	$("#selPdPage").on('blur', '.iptChangePrice', function(e) {
 		let pdfirId = $(this).attr("id").split("-")[1];
 		let newPrice = $(this).val();
-		if(isFloat(newPrice)) {
+		if(jsFunc_isFloat(newPrice)) {
 			newPrice = parseFloat(newPrice);
 			$("#selPriceSpan-"+pdfirId).text(newPrice)
 			selOrd.price = newPrice;

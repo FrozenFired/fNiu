@@ -3,6 +3,7 @@ extends ../aalayout/layout
 block content
 	.container.mt-3
 		form.mt-3#bsProdNew(method="post", action="/bsPdfirNew", enctype="multipart/form-data")
+			input(type="hidden", name="obj[test]", value=12)
 			input(type="hidden", name="obj[photoDir]", value=Conf.photoPath.proPhoto)
 			input#objId(type="hidden", name="objId")
 			.row
@@ -59,7 +60,6 @@ block content
 				.col-4
 				.col-8
 					span#optStockPlus(style="display:none").text-danger 必须是数字
-			hr
 			.form-group.row
 				.col-sm-6
 				.col-sm-6.col-12

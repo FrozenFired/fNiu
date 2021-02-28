@@ -99,9 +99,9 @@ $(function() {
 						var bodyH = $(document.body).height()
 						if(bodyH < browH) {
 							footH = browH - bodyH
-							$('.footerSpace').height(footH)
+							$('.js-browserHeight-autoFooter').height(footH)
 						} else {
-							$('.footerSpace').height(0)
+							$('.js-browserHeight-autoFooter').height(0)
 						}
 						// $(".timeloading").remove();
 					}, 1000)
