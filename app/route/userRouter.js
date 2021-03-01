@@ -21,7 +21,6 @@ let Orc = require('../controllers/user/bser/orc');
 let MdBcrypt = require('../middle/middleBcrypt');
 let MdRole = require('../middle/middleRole');
 let MdPicture = require('../middle/middlePicture');
-let MdExcel = require('../middle/middleExcel');
 
 let multipart = require('connect-multiparty');
 let postForm = multipart();

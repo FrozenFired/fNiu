@@ -53,9 +53,6 @@ app.use(serveStatic(path.join(__dirname, "./app/html")));
 app.use(serveStatic(path.join(__dirname, "./app/static")));
 
 
-// 网页生成pdf用的
-app.use(require('express-pdf'));
-
 // 前端代码压缩
 // app.use(require('compression')());
 
