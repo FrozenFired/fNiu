@@ -1,5 +1,9 @@
 $(function() {
-	$("#subBtn").click(function(e) {
+	$(".subBtn").click(function(e) {
+		// let form = $("#bsProdUpdForm");
+		// let data = form.serialize();
+		// console.log(data)
+		// return;
 		$("#bsProdUpdForm").submit();
 	})
 

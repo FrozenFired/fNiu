@@ -1,20 +1,6 @@
 $(function() {
-	$("#crtImg").click(function(e) {
-		$("#uploadPhoto").click();
-	})
-	$("#uploadPhoto").change(function(e) {
-		var f = document.getElementById('uploadPhoto').files[0];
-		var src = window.URL.createObjectURL(f);
-		document.getElementById('crtImg').src = src;
-		$("#crtImg").removeClass("rounded-circle")
-	})
 
-	let updFlag = false;
-	let clearData = () => {
-		if(updFlag == true) {
-			document.getElementById('crtImg').src = "/imgs/createPicture.jpg";
-			$("#crtImg").addClass("rounded-circle")
-		}
+	const clearData = () => {
 		$("#bsProdNew").attr('action', '/bsPdfirNew');
 		$("#objId").val('')
 		$("#iptNome").val('')
@@ -26,7 +12,7 @@ $(function() {
 		$("#iptStockPlus").val(0);
 	}
 	$("#iptCode").blur(function(e) {
-		let code = $("#iptCode").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		const code = $("#iptCode").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		if(code.length < 2) {
 			$("#optCode").text("请输入编号, 至少两个编号");
 			$("#optCode").show();
@@ -40,8 +26,6 @@ $(function() {
 			.done(function(results) {
 				if(results.success === 1) {
 					let pdfir = results.pdfir;
-					document.getElementById('crtImg').src = pdfir.photo;
-					$("#crtImg").removeClass("rounded-circle")
 					$("#bsProdNew").attr('action', '/bsPdfirUpd');
 					$("#objId").val(pdfir._id)
 					$("#iptNome").val(pdfir.nome)
@@ -52,12 +36,9 @@ $(function() {
 					$("#nowStock").text(pdfir.stock)
 					$("#rowStockPlus").show();
 
-					updFlag = true;
 				} else {
 					clearData();
-
 					$("#optCode").hide();
-					updFlag = false;
 				}
 			})
 		}

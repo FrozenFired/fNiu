@@ -1,3 +1,4 @@
+0.2.2	如果不能解决 请 git reset --hard edf054e80b0f4
 0.2.1	如果不能解决 请 git reset --hard edf054e80b0f4
 0.2.0	图片优化, 有问题 待解决, 如果不能解决 请 git reset --hard edf054e80b0f4
 0.1.84	客户前段页面优化, 如果firm.posts没有则不显示

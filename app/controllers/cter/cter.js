@@ -9,7 +9,6 @@ exports.cter = function(req, res) {
 	let crCter = req.session.crCter;
 	let firm = req.session.firm;
 	if(crCter) frim = crCter.firm;
-
 	res.render('./cter/index/index', {
 		title: '首页',
 		crCter,

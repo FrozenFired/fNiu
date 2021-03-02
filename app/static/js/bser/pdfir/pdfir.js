@@ -195,7 +195,7 @@ $(function() {
 	$("#upBtn").click(function(e) {
 		updateShow();
 	})
-	$("#cnlBtn").click(function(e) {
+	$(".cnlBtn").click(function(e) {
 		basicShow();
 	})
 	$("#basic_btn").click(function(e) {

@@ -1,8 +1,8 @@
 .row.my-3
 	.col-6
-		button.btn.btn-secondary#cnlBtn(type="button") <span class="oi oi-x"></span>
+		button.btn.btn-secondary.cnlBtn(type="button") <span class="oi oi-x"></span>
 	.col-6.text-right
-		button.btn.btn-success#subBtn(type="button") <span class="oi oi-location"></span>
+		button.btn.btn-success.subBtn(type="button") <span class="oi oi-location"></span>
 
 form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/form-data")
 	input(type="hidden", name="obj[_id]", value=pdfir._id)
@@ -10,12 +10,10 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 	input(type="hidden", name="obj[photoDir]", value=Conf.photoPath.proPhoto)
 
 	.row
-		.offset-3.col-6
-			img#crtImg(src=pdfir.photo, width='100%')
-	.form-group.row.udPhoto(style="display:none")
-		label.col-4.col-form-label(for="uploadPhoto") PdImg
-		.col-8
-			input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+		.offset-3.col-6.text-center
+			img.thumbnailImg#imgShow-uploadPhoto-id(src=pdfir.photo, width="100%")
+			.js-click-imgChange#imgClk-uploadPhoto-id.text-info <span class="oi oi-pencil"></span>[点击]
+			input.js-ipt-imgFile#imgIpt-uploadPhoto-id.btn.btn-info.btn-block(type="file", name="uploadPhoto", style="display:none")
 	hr
 	.form-group.row
 		label.col-4.col-form-label(for="iptCode") 编号
@@ -76,20 +74,26 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 	.form-group.row.my-3
 		.col-md-2.mt-3 添加图片:
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#img-photos0(src="", width="120px")
-			.changeImg#imgEdit-photos0.text-info <span class="oi oi-pencil"></span>[点击]
-			input.picIpt#ipt-photos0.btn.btn-info.btn-block(type="file", name="photos[0]", style="display:none")
+			img.thumbnailImg#imgShow-photos0-id(src="", width="120px")
+			.js-click-imgChange#imgClk-photos0-id.text-info <span class="oi oi-pencil"></span>[点击]
+			input.js-ipt-imgFile#imgIpt-photos0-id.btn.btn-info.btn-block(type="file", name="photos[0]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#img-photos1(src="", width="120px")
-			.changeImg#imgEdit-photos1.text-info <span class="oi oi-pencil"></span>[点击]
-			input.picIpt#ipt-photos1.btn.btn-info.btn-block(type="file", name="photos[1]", style="display:none")
+			img.thumbnailImg#imgShow-photos1-id(src="", width="120px")
+			.js-click-imgChange#imgClk-photos1-id.text-info <span class="oi oi-pencil"></span>[点击]
+			input.js-ipt-imgFile#imgIpt-photos1-id.btn.btn-info.btn-block(type="file", name="photos[1]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#img-photos2(src="", width="120px")
-			.changeImg#imgEdit-photos2.text-info <span class="oi oi-pencil"></span>[点击]
-			input.picIpt#ipt-photos2.btn.btn-info.btn-block(type="file", name="photos[2]", style="display:none")
+			img.thumbnailImg#imgShow-photos2-id(src="", width="120px")
+			.js-click-imgChange#imgClk-photos2-id.text-info <span class="oi oi-pencil"></span>[点击]
+			input.js-ipt-imgFile#imgIpt-photos2-id.btn.btn-info.btn-block(type="file", name="photos[2]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#img-photos3(src="", width="120px")
-			.changeImg#imgEdit-photos3.text-info <span class="oi oi-pencil"></span>[点击]
-			input.picIpt#ipt-photos3.btn.btn-info.btn-block(type="file", name="photos[3]", style="display:none")
+			img.thumbnailImg#imgShow-photos3-id(src="", width="120px")
+			.js-click-imgChange#imgClk-photos3-id.text-info <span class="oi oi-pencil"></span>[点击]
+			input.js-ipt-imgFile#imgIpt-photos3-id.btn.btn-info.btn-block(type="file", name="photos[3]", style="display:none")
 	hr
+
+.row.my-3
+	.col-6
+		button.btn.btn-secondary.cnlBtn(type="button") <span class="oi oi-x"></span>
+	.col-6.text-right
+		button.btn.btn-success.subBtn(type="button") <span class="oi oi-location"></span>
 script(src="/js/bser/pdfir/update.js")

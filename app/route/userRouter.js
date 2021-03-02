@@ -21,6 +21,7 @@ let Orc = require('../controllers/user/bser/orc');
 let MdBcrypt = require('../middle/middleBcrypt');
 let MdRole = require('../middle/middleRole');
 let MdPicture = require('../middle/middlePicture');
+const MdFiles = require('../middle/filesLocal');
 
 let multipart = require('connect-multiparty');
 let postForm = multipart();
@@ -73,10 +74,11 @@ module.exports = function(app){
 	app.get('/bsPdfirs', MdRole.bserIsLogin, Product.bsPdfirs);
 	app.get('/bsPdfirsAjax', MdRole.bserIsLogin, Product.bsPdfirsAjax);
 	app.get('/bspdfirAdd', MdRole.bserIsLogin, Product.bspdfirAdd);
-	app.post('/bsPdfirNew', MdRole.bserIsLogin, postForm, MdPicture.addNewPhoto, Product.bsPdfirNew);
+	app.post('/bsPdfirNew', MdRole.bserIsLogin, postForm, Product.bsPdfirNew);
 	app.get('/bspdfir/:id', MdRole.bserIsLogin, Product.bspdfir);
 
-	app.post('/bsPdfirUpd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhoto, Product.bsPdfirUpd);
+	app.post('/bsPdfirUpd', MdRole.bserIsLogin, postForm, Product.bsPdfirUpd);
+	app.post('/bsPdfirUpdFile', MdRole.bserIsLogin, postForm, MdFiles.newFile, Product.bsPdfirUpdFile);
 	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel)
 
 	app.get('/bsPdAjaxCode', MdRole.bserIsLogin, Product.bsPdAjaxCode);

@@ -35,4 +35,7 @@ table.table.table-bordered.my-3
 
 .row.mt-5
 	.col-12(align="center")
-		img#pdfirUpDefaultImg(src=pdfir.photo, width="100%")
+		- object= pdfir;
+		- postUrl="/bsPdfirUpdFile";
+		- field = "photoSpt4";
+		include ../../../../aaPlugin/uploadPic

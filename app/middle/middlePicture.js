@@ -12,9 +12,9 @@ let MiddlePicture = {
 	},
 
 	addNewPhoto : function(req, res, next) {
-		// console.log(req.body)
-		// console.log(req.files)
-		// return;
+		console.log(req.body)
+		console.log(req.files)
+		return;
 		let crUser = req.session.crUser;
 		// console.log(crUser.firm)
 		let obj = req.body.obj;

@@ -242,6 +242,20 @@ exports.bsPdfirUpd = function(req, res, next) {
 		}
 	})
 }
+exports.bsPdfirUpdFile = async(req, res) => {
+	// console.log("/bsPdfirUpdFile")
+	try{
+		const obj = req.body.obj;		// 所要更改的pdfir的id
+		const pdfir = await Pdfir.findOne({'_id': obj._id})
+		if(!pdfir) return res.redirect("/error?info=没有找到此导航信息, 请刷新重试");
+		let _object = _.extend(pdfir, obj)
+		const pdfirSave = _object.save();
+		return res.redirect("/adpdfir/"+obj._id);
+	} catch(error) {
+		console.log(error);
+		return res.redirect("/error?info=adpdfirUpdFile Error");
+	}
+}
 
 
 

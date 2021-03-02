@@ -13,6 +13,7 @@
 // 	.js-scroll-DwHideUpShow 		鼠标滚动事件 如果鼠标滚轮向下滚动 则加入此类的标签 隐藏， 鼠标滚轮向上滚动 则显示
 // 	.js-scroll-DwShowUpHide 		鼠标滚动事件 如果鼠标滚轮向下滚动 则加入此类的标签 显示 鼠标滚轮向上滚动 则隐藏
 // 	.js-click-imgEnlarge			img 标签使用, 如果当前img标签 加上此类 则可以放大到幕布, 需要#js-picZoom-* 等id配合
+// 	.js-click-imgChange				更换image用的, 
 // 	#js-picZoom-*					配合图片放大用的
 // js: 
 // 	jsFunc_isNumber(paramNumber) 										: 判断参数 paramNumber 是否是数字
@@ -47,31 +48,63 @@ $(() => {
 		}
 	})
 
-	$(".changeImg").click(function(e) {
-		let strs = $(this).attr("id").split('-');
-		let field = strs[1];
-		if(strs.length == 2) {
-			$("#ipt-"+field).click();
-		} else if(strs.length == 3) {
-			let id = strs[2];
-			$("#ipt-"+field+"-"+id).click();
+	$(".js-click-imgChange").click(function(e) {
+		const strs = $(this).attr("id").split('-');
+		if(strs.length == 3) {
+			// const mark = strs[0];
+			const field = strs[1];
+			const id = strs[2];
+			$("#imgIpt-"+field+"-"+id).click();
+		} else {
+			alert(".js-click-imgChange #id 参数错误")
 		}
 	})
-	$(".picIpt").change(function(e) {
-		let strs = $(this).attr("id").split('-');
-		let field = strs[1];
-		if(strs.length == 2) {
-			var f = document.getElementById('ipt-'+field).files[0];
-			var src = window.URL.createObjectURL(f);
-			document.getElementById('img-'+field).src = src;
-			$("#img-"+field).removeClass("rounded-circle")
-		} else if(strs.length == 3) {
-			let id = strs[2];
-			var f = document.getElementById('ipt-'+field+'-'+id).files[0];
-			var src = window.URL.createObjectURL(f);
-			document.getElementById('img-'+field+'-'+id).src = src;
-			$("#img-"+field+'-'+id).removeClass("rounded-circle")
+	$(".js-ipt-imgFile").change(function(e) {
+		const strs = $(this).attr("id").split('-');
+		if(strs.length == 3) {
+			// const mark = strs[0];
+			const field = strs[1];
+			const id = strs[2];
+			const f = document.getElementById('imgIpt-'+field+'-'+id).files[0];
+			const src = window.URL.createObjectURL(f);
+			document.getElementById('imgShow-'+field+'-'+id).src = src;
+			$("#imgShow-"+field+'-'+id).removeClass("rounded-circle")
+		} else {
+			alert(".js-ipt-imgFile #id 参数错误")
 		}
+	})
+	// 点击更改图片
+	$(".jsChangeImgDiv").click(function(e) {
+		const htmlId = $(this).attr("id");
+		const field = htmlId.split('-')[1];
+		const objId = htmlId.split('-')[2];
+		// console.log(dest);
+		$("#jsFileIpt-"+field+"-"+objId).click();
+	})
+	let orgPicSrc = "";
+	$(".jsFileIpt").change(function(e) {
+		try {
+			const htmlId = $(this).attr("id");
+			const field = htmlId.split('-')[1];
+			const objId = htmlId.split('-')[2];
+			const file = document.getElementById(htmlId).files[0];
+			const src = window.URL.createObjectURL(file);
+			orgPicSrc = document.getElementById('jsImg-'+field+'-'+objId).src;
+			document.getElementById('jsImg-'+field+'-'+objId).src = src;
+			$("#jsChangeImgDiv-"+field+"-"+objId).hide();
+			$("#jsFileForm-"+field+"-"+objId).show();
+		} catch(error) {
+			console.log(error);
+		}
+	})
+	$(".jsImgCancel").click(function(e) {
+		const target = $(e.target);
+		const objId = target.data("objid");
+		const field = target.data("field");
+		document.getElementById('jsImg-'+field+'-'+objId).src = orgPicSrc;
+		$("#jsFileIpt-"+field+"-"+objId).val("")
+		$("#jsFileForm-"+field+"-"+objId).hide();
+		$("#jsChangeImgDiv-"+field+"-"+objId).show();
 	})
 
 	// 图片放大 到前端显示
