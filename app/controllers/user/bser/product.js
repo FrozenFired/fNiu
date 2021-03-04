@@ -271,7 +271,7 @@ exports.bsPdfirPostDel = async(req, res) => {
 			let post = pdfir.posts[i];
 			if(post._id == id) {
 				let orgPhoto = post.photo;
-				MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.pdfirPostPhoto);
+				MdPicture.deleteOldPhoto(orgPhoto, "/pdImgs");
 				pdfir.posts.remove(post);
 			}
 		}

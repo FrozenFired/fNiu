@@ -21,7 +21,7 @@
 				.modal-body
 					input(type="hidden", name="pdfir", value=pdfir._id)
 					input(type="hidden", name="picName", value=pdfir.code)
-					input(type="hidden", name="photoDir", value='/pdImgs')
+					input(type="hidden", name="photoDir", value='/pdImgs/')
 					.row
 						.col-12(align="center")
 							img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
@@ -49,9 +49,9 @@
 					each post in pdfir.posts
 						-a;
 						.row.mt-5
-							.col-9
+							.col-8
 								img(src=post.photo, width="60%")
-							.col-3.pt-5
+							.col-4.pt-5
 								a.btn.btn-danger(href="/bsPdfirPostDel/"+post._id+"?pdfir="+pdfir._id) 删除
 						hr
 			.modal-footer
