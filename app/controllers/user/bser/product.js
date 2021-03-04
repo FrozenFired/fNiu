@@ -353,31 +353,30 @@ exports.bsProdFilter = function(req, res, next) {
 
 
 
-exports.bsPdfirDel = function(req, res) {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-	Pdfir.findOne({_id: id, 'firm': crUser.firm})
-	.exec(function(err, pdfir){
-		if(err) {
-			console.log(err);
-			info = "bsPdfirDel, Pdfir.findOne, Error！";
-			Err.usError(req, res, info);
-		} else if(!pdfir) {
-			info = "此产品已经被删除, 请刷新查看!";
-			Err.usError(req, res, info);
-		} else {
-			let orgPhoto = pdfir.photo;
-			MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.proPhoto);
-			Pdfir.deleteOne({_id: pdfir._id}, function(err, objRm) {
-				if(err) {
-					info = "bsPdfirDel, Pdfir.findOne, Error!";
-					Err.usError(req, res, info);
-				} else {
-					res.redirect('/bsPdfirs');
-				}
-			})
+exports.bsPdfirDel = async(req, res) => {
+	try {
+		const crUser = req.session.crUser;
+		const id = req.params.id;
+		const pdfir = await Pdfir.findOne({_id: id, 'firm': crUser.firm});
+		if(!pdfir) return res.redirect("/error?info=bsPdfirDel !pdfir");
+		const orgPhoto = pdfir.photo;
+		MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.proPhoto);
+		const orgPosts = pdfir.posts;
+		for(let i=0; i<orgPosts.length; i++) {
+			MdPicture.deleteOldPhoto(orgPosts[i].photo, '/pdImgs');
 		}
-	})
+		Pdfir.deleteOne({_id: pdfir._id}, function(err, objRm) {
+			if(err) {
+				info = "bsPdfirDel, Pdfir.findOne, Error!";
+				Err.usError(req, res, info);
+			} else {
+				res.redirect('/bsPdfirs');
+			}
+		})
+	} catch {
+		console.log(error);
+		return res.redirect("/error?info=bsPdfirDel Error");
+	}
 }
 
 

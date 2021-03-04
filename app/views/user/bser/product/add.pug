@@ -57,6 +57,13 @@ block content
 				.col-4
 				.col-8
 					span#optStockPlus(style="display:none").text-danger 必须是数字
+			hr
+			.form-group.row
+				label.col-4.col-form-label(for="iptRcmd") 推荐
+				.col-8
+					select.form-control(name="obj[rcmd]", data-style="btn-info")
+						option(value=1) 推荐
+						option(value=0) 不推荐
 			.form-group.row
 				.col-sm-6
 				.col-sm-6.col-12
