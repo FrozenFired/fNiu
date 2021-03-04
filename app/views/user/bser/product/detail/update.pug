@@ -11,7 +11,7 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 
 	.row
 		.offset-3.col-6.text-center
-			img.thumbnailImg#imgShow-uploadPhoto-id(src=pdfir.photo, width="100%")
+			img.js-click-imgEnlarge#imgShow-uploadPhoto-id(src=pdfir.photo, width="100%")
 			.js-click-imgChange#imgClk-uploadPhoto-id.text-info <span class="oi oi-pencil"></span>[点击]
 			input.js-ipt-imgFile#imgIpt-uploadPhoto-id.btn.btn-info.btn-block(type="file", name="uploadPhoto", style="display:none")
 	hr
@@ -74,19 +74,19 @@ form.mt-3#bsProdUpdForm(method="post", action="/bsPdfirUpd", enctype="multipart/
 	.form-group.row.my-3
 		.col-md-2.mt-3 添加图片:
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#imgShow-photos0-id(src="", width="120px")
+			img.js-click-imgEnlarge#imgShow-photos0-id(src="", width="120px")
 			.js-click-imgChange#imgClk-photos0-id.text-info <span class="oi oi-pencil"></span>[点击]
 			input.js-ipt-imgFile#imgIpt-photos0-id.btn.btn-info.btn-block(type="file", name="photos[0]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#imgShow-photos1-id(src="", width="120px")
+			img.js-click-imgEnlarge#imgShow-photos1-id(src="", width="120px")
 			.js-click-imgChange#imgClk-photos1-id.text-info <span class="oi oi-pencil"></span>[点击]
 			input.js-ipt-imgFile#imgIpt-photos1-id.btn.btn-info.btn-block(type="file", name="photos[1]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#imgShow-photos2-id(src="", width="120px")
+			img.js-click-imgEnlarge#imgShow-photos2-id(src="", width="120px")
 			.js-click-imgChange#imgClk-photos2-id.text-info <span class="oi oi-pencil"></span>[点击]
 			input.js-ipt-imgFile#imgIpt-photos2-id.btn.btn-info.btn-block(type="file", name="photos[2]", style="display:none")
 		.col-md-2.mt-3(align="center")
-			img.thumbnailImg#imgShow-photos3-id(src="", width="120px")
+			img.js-click-imgEnlarge#imgShow-photos3-id(src="", width="120px")
 			.js-click-imgChange#imgClk-photos3-id.text-info <span class="oi oi-pencil"></span>[点击]
 			input.js-ipt-imgFile#imgIpt-photos3-id.btn.btn-info.btn-block(type="file", name="photos[3]", style="display:none")
 	hr

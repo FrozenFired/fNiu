@@ -35,7 +35,9 @@ table.table.table-bordered.my-3
 
 .row.mt-5
 	.col-12(align="center")
-		- object= pdfir;
-		- postUrl="/bsPdfirUpdFile";
-		- field = "photoSpt4";
-		include ../../../../aaPlugin/uploadPic
+		img.js-click-imgEnlarge.jsImg(src=pdfir.photo, width="100px")
+
+hr
+include ./postUpd
+include ./postInfo
+script(src="./js/bser/firm/postUpd.js")

@@ -73,13 +73,16 @@ module.exports = function(app){
 	/* ======================================== product ======================================== */
 	app.get('/bsPdfirs', MdRole.bserIsLogin, Product.bsPdfirs);
 	app.get('/bsPdfirsAjax', MdRole.bserIsLogin, Product.bsPdfirsAjax);
-	app.get('/bspdfirAdd', MdRole.bserIsLogin, Product.bspdfirAdd);
-	app.post('/bsPdfirNew', MdRole.bserIsLogin, postForm, Product.bsPdfirNew);
-	app.get('/bspdfir/:id', MdRole.bserIsLogin, Product.bspdfir);
+	app.get('/bsPdfirAdd', MdRole.bserIsLogin, Product.bsPdfirAdd);
+	app.post('/bsPdfirNew', MdRole.bserIsLogin, postForm, MdPicture.addNewPhoto, Product.bsPdfirNew);
+	app.get('/bsPdfir/:id', MdRole.bserIsLogin, Product.bsPdfir);
 
-	app.post('/bsPdfirUpd', MdRole.bserIsLogin, postForm, Product.bsPdfirUpd);
+	app.post('/bsPdfirUpd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhoto, Product.bsPdfirUpd);
 	app.post('/bsPdfirUpdFile', MdRole.bserIsLogin, postForm, MdFiles.newFile, Product.bsPdfirUpdFile);
-	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel)
+	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel);
+
+	app.post('/bsPdfirPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotoOrg, Product.bsPdfirPostAdd);
+	app.get('/bsPdfirPostDel/:id', MdRole.bserIsLogin, Product.bsPdfirPostDel);
 
 	app.get('/bsPdAjaxCode', MdRole.bserIsLogin, Product.bsPdAjaxCode);
 	/* ===================== product color size ===================== */

@@ -107,7 +107,7 @@ exports.bsPdAjaxCode = function(req, res) {
 	})
 }
 
-exports.bspdfir = function(req, res) {
+exports.bsPdfir = function(req, res) {
 	let crUser = req.session.crUser;
 	
 	let id = req.params.id;
@@ -140,7 +140,7 @@ exports.bspdfir = function(req, res) {
 }
 
 
-exports.bspdfirAdd = function(req, res) {
+exports.bsPdfirAdd = function(req, res) {
 	let crUser = req.session.crUser;
 
 	res.render('./user/bser/product/add', {
@@ -242,22 +242,60 @@ exports.bsPdfirUpd = function(req, res, next) {
 		}
 	})
 }
-exports.bsPdfirUpdFile = async(req, res) => {
-	// console.log("/bsPdfirUpdFile")
-	try{
-		const obj = req.body.obj;		// 所要更改的pdfir的id
-		const pdfir = await Pdfir.findOne({'_id': obj._id})
-		if(!pdfir) return res.redirect("/error?info=没有找到此导航信息, 请刷新重试");
-		let _object = _.extend(pdfir, obj)
-		const pdfirSave = _object.save();
-		return res.redirect("/adpdfir/"+obj._id);
-	} catch(error) {
+exports.bsPdfirPostAdd = async(req, res) => {
+	try {
+		const crUser = req.session.crUser;
+		const postObj = req.body.obj;
+		const pdfirId = req.body.pdfir;
+		const pdfir = await Pdfir.findOne({_id: pdfirId});
+		if(!pdfir) return res.redirect("/error?info=修改公司信息时，数据库保存错误，bsPdfirPostAddError");
+		if(!pdfir.posts) pdfir.posts = new Array();
+		pdfir.posts.push(postObj);
+		pdfirSave = await pdfir.save();
+		return res.redirect('/bsPdfir/'+pdfirId);
+	} catch {
 		console.log(error);
-		return res.redirect("/error?info=adpdfirUpdFile Error");
+		return res.redirect("/error?info=bsPdfirPostAdd Error");
 	}
 }
 
+exports.bsPdfirPostDel = async(req, res) => {
+	try {
+		const crUser = req.session.crUser;
+		const pdfirId = req.query.pdfir;
+		const id = req.params.id;
 
+		const pdfir = await Pdfir.findOne({_id: pdfirId});
+		if(!pdfir) return res.redirect("/error?info=修改公司信息时，数据库保存错误,bsPdfirPostDel,Error");
+		for(let i=0; i<pdfir.posts.length; i++) {
+			let post = pdfir.posts[i];
+			if(post._id == id) {
+				let orgPhoto = post.photo;
+				MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.pdfirPostPhoto);
+				pdfir.posts.remove(post);
+			}
+		}
+		pdfirSave = await pdfir.save();
+		return res.redirect('/bsPdfir/'+pdfirId);
+	} catch {
+		console.log(error);
+		return res.redirect("/error?info=bsPdfirPostDel Error");
+	}
+}
+exports.bsPdfirUpdFile = async(req, res) => {
+	// console.log("/adPdfirUpdFile")
+	try{
+		const obj = req.body.obj;		// 所要更改的pdfir的id
+		const pdfir = await Pdfir.findOne({'_id': obj._id})
+		if(!pdfir) return res.redirect("/error?info=没有找到此商品, 请刷新重试");
+		let _object = _.extend(pdfir, obj)
+		const pdfirSave = _object.save();
+		return res.redirect("/bsPdfir/"+obj._id);
+	} catch(error) {
+		console.log(error);
+		return res.redirect("/error?info=adPdfirUpdFile Error");
+	}
+}
 
 
 exports.bsProdFilter = function(req, res, next) {

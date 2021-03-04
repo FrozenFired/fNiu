@@ -29,7 +29,11 @@ let dbSchema = new Schema({
 	status: Number,
 	rcmd: Number, // Recommended 店长推荐
 	weight: Number,
-	photos: [String],
+	posts: [{
+		photo: String,
+		weight: Number
+	}],
+
 
 	stock: Number,  // 库存
 	sales: Number,  // 销量

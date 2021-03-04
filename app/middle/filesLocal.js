@@ -46,7 +46,7 @@ exports.newFile = (req, res, next) => {
 		});
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/error?info=newFile_Error');
+		return res.redirect('/error?info=Middle_newFile_Error');
 	}
 }
 
