@@ -5,12 +5,6 @@
 		if !pdfir.posts || pdfir.posts.length < 6
 			-a;
 			a.btn.btn-success(href="#", data-toggle="modal", data-target="#addPost") <span class="oi oi-plus"></span>
-	.col-6.text-right
-		if pdfir.posts
-			-a;
-		if pdfir.posts && pdfir.posts.length > 0
-			-a;
-			a.btn.btn-danger(href="#", data-toggle="modal", data-target="#delPost") <span class="oi oi-trash"></span>
 
 #addPost.modal.fade
 	.modal-dialog
@@ -24,11 +18,11 @@
 					input(type="hidden", name="photoDir", value='/pdImgs/')
 					.row
 						.col-12(align="center")
-							img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
+							img#crtImgs.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
 					.form-group.row.udPhoto(style="display:none")
 						label.col-4.col-form-label(for="uploadPhoto") PdImg
 						.col-8
-							input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+							input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto", multiple)
 					.form-group.row
 						label.col-4.col-form-label 排序
 						.col-8
@@ -38,23 +32,4 @@
 						button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
 					.col-6.text-right
 						button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
-#delPost.modal.fade
-	.modal-dialog
-		.modal-content
-			.modal-header
-				h5 删除海报
-			.modal-body
-				if pdfir.posts
-					-a;
-					each post in pdfir.posts
-						-a;
-						.row.mt-5
-							.col-8
-								img(src=post.photo, width="60%")
-							.col-4.pt-5
-								a.btn.btn-danger(href="/bsPdfirPostDel/"+post._id+"?pdfir="+pdfir._id) 删除
-						hr
-			.modal-footer
-				.col-6
-					button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
-				.col-6.text-right
+

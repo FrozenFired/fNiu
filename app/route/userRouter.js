@@ -81,7 +81,7 @@ module.exports = function(app){
 	app.post('/bsPdfirUpdFile', MdRole.bserIsLogin, postForm, MdFiles.newFile, Product.bsPdfirUpdFile);
 	app.get('/bsPdfirDel/:id', MdRole.bserIsLogin, Product.bsPdfirDel);
 
-	app.post('/bsPdfirPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotoOrg, Product.bsPdfirPostAdd);
+	app.post('/bsPdfirPostAdd', MdRole.bserIsLogin, postForm, MdPicture.addNewPhotos, Product.bsPdfirPostAdd);
 	app.get('/bsPdfirPostDel/:id', MdRole.bserIsLogin, Product.bsPdfirPostDel);
 
 	app.get('/bsPdAjaxCode', MdRole.bserIsLogin, Product.bsPdAjaxCode);

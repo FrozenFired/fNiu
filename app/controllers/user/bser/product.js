@@ -245,15 +245,21 @@ exports.bsPdfirUpd = function(req, res, next) {
 exports.bsPdfirPostAdd = async(req, res) => {
 	try {
 		const crUser = req.session.crUser;
-		const postObj = req.body.obj;
 		const pdfirId = req.body.pdfir;
 		const pdfir = await Pdfir.findOne({_id: pdfirId});
 		if(!pdfir) return res.redirect("/error?info=修改公司信息时，数据库保存错误，bsPdfirPostAddError");
 		if(!pdfir.posts) pdfir.posts = new Array();
-		pdfir.posts.push(postObj);
+		console.log(pdfir.posts)
+		const photos = req.body.imgObjs;
+		for(let i=0; i<photos.length; i++) {
+			let post = new Object();
+			post.photo = photos[i];
+			post.weight = 0;
+			pdfir.posts.push(post);
+		}
 		pdfirSave = await pdfir.save();
 		return res.redirect('/bsPdfir/'+pdfirId);
-	} catch {
+	} catch(error) {
 		console.log(error);
 		return res.redirect("/error?info=bsPdfirPostAdd Error");
 	}
@@ -277,7 +283,7 @@ exports.bsPdfirPostDel = async(req, res) => {
 		}
 		pdfirSave = await pdfir.save();
 		return res.redirect('/bsPdfir/'+pdfirId);
-	} catch {
+	} catch(error) {
 		console.log(error);
 		return res.redirect("/error?info=bsPdfirPostDel Error");
 	}
@@ -363,7 +369,10 @@ exports.bsPdfirDel = async(req, res) => {
 		MdPicture.deleteOldPhoto(orgPhoto, Conf.photoPath.proPhoto);
 		const orgPosts = pdfir.posts;
 		for(let i=0; i<orgPosts.length; i++) {
-			MdPicture.deleteOldPhoto(orgPosts[i].photo, '/pdImgs');
+			let orgPost = orgPosts[i];
+			if(orgPost && orgPost.photo) {
+				MdPicture.deleteOldPhoto(orgPost.photo, '/pdImgs');
+			}
 		}
 		Pdfir.deleteOne({_id: pdfir._id}, function(err, objRm) {
 			if(err) {
@@ -373,7 +382,7 @@ exports.bsPdfirDel = async(req, res) => {
 				res.redirect('/bsPdfirs');
 			}
 		})
-	} catch {
+	} catch(error) {
 		console.log(error);
 		return res.redirect("/error?info=bsPdfirDel Error");
 	}

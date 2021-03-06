@@ -86,6 +86,45 @@ let MiddlePicture = {
 			next();
 		}
 	},
+	addNewPhotos : async(req, res, next) => {
+		let obj = req.body.obj;
+		let picName = req.body.picName;			// 获取图片主要名称
+		let photoDir = req.body.photoDir;		// 图片要储存的位置
+		if(!photoDir) return next();
+
+		let photoDatas = req.files.uploadPics;	// 图片数据
+		let imgObjs = new Array();
+		if(photoDatas instanceof Array) {
+			for(let i=0;  i<photoDatas.length; i++) {
+				let photoData = photoDatas[i];
+				let imgObj = await recuPics(photoData, picName, photoDir);
+				imgObjs.push(imgObj)
+			}
+		} else {
+			let photoData = photoDatas;
+			if(photoData && photoData.originalFilename && photoDir) {
+				let imgObj = await recuPics(photoData, picName, photoDir)
+				imgObjs.push(imgObj)
+			}
+		}
+		req.body.imgObjs = imgObjs;
+		next();
+	},
 };
+recuPics = (photoData, picName, photoDir) => {
+	return new Promise((resolve, reject) => {
+		const filePath = photoData.path;		// 图片的位置
+		fs.readFile(filePath, function(err, data) {
+			const type = photoData.type.split('/')[1];		// 图片类型
+			const photoName = picName + '_' + Date.now() + '.' + type;	// 图片名称 code_2340.jpg
+			const photoSrc = path.join(__dirname, '../../public/upload/'+photoDir);	// niu/public/upload/***/
+			const photo = photoSrc + photoName;
+			fs.writeFile(photo, data, function(err){
+				if(err) console.log(err);
+				resolve('/upload'+photoDir+photoName)
+			});
+		});
+	})
+}
 
 module.exports = MiddlePicture;

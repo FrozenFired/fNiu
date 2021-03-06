@@ -38,6 +38,60 @@ table.table.table-bordered.my-3
 		img.js-click-imgEnlarge.jsImg(src=pdfir.photo, width="100px")
 
 hr
-include ./postUpd
-include ./postInfo
-script(src="./js/bser/firm/postUpd.js")
+.row.postsPage
+	if pdfir.posts && pdfir.posts.length > 0
+		-a;
+		.col-12.text-right
+			a.btn.btn-danger(href="#", data-toggle="modal", data-target="#delPost") <span class="oi oi-trash"></span>
+		each post in pdfir.posts
+			-a;
+			.col-6.col-md-4.col-xl-2
+				img.js-click-imgEnlarge.jsImg(src=post.photo, width="100%", height="100px")
+		.col-6.col-md-4.col-xl-2
+			a(href="#", data-toggle="modal", data-target="#addPost")
+				img(src="/imgs/createPicture.jpg", width="100%", height="100px")
+	else
+		.col-6.col-md-4.col-xl-2
+			a(href="#", data-toggle="modal", data-target="#addPost")
+				img(src="/imgs/createPicture.jpg", width="100%", height="100px")
+
+	#delPost.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h5 删除海报
+				.modal-body
+					if pdfir.posts
+						-a;
+						each post in pdfir.posts
+							-a;
+							.row.mt-5
+								.col-8
+									img(src=post.photo, width="60%")
+								.col-4.pt-5
+									a.btn.btn-danger(href="/bsPdfirPostDel/"+post._id+"?pdfir="+pdfir._id) 删除
+							hr
+				.modal-footer
+					.col-6
+						button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+					.col-6.text-right
+#addPost.modal.fade
+	.modal-dialog
+		.modal-content
+			form#upGroup(method="post", action="/bsPdfirPostAdd", enctype="multipart/form-data")
+				.modal-header
+					h5 添加海报
+				.modal-body
+					input(type="hidden", name="pdfir", value=pdfir._id)
+					input(type="hidden", name="picName", value=pdfir.code)
+					input(type="hidden", name="photoDir", value='/pdImgs/')
+					.row
+						.col-12(align="center")
+							input#uploadPics.btn.btn-info.btn-block(type="file", name="uploadPics", multiple)
+					.form-group.row#crtImgs
+				.modal-footer
+					.col-6
+						button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+					.col-6.text-right
+						button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
+script(src="/js/bser/pdfir/postUpd.js")
